@@ -1,0 +1,35 @@
+{
+  "name": "@lijuhong1981/cesium.utils",
+  "version": "0.1.0",
+  "description": "Cesium 公共工具库：Cesium 类扩展（revisions）、值解析（parses）、坐标/矩阵变换、通用工具函数",
+  "type": "module",
+  "main": "src/index.js",
+  "module": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "scripts": {
+    "docs": "jsdoc -c jsdoc.json"
+  },
+  "files": [
+    "src"
+  ],
+  "keywords": [
+    "cesium",
+    "3d",
+    "gis",
+    "map",
+    "utils"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "cesium": ">=1.107.0 <2.0.0"
+  },
+  "dependencies": {
+    "@lijuhong1981/jslibs": "^1.4.30"
+  },
+  "devDependencies": {
+    "docdash": "^2.0.2",
+    "jsdoc": "^4.0.5"
+  }
+}

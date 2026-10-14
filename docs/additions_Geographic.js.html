@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>additions/Geographic.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Billboard.html">Billboard</a><ul class='members'><li data-type='member' style='display: none;'><a href="Billboard.html#.isBillboard">isBillboard</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="Billboard.html#_removeFromCollection">_removeFromCollection</a></li></ul></li><li><a href="BillboardCollection.html">BillboardCollection</a><ul class='methods'><li data-type='method' style='display: none;'><a href="BillboardCollection.html#getBoundingSphere">getBoundingSphere</a></li></ul></li><li><a href="BoundingSphere.html">BoundingSphere</a><ul class='methods'><li data-type='method' style='display: none;'><a href="BoundingSphere.html#distanceToCamera">distanceToCamera</a></li><li data-type='method' style='display: none;'><a href="BoundingSphere.html#distanceToCartesian">distanceToCartesian</a></li><li data-type='method' style='display: none;'><a href="BoundingSphere.html#.distanceToCamera">distanceToCamera</a></li><li data-type='method' style='display: none;'><a href="BoundingSphere.html#.distanceToCartesian">distanceToCartesian</a></li><li data-type='method' style='display: none;'><a href="BoundingSphere.html#.fromElements">fromElements</a></li><li data-type='method' style='display: none;'><a href="BoundingSphere.html#.fromGeographics">fromGeographics</a></li><li data-type='method' style='display: none;'><a href="BoundingSphere.html#.fromModelMatrix">fromModelMatrix</a></li></ul></li><li><a href="Camera.html">Camera</a><ul class='members'><li data-type='member' style='display: none;'><a href="Camera.html#originalFlyHome">originalFlyHome</a></li><li data-type='member' style='display: none;'><a href="Camera.html#originalFlyTo">originalFlyTo</a></li><li data-type='member' style='display: none;'><a href="Camera.html#originalSetView">originalSetView</a></li><li data-type='member' style='display: none;'><a href="Camera.html#.attitude">attitude</a></li><li data-type='member' style='display: none;'><a href="Camera.html#.ellipsoid">ellipsoid</a></li><li data-type='member' style='display: none;'><a href="Camera.html#.geographic">geographic</a></li><li data-type='member' style='display: none;'><a href="Camera.html#.headingDegrees">headingDegrees</a></li><li data-type='member' style='display: none;'><a href="Camera.html#.isFlighting">isFlighting</a></li><li data-type='member' style='display: none;'><a href="Camera.html#.orientation">orientation</a></li><li data-type='member' style='display: none;'><a href="Camera.html#.orientationDegrees">orientationDegrees</a></li><li data-type='member' style='display: none;'><a href="Camera.html#.pitchDegrees">pitchDegrees</a></li><li data-type='member' style='display: none;'><a href="Camera.html#.projectionMatrix">projectionMatrix</a></li><li data-type='member' style='display: none;'><a href="Camera.html#.rollDegrees">rollDegrees</a></li><li data-type='member' style='display: none;'><a href="Camera.html#.scene">scene</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="Camera.html#flyHome">flyHome</a></li><li data-type='method' style='display: none;'><a href="Camera.html#flyTo">flyTo</a></li><li data-type='method' style='display: none;'><a href="Camera.html#flyToRectangle">flyToRectangle</a></li><li data-type='method' style='display: none;'><a href="Camera.html#flyToViewPoint">flyToViewPoint</a></li><li data-type='method' style='display: none;'><a href="Camera.html#getDirectionRay">getDirectionRay</a></li><li data-type='method' style='display: none;'><a href="Camera.html#getMetersPerPixel">getMetersPerPixel</a></li><li data-type='method' style='display: none;'><a href="Camera.html#lookAtDirection">lookAtDirection</a></li><li data-type='method' style='display: none;'><a href="Camera.html#lookAtGeographic">lookAtGeographic</a></li><li data-type='method' style='display: none;'><a href="Camera.html#lookAtPosition">lookAtPosition</a></li><li data-type='method' style='display: none;'><a href="Camera.html#setDefaultView">setDefaultView</a></li><li data-type='method' style='display: none;'><a href="Camera.html#setHomeView">setHomeView</a></li><li data-type='method' style='display: none;'><a href="Camera.html#setView">setView</a></li></ul></li><li><a href="Cartesian2.html">Cartesian2</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Cartesian2.html#toFixed">toFixed</a></li><li data-type='method' style='display: none;'><a href="Cartesian2.html#.toFixed">toFixed</a></li></ul></li><li><a href="Cartesian3.html">Cartesian3</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Cartesian3.html#distance">distance</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#negate">negate</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#normalize">normalize</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#surfaceDistance">surfaceDistance</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#toArray">toArray</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#toCartographic">toCartographic</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#toFixed">toFixed</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#toGeographic">toGeographic</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#.fromCartographic">fromCartographic</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#.fromCartographicArray">fromCartographicArray</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#.fromGeographic">fromGeographic</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#.fromGeographicArray">fromGeographicArray</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#.surfaceDistance">surfaceDistance</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#.toCartographic">toCartographic</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#.toCartographicArray">toCartographicArray</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#.toFixed">toFixed</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#.toGeographic">toGeographic</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#.toGeographicArray">toGeographicArray</a></li></ul></li><li><a href="Cartesian4.html">Cartesian4</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Cartesian4.html#toFixed">toFixed</a></li><li data-type='method' style='display: none;'><a href="Cartesian4.html#.toFixed">toFixed</a></li></ul></li><li><a href="Cartographic.html">Cartographic</a><ul class='members'><li data-type='member' style='display: none;'><a href="Cartographic.html#.altitude">altitude</a></li><li data-type='member' style='display: none;'><a href="Cartographic.html#.fromArray">fromArray</a></li><li data-type='member' style='display: none;'><a href="Cartographic.html#.packedLength">packedLength</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="Cartographic.html#distance">distance</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#moveToEast">moveToEast</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#moveToNorth">moveToNorth</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#moveToSouth">moveToSouth</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#moveToWest">moveToWest</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#surfaceDistance">surfaceDistance</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#toArray">toArray</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#toCartesian">toCartesian</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#toGeographic">toGeographic</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.distance">distance</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.fromCartesianArray">fromCartesianArray</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.fromGeographic">fromGeographic</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.fromGeographicArray">fromGeographicArray</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.moveToEast">moveToEast</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.moveToNorth">moveToNorth</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.moveToSouth">moveToSouth</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.moveToWest">moveToWest</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.pack">pack</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.pack2DArray">pack2DArray</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.packArray">packArray</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.surfaceDistance">surfaceDistance</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.toCartesianArray">toCartesianArray</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.toGeographic">toGeographic</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.toGeographicArray">toGeographicArray</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.unpack">unpack</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.unpackArray">unpackArray</a></li></ul></li><li><a href="CesiumMath.html">CesiumMath</a><ul class='members'><li data-type='member' style='display: none;'><a href="CesiumMath.html#.WGS84_CIRCUM">WGS84_CIRCUM</a></li><li data-type='member' style='display: none;'><a href="CesiumMath.html#.WGS84_DEGREES_PER_METERS">WGS84_DEGREES_PER_METERS</a></li><li data-type='member' style='display: none;'><a href="CesiumMath.html#.WGS84_METERS_PER_DEGREES">WGS84_METERS_PER_DEGREES</a></li><li data-type='member' style='display: none;'><a href="CesiumMath.html#.WGS84_RADIUS">WGS84_RADIUS</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="CesiumMath.html#.between">between</a></li><li data-type='method' style='display: none;'><a href="CesiumMath.html#.randomInteger">randomInteger</a></li><li data-type='method' style='display: none;'><a href="CesiumMath.html#.randomIntegerBetween">randomIntegerBetween</a></li><li data-type='method' style='display: none;'><a href="CesiumMath.html#.randomNumber">randomNumber</a></li></ul></li><li><a href="Check.html">Check</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Check.html#.instanceOf">instanceOf</a></li></ul></li><li><a href="ClassificationPrimitive.html">ClassificationPrimitive</a><ul class='methods'><li data-type='method' style='display: none;'><a href="ClassificationPrimitive.html#getBoundingSphere">getBoundingSphere</a></li></ul></li><li><a href="Color.html">Color</a><ul class='members'><li data-type='member' style='display: none;'><a href="Color.html#.fromArray">fromArray</a></li><li data-type='member' style='display: none;'><a href="Color.html#.fromBytesArray">fromBytesArray</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="Color.html#cloneRgb">cloneRgb</a></li><li data-type='method' style='display: none;'><a href="Color.html#equalsRgb">equalsRgb</a></li><li data-type='method' style='display: none;'><a href="Color.html#toCartesian3">toCartesian3</a></li><li data-type='method' style='display: none;'><a href="Color.html#toCartesian4">toCartesian4</a></li><li data-type='method' style='display: none;'><a href="Color.html#toCssRgbString">toCssRgbString</a></li><li data-type='method' style='display: none;'><a href="Color.html#toCssRgbaString">toCssRgbaString</a></li><li data-type='method' style='display: none;'><a href="Color.html#.cloneRgb">cloneRgb</a></li><li data-type='method' style='display: none;'><a href="Color.html#.equalsRgb">equalsRgb</a></li><li data-type='method' style='display: none;'><a href="Color.html#.fromCartesian3">fromCartesian3</a></li><li data-type='method' style='display: none;'><a href="Color.html#.fromCssColorWithAlpha">fromCssColorWithAlpha</a></li><li data-type='method' style='display: none;'><a href="Color.html#.packArrayToBytes">packArrayToBytes</a></li><li data-type='method' style='display: none;'><a href="Color.html#.packToBytes">packToBytes</a></li><li data-type='method' style='display: none;'><a href="Color.html#.unpackArrayFromBytes">unpackArrayFromBytes</a></li><li data-type='method' style='display: none;'><a href="Color.html#.unpackFromBytes">unpackFromBytes</a></li></ul></li><li><a href="DistanceDisplayCondition.html">DistanceDisplayCondition</a><ul class='methods'><li data-type='method' style='display: none;'><a href="DistanceDisplayCondition.html#isDisplay">isDisplay</a></li><li data-type='method' style='display: none;'><a href="DistanceDisplayCondition.html#.isDisplay">isDisplay</a></li></ul></li><li><a href="Ellipsoid.html">Ellipsoid</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Ellipsoid.html#rayPosition">rayPosition</a></li><li data-type='method' style='display: none;'><a href="Ellipsoid.html#scaleGeodeticHeightOffset">scaleGeodeticHeightOffset</a></li><li data-type='method' style='display: none;'><a href="Ellipsoid.html#scaleToGeodeticHeight">scaleToGeodeticHeight</a></li></ul></li><li><a href="GeographicTransform.html">GeographicTransform</a><ul class='methods'><li data-type='method' style='display: none;'><a href="GeographicTransform.html#getGeographic">getGeographic</a></li><li data-type='method' style='display: none;'><a href="GeographicTransform.html#getPosition">getPosition</a></li><li data-type='method' style='display: none;'><a href="GeographicTransform.html#onDestroy">onDestroy</a></li><li data-type='method' style='display: none;'><a href="GeographicTransform.html#setGeographic">setGeographic</a></li><li data-type='method' style='display: none;'><a href="GeographicTransform.html#setPosition">setPosition</a></li><li data-type='method' style='display: none;'><a href="GeographicTransform.html#setTransforms">setTransforms</a></li><li data-type='method' style='display: none;'><a href="GeographicTransform.html#translateAltitude">translateAltitude</a></li><li data-type='method' style='display: none;'><a href="GeographicTransform.html#translateLatitude">translateLatitude</a></li><li data-type='method' style='display: none;'><a href="GeographicTransform.html#translateLongitude">translateLongitude</a></li><li data-type='method' style='display: none;'><a href="GeographicTransform.html#update">update</a></li><li data-type='method' style='display: none;'><a href="GeographicTransform.html#updateMatrix">updateMatrix</a></li></ul></li><li><a href="Geometry.html">Geometry</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Geometry.html#clone">clone</a></li><li data-type='method' style='display: none;'><a href="Geometry.html#getBoundingSphere">getBoundingSphere</a></li><li data-type='method' style='display: none;'><a href="Geometry.html#toWireframe">toWireframe</a></li><li data-type='method' style='display: none;'><a href="Geometry.html#.clone">clone</a></li><li data-type='method' style='display: none;'><a href="Geometry.html#.toWireframe">toWireframe</a></li></ul></li><li><a href="Globe.html">Globe</a><ul class='members'><li data-type='member' style='display: none;'><a href="Globe.html#.terrainAnalysis">terrainAnalysis</a></li></ul></li><li><a href="GlobeSurfaceTileProvider.html">GlobeSurfaceTileProvider</a><ul class='members'><li data-type='member' style='display: none;'><a href="GlobeSurfaceTileProvider.html#.terrainAnalysis">terrainAnalysis</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="GlobeSurfaceTileProvider.html#showTilesToRenderFrame">showTilesToRenderFrame</a></li></ul></li><li><a href="GroundPolylinePrimitive.html">GroundPolylinePrimitive</a><ul class='methods'><li data-type='method' style='display: none;'><a href="GroundPolylinePrimitive.html#getBoundingSphere">getBoundingSphere</a></li></ul></li><li><a href="GroundPrimitive.html">GroundPrimitive</a><ul class='methods'><li data-type='method' style='display: none;'><a href="GroundPrimitive.html#getBoundingSphere">getBoundingSphere</a></li></ul></li><li><a href="HeadingPitchRoll.html">HeadingPitchRoll</a><ul class='members'><li data-type='member' style='display: none;'><a href="HeadingPitchRoll.html#.ZERO">ZERO</a></li><li data-type='member' style='display: none;'><a href="HeadingPitchRoll.html#.headingDegrees">headingDegrees</a></li><li data-type='member' style='display: none;'><a href="HeadingPitchRoll.html#.packedLength">packedLength</a></li><li data-type='member' style='display: none;'><a href="HeadingPitchRoll.html#.pitchDegrees">pitchDegrees</a></li><li data-type='member' style='display: none;'><a href="HeadingPitchRoll.html#.rollDegrees">rollDegrees</a></li><li data-type='member' style='display: none;'><a href="HeadingPitchRoll.html#.yaw">yaw</a></li><li data-type='member' style='display: none;'><a href="HeadingPitchRoll.html#.yawDegrees">yawDegrees</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#inverse">inverse</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#toDegrees">toDegrees</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#toEuler">toEuler</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#toEulerDegrees">toEulerDegrees</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#toQuaternion">toQuaternion</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#.fromRadians">fromRadians</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#.fromRotationMatrix">fromRotationMatrix</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#.inverse">inverse</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#.pack">pack</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#.packArray">packArray</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#.toDegrees">toDegrees</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#.toEuler">toEuler</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#.toEulerDegrees">toEulerDegrees</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#.toQuaternion">toQuaternion</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#.unpack">unpack</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#.unpackArray">unpackArray</a></li></ul></li><li><a href="JulianDate.html">JulianDate</a><ul class='methods'><li data-type='method' style='display: none;'><a href="JulianDate.html#toDate">toDate</a></li><li data-type='method' style='display: none;'><a href="JulianDate.html#toGregorianDate">toGregorianDate</a></li></ul></li><li><a href="Label.html">Label</a><ul class='members'><li data-type='member' style='display: none;'><a href="Label.html#.isLabel">isLabel</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="Label.html#_removeFromCollection">_removeFromCollection</a></li></ul></li><li><a href="LabelCollection.html">LabelCollection</a><ul class='methods'><li data-type='method' style='display: none;'><a href="LabelCollection.html#getBoundingSphere">getBoundingSphere</a></li></ul></li><li><a href="Material.html">Material</a><ul class='members'><li data-type='member' style='display: none;'><a href="Material.html#.BasicImageType">BasicImageType</a></li><li data-type='member' style='display: none;'><a href="Material.html#.ConverageAreaType">ConverageAreaType</a></li><li data-type='member' style='display: none;'><a href="Material.html#.ImageTransformType">ImageTransformType</a></li><li data-type='member' style='display: none;'><a href="Material.html#.PolylineTrailType">PolylineTrailType</a></li></ul></li><li><a href="MaterialProperty.html">MaterialProperty</a><ul class='methods'><li data-type='method' style='display: none;'><a href="MaterialProperty.html#.fromMaterial">fromMaterial</a></li><li data-type='method' style='display: none;'><a href="MaterialProperty.html#.fromType">fromType</a></li></ul></li><li><a href="Matrix3.html">Matrix3</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Matrix3.html#getColumn">getColumn</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#getHeadingPitchRoll">getHeadingPitchRoll</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#getQuaternion">getQuaternion</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#getRotation">getRotation</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#getRow">getRow</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#getScale">getScale</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#setHeadingPitchRoll">setHeadingPitchRoll</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#setQuaternion">setQuaternion</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#setRotation">setRotation</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#setScale">setScale</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#toArray">toArray</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#.getHeadingPitchRoll">getHeadingPitchRoll</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#.getQuaternion">getQuaternion</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#.setHeadingPitchRoll">setHeadingPitchRoll</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#.setQuaternion">setQuaternion</a></li></ul></li><li><a href="Matrix4.html">Matrix4</a><ul class='members'><li data-type='member' style='display: none;'><a href="Matrix4.html#.getRotationMatrix">getRotationMatrix</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="Matrix4.html#getColumn">getColumn</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#getEuler">getEuler</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#getHeadingPitchRoll">getHeadingPitchRoll</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#getQuaternion">getQuaternion</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#getRotation">getRotation</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#getRow">getRow</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#getScale">getScale</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#getTranslation">getTranslation</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#getTranslationRotationScale">getTranslationRotationScale</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#setEuler">setEuler</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#setHeadingPitchRoll">setHeadingPitchRoll</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#setQuaternion">setQuaternion</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#setRotation">setRotation</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#setScale">setScale</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#setTranslation">setTranslation</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#toArray">toArray</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.fromHeadingPitchRoll">fromHeadingPitchRoll</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.fromQuaternion">fromQuaternion</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.getEuler">getEuler</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.getHeadingPitchRoll">getHeadingPitchRoll</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.getQuaternion">getQuaternion</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.getTranslationRotationScale">getTranslationRotationScale</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.multiplyByEuler">multiplyByEuler</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.multiplyByHeadingPitchRoll">multiplyByHeadingPitchRoll</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.multiplyByQuaternion">multiplyByQuaternion</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.multiplyByRotation">multiplyByRotation</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.setEuler">setEuler</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.setHeadingPitchRoll">setHeadingPitchRoll</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.setQuaternion">setQuaternion</a></li></ul></li><li><a href="ModelMatrixTransforms.html">ModelMatrixTransforms</a><ul class='methods'><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#getActualPosition">getActualPosition</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#getAttitude">getAttitude</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#getEuler">getEuler</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#getGeographic">getGeographic</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#getPosition">getPosition</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#getRotation">getRotation</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#getScale">getScale</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#getTranslation">getTranslation</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#onDestroy">onDestroy</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#onModelMatrixChanged">onModelMatrixChanged</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#raiseModelMatrixChangeEvent">raiseModelMatrixChangeEvent</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#rotate">rotate</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#rotateByEuler">rotateByEuler</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#rotateHeading">rotateHeading</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#rotateOnAxis">rotateOnAxis</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#rotatePitch">rotatePitch</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#rotateRoll">rotateRoll</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#rotateX">rotateX</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#rotateY">rotateY</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#rotateZ">rotateZ</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#setAttitude">setAttitude</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#setEuler">setEuler</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#setGeographic">setGeographic</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#setPosition">setPosition</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#setRotation">setRotation</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#setScale">setScale</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#setTransforms">setTransforms</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#setTranslation">setTranslation</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#translate">translate</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#translateAltitude">translateAltitude</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#translateLatitude">translateLatitude</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#translateLongitude">translateLongitude</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#translateOnAxis">translateOnAxis</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#translateX">translateX</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#translateY">translateY</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#translateZ">translateZ</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#update">update</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#updateModelMatrix">updateModelMatrix</a></li></ul></li><li><a href="Plane.html">Plane</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Plane.html#clone">clone</a></li><li data-type='method' style='display: none;'><a href="Plane.html#.fromCoplanarPoints">fromCoplanarPoints</a></li></ul></li><li><a href="PointPrimitive.html">PointPrimitive</a><ul class='members'><li data-type='member' style='display: none;'><a href="PointPrimitive.html#.isPointPrimitive">isPointPrimitive</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="PointPrimitive.html#_removeFromCollection">_removeFromCollection</a></li></ul></li><li><a href="PointPrimitiveCollection.html">PointPrimitiveCollection</a><ul class='methods'><li data-type='method' style='display: none;'><a href="PointPrimitiveCollection.html#getBoundingSphere">getBoundingSphere</a></li></ul></li><li><a href="PolylinePipeline.html">PolylinePipeline</a><ul class='methods'><li data-type='method' style='display: none;'><a href="PolylinePipeline.html#.computeLength">computeLength</a></li><li data-type='method' style='display: none;'><a href="PolylinePipeline.html#.computeSurfaceLength">computeSurfaceLength</a></li></ul></li><li><a href="PostProcessStage.html">PostProcessStage</a><ul class='methods'><li data-type='method' style='display: none;'><a href="PostProcessStage.html#setOptions">setOptions</a></li><li data-type='method' style='display: none;'><a href="PostProcessStage.html#.stage.addCircle">stage.addCircle</a></li><li data-type='method' style='display: none;'><a href="PostProcessStage.html#.stage.removeAllCircles">stage.removeAllCircles</a></li><li data-type='method' style='display: none;'><a href="PostProcessStage.html#.stage.removeCircleAt">stage.removeCircleAt</a></li></ul></li><li><a href="PostProcessStageLibrary.html">PostProcessStageLibrary</a><ul class='methods'><li data-type='method' style='display: none;'><a href="PostProcessStageLibrary.html#.createCircleScanStage">createCircleScanStage</a></li><li data-type='method' style='display: none;'><a href="PostProcessStageLibrary.html#.createExp2FogStage">createExp2FogStage</a></li><li data-type='method' style='display: none;'><a href="PostProcessStageLibrary.html#.createFogStage">createFogStage</a></li><li data-type='method' style='display: none;'><a href="PostProcessStageLibrary.html#.createHighlightStage">createHighlightStage</a></li><li data-type='method' style='display: none;'><a href="PostProcessStageLibrary.html#.createNearFarScalarFogStage">createNearFarScalarFogStage</a></li><li data-type='method' style='display: none;'><a href="PostProcessStageLibrary.html#.createSkylineState">createSkylineState</a></li></ul></li><li><a href="Primitive.html">Primitive</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Primitive.html#getBoundingSphere">getBoundingSphere</a></li></ul></li><li><a href="Property.html">Property</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Property.html#.getValue">getValue</a></li><li data-type='method' style='display: none;'><a href="Property.html#.isProperty">isProperty</a></li></ul></li><li><a href="PropertyChangedListener.html">PropertyChangedListener</a><ul class='methods'><li data-type='method' style='display: none;'><a href="PropertyChangedListener.html#onDestroy">onDestroy</a></li><li data-type='method' style='display: none;'><a href="PropertyChangedListener.html#onPropertyValueChanged">onPropertyValueChanged</a></li><li data-type='method' style='display: none;'><a href="PropertyChangedListener.html#raisePropertyChangeEvent">raisePropertyChangeEvent</a></li></ul></li><li><a href="Quaternion.html">Quaternion</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Quaternion.html#toHeadingPitchRoll">toHeadingPitchRoll</a></li><li data-type='method' style='display: none;'><a href="Quaternion.html#.fromDegrees">fromDegrees</a></li><li data-type='method' style='display: none;'><a href="Quaternion.html#.fromRadians">fromRadians</a></li><li data-type='method' style='display: none;'><a href="Quaternion.html#.multiplyByVector">multiplyByVector</a></li></ul></li><li><a href="Rectangle.html">Rectangle</a><ul class='members'><li data-type='member' style='display: none;'><a href="Rectangle.html#.center">center</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.centerGeographic">centerGeographic</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.centreHeightInMeters">centreHeightInMeters</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.centreWidthInMeters">centreWidthInMeters</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.eastDegrees">eastDegrees</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.eastHeightInMeters">eastHeightInMeters</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.heightInDegrees">heightInDegrees</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.heightInMeters">heightInMeters</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.northDegrees">northDegrees</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.northWidthInMeters">northWidthInMeters</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.northeast">northeast</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.northwest">northwest</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.southDegrees">southDegrees</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.southWidthInMeters">southWidthInMeters</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.southeast">southeast</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.southwest">southwest</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.westDegrees">westDegrees</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.westHeightInMeters">westHeightInMeters</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.widthInDegrees">widthInDegrees</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.widthInMeters">widthInMeters</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="Rectangle.html#containsCartographicPoint">containsCartographicPoint</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#containsGeographicPoint">containsGeographicPoint</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#containsPoint">containsPoint</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#toDegrees">toDegrees</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.computeCentreHeightInMeters">computeCentreHeightInMeters</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.computeCentreWidthInMeters">computeCentreWidthInMeters</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.computeEastHeightInMeters">computeEastHeightInMeters</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.computeNorthWidthInMeters">computeNorthWidthInMeters</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.computeRectangleCartographics">computeRectangleCartographics</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.computeRectangleGeographics">computeRectangleGeographics</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.computeRectanglePositions">computeRectanglePositions</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.computeSouthWidthInMeters">computeSouthWidthInMeters</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.computeWestHeightInMeters">computeWestHeightInMeters</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.containsCartographicPoint">containsCartographicPoint</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.containsGeographicPoint">containsGeographicPoint</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.containsPoint">containsPoint</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.fromCenterDimensions">fromCenterDimensions</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.fromCenterWidthHeight">fromCenterWidthHeight</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.fromGeographicArray">fromGeographicArray</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.fromRectangles">fromRectangles</a></li></ul></li><li><a href="SceneTransforms.html">SceneTransforms</a><ul class='methods'><li data-type='method' style='display: none;'><a href="SceneTransforms.html#.cartesianToEyeCoordinates">cartesianToEyeCoordinates</a></li><li data-type='method' style='display: none;'><a href="SceneTransforms.html#.cartesianToNDC">cartesianToNDC</a></li><li data-type='method' style='display: none;'><a href="SceneTransforms.html#.ndcToWorldCoordinates">ndcToWorldCoordinates</a></li></ul></li><li><a href="Spherical.html">Spherical</a><ul class='members'><li data-type='member' style='display: none;'><a href="Spherical.html#.clockDegrees">clockDegrees</a></li><li data-type='member' style='display: none;'><a href="Spherical.html#.coneDegrees">coneDegrees</a></li></ul></li><li><a href="StTransforms.html">StTransforms</a><ul class='methods'><li data-type='method' style='display: none;'><a href="StTransforms.html#onDestroy">onDestroy</a></li><li data-type='method' style='display: none;'><a href="StTransforms.html#onStTransformChanged">onStTransformChanged</a></li><li data-type='method' style='display: none;'><a href="StTransforms.html#raiseStTransformChangeEvent">raiseStTransformChangeEvent</a></li><li data-type='method' style='display: none;'><a href="StTransforms.html#setTransforms">setTransforms</a></li><li data-type='method' style='display: none;'><a href="StTransforms.html#update">update</a></li><li data-type='method' style='display: none;'><a href="StTransforms.html#updateTransform">updateTransform</a></li></ul></li><li><a href="TranslationRotationScaleTransform.html">TranslationRotationScaleTransform</a><ul class='methods'><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#getAttitude">getAttitude</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#getEuler">getEuler</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#getRotation">getRotation</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#getScale">getScale</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#getTranslation">getTranslation</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#onDestroy">onDestroy</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#rotate">rotate</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#rotateByEuler">rotateByEuler</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#rotateHeading">rotateHeading</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#rotateOnAxis">rotateOnAxis</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#rotatePitch">rotatePitch</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#rotateRoll">rotateRoll</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#rotateX">rotateX</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#rotateY">rotateY</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#rotateZ">rotateZ</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#setAttitude">setAttitude</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#setEuler">setEuler</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#setRotation">setRotation</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#setScale">setScale</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#setTransforms">setTransforms</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#setTranslation">setTranslation</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#translate">translate</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#translateOnAxis">translateOnAxis</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#translateX">translateX</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#translateY">translateY</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#translateZ">translateZ</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#update">update</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#updateMatrix">updateMatrix</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#APPEARANCE">APPEARANCE</a></li><li><a href="global.html#ATTRIBUTE">ATTRIBUTE</a></li><li><a href="global.html#BooleanGeometryInstanceAttribute">BooleanGeometryInstanceAttribute</a></li><li><a href="global.html#CAMERA">CAMERA</a></li><li><a href="global.html#Cartesian3GeometryInstanceAttribute">Cartesian3GeometryInstanceAttribute</a></li><li><a href="global.html#FILLAPPEARANCE">FILLAPPEARANCE</a></li><li><a href="global.html#FILLGEOMETRY">FILLGEOMETRY</a></li><li><a href="global.html#FILLPRIMITIVE">FILLPRIMITIVE</a></li><li><a href="global.html#FloatGeometryInstanceAttribute">FloatGeometryInstanceAttribute</a></li><li><a href="global.html#FogType">FogType</a></li><li><a href="global.html#GEOMETRY">GEOMETRY</a></li><li><a href="global.html#Geographic">Geographic</a></li><li><a href="global.html#MATERIAL">MATERIAL</a></li><li><a href="global.html#MODELMATRIX">MODELMATRIX</a></li><li><a href="global.html#NONE">NONE</a></li><li><a href="global.html#OUTLINEGEOMETRY">OUTLINEGEOMETRY</a></li><li><a href="global.html#PRIMITIVE">PRIMITIVE</a></li><li><a href="global.html#PropertyType">PropertyType</a></li><li><a href="global.html#RotationFrameType">RotationFrameType</a></li><li><a href="global.html#TEXT3D">TEXT3D</a></li><li><a href="global.html#altitude">altitude</a></li><li><a href="global.html#componentDatatype">componentDatatype</a></li><li><a href="global.html#componentsPerAttribute">componentsPerAttribute</a></li><li><a href="global.html#computeCirclePositions">computeCirclePositions</a></li><li><a href="global.html#computeCircleRadius">computeCircleRadius</a></li><li><a href="global.html#computeModelMatrix">computeModelMatrix</a></li><li><a href="global.html#computeStTransform">computeStTransform</a></li><li><a href="global.html#createGeometry">createGeometry</a></li><li><a href="global.html#createPointCloudGeometry">createPointCloudGeometry</a></li><li><a href="global.html#decompose">decompose</a></li><li><a href="global.html#getAttributeComponentType">getAttributeComponentType</a></li><li><a href="global.html#getGeometryInstanceAttributes">getGeometryInstanceAttributes</a></li><li><a href="global.html#getPositionFromTarget">getPositionFromTarget</a></li><li><a href="global.html#getRenderState">getRenderState</a></li><li><a href="global.html#height">height</a></li><li><a href="global.html#isColorMaterial">isColorMaterial</a></li><li><a href="global.html#isTranslucent">isTranslucent</a></li><li><a href="global.html#latitude">latitude</a></li><li><a href="global.html#longitude">longitude</a></li><li><a href="global.html#normalize">normalize</a></li><li><a href="global.html#parseAltitude">parseAltitude</a></li><li><a href="global.html#parseArcType">parseArcType</a></li><li><a href="global.html#parseAttitudeToHeadingPitchRoll">parseAttitudeToHeadingPitchRoll</a></li><li><a href="global.html#parseAttitudeToMatrix3">parseAttitudeToMatrix3</a></li><li><a href="global.html#parseAttitudeToQuaternion">parseAttitudeToQuaternion</a></li><li><a href="global.html#parseCartographicToCartesian">parseCartographicToCartesian</a></li><li><a href="global.html#parseCartographicsToPositions">parseCartographicsToPositions</a></li><li><a href="global.html#parseClassificationType">parseClassificationType</a></li><li><a href="global.html#parseClockRange">parseClockRange</a></li><li><a href="global.html#parseColorBlendMode">parseColorBlendMode</a></li><li><a href="global.html#parseCornerType">parseCornerType</a></li><li><a href="global.html#parseCullFace">parseCullFace</a></li><li><a href="global.html#parseEulerToHeadingPitchRoll">parseEulerToHeadingPitchRoll</a></li><li><a href="global.html#parseEulerToQuaternion">parseEulerToQuaternion</a></li><li><a href="global.html#parseGeographicToCartesian">parseGeographicToCartesian</a></li><li><a href="global.html#parseGeographicsToPositions">parseGeographicsToPositions</a></li><li><a href="global.html#parseHeading">parseHeading</a></li><li><a href="global.html#parseHeightReference">parseHeightReference</a></li><li><a href="global.html#parseHoles">parseHoles</a></li><li><a href="global.html#parseHorizontalOrigin">parseHorizontalOrigin</a></li><li><a href="global.html#parseLabelStyle">parseLabelStyle</a></li><li><a href="global.html#parseLatitude">parseLatitude</a></li><li><a href="global.html#parseLongitude">parseLongitude</a></li><li><a href="global.html#parsePitch">parsePitch</a></li><li><a href="global.html#parseRoll">parseRoll</a></li><li><a href="global.html#parseRotationToHeadingPitchRoll">parseRotationToHeadingPitchRoll</a></li><li><a href="global.html#parseRotationToMatrix3">parseRotationToMatrix3</a></li><li><a href="global.html#parseRotationToQuaternion">parseRotationToQuaternion</a></li><li><a href="global.html#parseShadowMode">parseShadowMode</a></li><li><a href="global.html#parseToBoundingRectangle">parseToBoundingRectangle</a></li><li><a href="global.html#parseToCartesian2">parseToCartesian2</a></li><li><a href="global.html#parseToCartesian3">parseToCartesian3</a></li><li><a href="global.html#parseToCartesian3Array">parseToCartesian3Array</a></li><li><a href="global.html#parseToCartesian4">parseToCartesian4</a></li><li><a href="global.html#parseToCartographic">parseToCartographic</a></li><li><a href="global.html#parseToColor">parseToColor</a></li><li><a href="global.html#parseToDistanceDisplayCondition">parseToDistanceDisplayCondition</a></li><li><a href="global.html#parseToGeographic">parseToGeographic</a></li><li><a href="global.html#parseToHeadingPitchRange">parseToHeadingPitchRange</a></li><li><a href="global.html#parseToJulianDate">parseToJulianDate</a></li><li><a href="global.html#parseToNearFarScalar">parseToNearFarScalar</a></li><li><a href="global.html#parseToPlane">parseToPlane</a></li><li><a href="global.html#parseToPolygonHierarchy">parseToPolygonHierarchy</a></li><li><a href="global.html#parseToRange">parseToRange</a></li><li><a href="global.html#parseToRectangle">parseToRectangle</a></li><li><a href="global.html#parseToTimeInterval">parseToTimeInterval</a></li><li><a href="global.html#parseVerticalOrigin">parseVerticalOrigin</a></li><li><a href="global.html#resolveModelMatrixByFixedFrame">resolveModelMatrixByFixedFrame</a></li><li><a href="global.html#threeGeometryToCesiumGeometry">threeGeometryToCesiumGeometry</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">additions/Geographic.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Cartesian3, Cartographic, Math as CesiumMath, Check, defined, EllipsoidGeodesic } from "cesium";
+import Scratch from "../utils/Scratch.js";
+
+/**
+ * 因Cesium的Cartographic对象保存的经纬度值是Radius，而不是常用的Degrees，使用起来并不方便，
+ * 所以自定义了一个Geographic对象用来保存Degrees值的经纬度。
+ * 同时添加了Geographic、Cartographic、Cartesian3三种对象之间的相互转换方法。
+ * 
+ * @param {number} [longitude = 0] [经度] The longitude, in degrees.
+ * @param {number} [latitude = 0] [纬度] The latitude, in degrees.
+ * @param {number} [altitude = 0] [高度] The altitude, in meters, above the ellipsoid.
+ */
+function Geographic(longitude = 0, latitude = 0, altitude = 0) {
+
+    /**
+     * The longitude, in degrees.
+     * @type {number}
+     * @default 0.0
+     */
+    this.longitude = longitude;
+
+    /**
+     * The latitude, in degrees.
+     * @type {number}
+     * @default 0.0
+     */
+    this.latitude = latitude;
+
+    /**
+     * The altitude, in meters, above the ellipsoid.
+     * @type {number}
+     * @default 0.0
+     */
+    this.altitude = altitude;
+
+};
+
+Object.defineProperties(Geographic.prototype, {
+    /**
+     * height属性，等同于altitude属性
+     * @type {number}
+     * @default 0.0
+     */
+    height: {
+        set: function (value) {
+            this.altitude = value;
+        },
+        get: function () {
+            return this.altitude;
+        }
+    }
+});
+
+/**
+ * 从Degrees经纬度生成Geographic实例
+ * @param  {number} longitude [经度] The longitude, in degrees.
+ * @param  {number} latitude [纬度] The latitude, in degrees.
+ * @param  {number} [altitude = 0] [高度] The altitude, in meters, above the ellipsoid.
+ * @param  {Geographic} [result] 输出结果的Geographic实例
+ * @return {Geographic} 返回修改后的result实例或创建一个新的Geographic实例
+ */
+Geographic.fromDegrees = function (longitude, latitude, altitude = 0, result = new Geographic()) {
+    //>>includeStart('debug', pragmas.debug);
+    Check.typeOf.number('longitude', longitude);
+    Check.typeOf.number('latitude', latitude);
+    //>>includeEnd('debug');
+
+    result.longitude = longitude;
+    result.latitude = latitude;
+    result.altitude = altitude;
+    return result;
+};
+
+/**
+ * 从Radius经纬度生成Geographic实例
+ * @param  {number} longitude [经度] The longitude, in radius.
+ * @param  {number} latitude [纬度] The latitude, in radius.
+ * @param  {number} height [高度] The height, in meters, above the ellipsoid.
+ * @param  {Geographic} [result] 输出结果的Geographic实例
+ * @return {Geographic} 返回修改后的result实例或创建一个新的Geographic实例
+ */
+Geographic.fromRadians = function (longitude, latitude, height, result) {
+    //>>includeStart('debug', pragmas.debug);
+    Check.typeOf.number('longitude', longitude);
+    Check.typeOf.number('latitude', latitude);
+    //>>includeEnd('debug');
+    longitude = CesiumMath.toDegrees(longitude);
+    latitude = CesiumMath.toDegrees(latitude);
+
+    return Geographic.fromDegrees(longitude, latitude, height, result);
+};
+
+/**
+ * 从Cartographic实例生成Geographic实例
+ * @param  {Cartographic} cartographic Cartographic实例
+ * @param  {Geographic} [result] 输出结果的Geographic实例
+ * @return {Geographic} 返回修改后的result实例或创建一个新的Geographic实例
+ */
+Geographic.fromCartographic = function (cartographic, result = new Geographic()) {
+    //>>includeStart('debug', pragmas.debug);
+    Check.defined('cartographic', cartographic);
+    //>>includeEnd('debug');
+
+    result.longitude = CesiumMath.toDegrees(cartographic.longitude);
+    result.latitude = CesiumMath.toDegrees(cartographic.latitude);
+    result.height = cartographic.height;
+    return result;
+};
+
+/**
+ * 从Cartographic实例数组生成Geographic实例数组
+ * @param  {Array&lt;Cartographic>} cartographics Cartographic实例数组
+ * @param  {Array} [result] 输出结果的Geographic实例数组
+ * @return {Array&lt;Geographic>} 返回修改后的result实例数组或创建一个新的Geographic实例数组
+ */
+Geographic.fromCartographicArray = function (cartographics, result = []) {
+    //>>includeStart('debug', pragmas.debug);
+    Check.typeOf.array('cartographics', cartographics);
+    //>>includeEnd('debug');
+
+    for (let i = 0; i &lt; cartographics.length; i++) {
+        result[i] = Geographic.fromCartographic(cartographics[i], result[i]);
+    }
+    return result;
+};
+
+/**
+ * 将Geographic实例转换为Cartographic实例
+ * @param  {Geographic} geographic Geographic实例
+ * @param  {Cartographic} [result] 输出结果的Cartographic实例
+ * @return {Cartographic} 返回修改后的result实例或创建一个新的Cartographic实例
+ */
+Geographic.toCartographic = function (geographic, result) {
+    return Cartographic.fromGeographic(geographic, result);
+};
+
+/**
+ * 将当前Geographic实例转换为Cartographic实例
+ * @see Geographic.toCartographic
+ */
+Geographic.prototype.toCartographic = function (result) {
+    return Geographic.toCartographic(this, result);
+};
+
+/**
+ * 将Geographic实例数组转换为Cartographic实例数组
+ * @param  {Array&lt;Geographic>} geographics Geographic实例数组
+ * @param  {Array} [result] 输出结果的数组
+ * @return {Array&lt;Geographic>} 返回修改后的result实例数组或创建一个新的Cartographic实例数组
+ */
+Geographic.toCartographicArray = function (geographics, result) {
+    return Cartographic.fromGeographicArray(geographics, result);
+};
+
+/**
+ * 从Cartesian3实例生成Geographic实例
+ * @param  {Cartesian3} cartesian Cartesian3实例
+ * @param  {Ellipsoid} [ellipsoid=Ellipsoid.default] 椭球体，默认为WGS84椭球体
+ * @param  {Geographic} [result] 输出结果的Geographic实例
+ * @return {Geographic} 返回修改后的result实例或创建一个新的Geographic实例
+ */
+Geographic.fromCartesian = function (cartesian, ellipsoid, result) {
+    //>>includeStart('debug', pragmas.debug);
+    Check.defined('cartesian', cartesian);
+    //>>includeEnd('debug');
+    const cartographic = Cartographic.fromCartesian(cartesian, ellipsoid, Scratch.scratchCartographic);
+    if (defined(cartographic))
+        return Geographic.fromCartographic(cartographic, result);
+};
+
+/**
+ * 从Cartesian3实例数组生成Geographic实例数组
+ * @param  {Array&lt;Cartesian3>} cartesians Cartesian3实例数组
+ * @param  {Ellipsoid} [ellipsoid=Ellipsoid.default] 椭球体，默认为WGS84椭球体
+ * @param  {Array} [result] 输出结果的数组
+ * @return {Array&lt;Geographic>} 返回修改后的result实例数组或创建一个新的Geographic实例数组
+ */
+Geographic.fromCartesianArray = function (cartesians, ellipsoid, result = []) {
+    //>>includeStart('debug', pragmas.debug);
+    Check.typeOf.array('cartesians', cartesians);
+    //>>includeEnd('debug');
+
+    for (let i = 0; i &lt; cartesians.length; i++) {
+        result[i] = Geographic.fromCartesian(cartesians[i], ellipsoid, result[i]);
+    }
+
+    return result;
+};
+
+/**
+ * 将Geographic转换为Cartesian3实例
+ * @param  {Geographic} geographic Geographic实例
+ * @param  {Ellipsoid} [ellipsoid=Ellipsoid.default] 椭球体，默认为WGS84椭球体
+ * @param  {Cartesian3} [result] 输出结果的Cartesian3实例
+ * @return {Cartesian3} 返回修改后的result实例或创建一个新的Cartesian3实例
+ */
+Geographic.toCartesian = function (geographic, ellipsoid, result) {
+    //>>includeStart('debug', pragmas.debug);
+    Check.defined('geographic', geographic);
+    //>>includeEnd('debug');
+
+    return Cartesian3.fromDegrees(geographic.longitude, geographic.latitude, geographic.altitude, ellipsoid, result);
+};
+
+/**
+ * 将当前Geographic实例转换为Cartesian3实例
+ * @see Geographic.toCartesian
+*/
+Geographic.prototype.toCartesian = function (ellipsoid, result) {
+    return Geographic.toCartesian(this, ellipsoid, result);
+};
+
+/**
+ * 将Geographic实例数组转换为Cartesian3实例数组
+ * @param  {Array&lt;Geographic>} geographics Geographic实例数组
+ * @param  {Ellipsoid} [ellipsoid=Ellipsoid.default] 椭球体，默认为WGS84椭球体
+ * @param  {Array} [result] 输出结果的数组
+ * @return {Array&lt;Cartesian3>} 返回修改后的result实例数组或创建一个新的Cartesian3实例数组
+ */
+Geographic.toCartesianArray = function (geographics, ellipsoid, result) {
+    return Cartesian3.fromGeographicArray(geographics, ellipsoid, result);
+};
+
+/**
+ * 计算两个Geographic实例之间的直线距离
+ * @param  {Geographic} left 第一个Geographic实例
+ * @param  {Geographic} right 第二个Geographic实例
+ * @param  {Ellipsoid} [ellipsoid=Ellipsoid.default] 椭球体，默认为WGS84椭球体
+ * @return {number} 两点之间的直线距离（单位：米）
+ */
+Geographic.distance = function (left, right, ellipsoid) {
+    Check.defined("left", left);
+    Check.defined("right", right);
+
+    const leftCartesian = Geographic.toCartesian(left, ellipsoid, Scratch.scratchLeftCartesian3);
+    const rightCartesian = Geographic.toCartesian(right, ellipsoid, Scratch.scratchRightCartesian3);
+
+    return Cartesian3.distance(leftCartesian, rightCartesian);
+};
+
+/**
+ * 计算当前Geographic实例与另一个Geographic实例之间的直线距离
+ * @see Geographic.distance
+*/
+Geographic.prototype.distance = function (other, ellipsoid) {
+    return Geographic.distance(this, other, ellipsoid);
+};
+
+/**
+ * 计算两个Geographic实例间的地表距离（不考虑高度）
+ * @param  {Geographic} left 第一个Geographic实例
+ * @param  {Geographic} right 第二个Geographic实例
+ * @param  {Ellipsoid} [ellipsoid=Ellipsoid.default] 椭球体，默认为WGS84椭球体
+ * @return {number} 两点之间的地表距离（单位：米）
+ */
+Geographic.surfaceDistance = function (left, right, ellipsoid) {
+    Check.defined("left", left);
+    Check.defined("right", right);
+
+    const start = Geographic.toCartographic(left, Scratch.scratchLeftCartographic);
+    const end = Geographic.toCartographic(right, Scratch.scratchRightCartographic);
+
+    return new EllipsoidGeodesic(start, end, ellipsoid).surfaceDistance;
+};
+
+/**
+ * 计算当前Geographic实例与另一个Geographic实例之间的地表距离（不考虑高度）
+ * @see Geographic.surfaceDistance
+ */
+Geographic.prototype.surfaceDistance = function (other, ellipsoid) {
+    return Geographic.surfaceDistance(this, other, ellipsoid);
+};
+
+/**
+ * Geographic实例沿地表向正北方向移动一定距离（不考虑高度）
+ * @param  {Geographic} geographic Geographic实例
+ * @param  {number} distance 移动的距离（单位：米）
+ * @param  {Ellipsoid} [ellipsoid=Ellipsoid.default] 椭球体，默认为WGS84椭球体
+ * @param  {Geographic} [result] 输出结果的Geographic实例
+ * @return {Geographic} 返回修改后的result实例或创建一个新的Geographic实例
+ */
+Geographic.moveToNorth = function (geographic, distance, ellipsoid, result) {
+    Check.defined('geographic', geographic);
+    Check.typeOf.number('distance', distance);
+
+    const cartographic = Cartographic.fromGeographic(geographic, Scratch.scratchCartographic);
+    cartographic.moveToNorth(distance, ellipsoid);
+    return cartographic.toGeographic(result);
+};
+
+/**
+ * 当前Geographic实例沿地表向正北方向移动一定距离（不考虑高度）
+ * @see Geographic.moveToNorth
+*/
+Geographic.prototype.moveToNorth = function (distance, ellipsoid, result) {
+    return Geographic.moveToNorth(this, distance, ellipsoid, result ? result : this);
+};
+
+/**
+ * Geographic实例沿地表向正南方向移动一定距离（不考虑高度）
+ * @param  {Geographic} geographic Geographic实例
+ * @param  {number} distance 移动的距离（单位：米）
+ * @param  {Ellipsoid} [ellipsoid=Ellipsoid.default] 椭球体，默认为WGS84椭球体
+ * @param  {Geographic} [result] 输出结果的Geographic实例
+ * @return {Geographic} 返回修改后的result实例或创建一个新的Geographic实例
+ */
+Geographic.moveToSouth = function (geographic, distance, ellipsoid, result) {
+    Check.defined('geographic', geographic);
+    Check.typeOf.number('distance', distance);
+
+    const cartographic = Cartographic.fromGeographic(geographic, Scratch.scratchCartographic);
+    cartographic.moveToSouth(distance, ellipsoid);
+    return cartographic.toGeographic(result);
+};
+
+/**
+ * 当前Geographic实例沿地表向正南方向移动一定距离（不考虑高度）
+ * @see Geographic.moveToSouth
+*/
+Geographic.prototype.moveToSouth = function (distance, ellipsoid, result) {
+    return Geographic.moveToSouth(this, distance, ellipsoid, result ? result : this);
+};
+
+/**
+ * Geographic实例沿地表向正东方向移动一定距离（不考虑高度）
+ * @param  {Geographic} geographic Geographic实例
+ * @param  {number} distance 移动的距离（单位：米）
+ * @param  {Ellipsoid} [ellipsoid=Ellipsoid.default] 椭球体，默认为WGS84椭球体
+ * @param  {Geographic} [result] 输出结果的Geographic实例
+ * @return {Geographic} 返回修改后的result实例或创建一个新的Geographic实例
+ */
+Geographic.moveToEast = function (geographic, distance, ellipsoid, result) {
+    Check.defined('geographic', geographic);
+    Check.typeOf.number('distance', distance);
+
+    const cartographic = Cartographic.fromGeographic(geographic, Scratch.scratchCartographic);
+    cartographic.moveToEast(distance, ellipsoid);
+    return cartographic.toGeographic(result);
+};
+
+/**
+ * 当前Geographic实例沿地表向正东方向移动一定距离（不考虑高度）
+ * @see Geographic.moveToEast
+*/
+Geographic.prototype.moveToEast = function (distance, ellipsoid, result) {
+    return Geographic.moveToEast(this, distance, ellipsoid, result ? result : this);
+};
+
+/**
+ * Geographic实例沿地表向正西方向移动一定距离（不考虑高度）
+ * @param  {Geographic} geographic Geographic实例
+ * @param  {number} distance 移动的距离（单位：米）
+ * @param  {Ellipsoid} [ellipsoid=Ellipsoid.default] 椭球体，默认为WGS84椭球体
+ * @param  {Geographic} [result] 输出结果的Geographic实例
+ * @return {Geographic} 返回修改后的result实例或创建一个新的Geographic实例
+ */
+Geographic.moveToWest = function (geographic, distance, ellipsoid, result) {
+    Check.defined('geographic', geographic);
+    Check.typeOf.number('distance', distance);
+
+    const cartographic = Cartographic.fromGeographic(geographic, Scratch.scratchCartographic);
+    cartographic.moveToWest(distance, ellipsoid);
+    return cartographic.toGeographic(result);
+};
+
+/**
+ * 当前Geographic实例沿地表向正西方向移动一定距离（不考虑高度）
+ * @see Geographic.moveToWest
+*/
+Geographic.prototype.moveToWest = function (distance, ellipsoid, result) {
+    return Geographic.moveToWest(this, distance, ellipsoid, result ? result : this);
+};
+
+/**
+ * 克隆Geographic实例
+ * @param  {Geographic} geographic Geographic实例
+ * @param  {Geographic} [result] 输出结果的Geographic实例
+ * @return {Geographic} 返回修改后的result实例或创建一个新的Geographic实例
+ */
+Geographic.clone = function (geographic, result = new Geographic()) {
+    Check.defined('geographic', geographic);
+
+    result.longitude = geographic.longitude;
+    result.latitude = geographic.latitude;
+    result.altitude = geographic.altitude;
+    return result;
+};
+
+/**
+ * 克隆当前Geographic实例
+ * @see Geographic.clone
+*/
+Geographic.prototype.clone = function (result) {
+    return Geographic.clone(this, result);
+};
+
+/**
+ * 判断两个Geographic实例是否相等
+ * @param  {Geographic} left 第一个Geographic实例
+ * @param  {Geographic} right 第二个Geographic实例
+ * @return {boolean} 返回判断结果
+ */
+Geographic.equals = function (left, right) {
+    return (left === right) ||
+        ((defined(left)) &amp;&amp;
+            (defined(right)) &amp;&amp;
+            (left.longitude === right.longitude) &amp;&amp;
+            (left.latitude === right.latitude) &amp;&amp;
+            (left.altitude === right.altitude));
+};
+
+/**
+ * 当前Geographic实例是否与另一个Geographic实例相等
+ * @see Geographic.equals
+*/
+Geographic.prototype.equals = function (other) {
+    return Geographic.equals(this, other);
+};
+
+/**
+ * 判断两个Geographic实例是否在指定误差范围内相等
+ * @param  {Geographic} left 第一个Geographic实例
+ * @param  {Geographic} right 第二个Geographic实例
+ * @param  {number} [epsilon = 0] 误差范围，默认为0
+ * @return {boolean} 返回判断结果
+ */
+Geographic.equalsEpsilon = function (left, right, epsilon = 0) {
+    return (
+        left === right ||
+        (defined(left) &amp;&amp;
+            defined(right) &amp;&amp;
+            Math.abs(left.longitude - right.longitude) &lt;= epsilon &amp;&amp;
+            Math.abs(left.latitude - right.latitude) &lt;= epsilon &amp;&amp;
+            Math.abs(left.altitude - right.altitude) &lt;= epsilon)
+    );
+};
+
+/**
+ * 当前Geographic实例是否与另一个Geographic实例在指定误差范围内相等
+ * @see Geographic.equalsEpsilon
+*/
+Geographic.prototype.equalsEpsilon = function (other, epsilon) {
+    return Geographic.equalsEpsilon(other, epsilon);
+};
+
+/**
+ * The number of elements used to pack the object into an array.
+ * @type {number}
+*/
+Geographic.packedLength = 3;
+
+/**
+ * 将Geographic实例打包到数组中
+ * @param  {Geographic} value Geographic实例
+ * @param  {Array} [array] 输出结果的数组
+ * @param  {number} [startingIndex = 0] 数组开始索引
+ * @return {Array} 返回修改后的array数组或创建一个新的数组
+ */
+Geographic.pack = function (value, array = [], startingIndex = 0) {
+    //>>includeStart('debug', pragmas.debug);
+    Check.defined("value", value);
+    //>>includeEnd('debug');
+
+    array[startingIndex++] = value.longitude;
+    array[startingIndex++] = value.latitude;
+    array[startingIndex] = value.altitude;
+    return array;
+};
+
+/**
+ * 将数组解包为Geographic实例
+ * @param  {Array} array 输入的数组
+ * @param  {number} [startingIndex = 0] 数组开始索引
+ * @param  {Geographic} [result] 输出结果的Geographic实例
+ * @return {Geographic} 返回修改后的result实例或创建一个新的Geographic实例
+ */
+Geographic.unpack = function (array, startingIndex = 0, result = new Geographic()) {
+    //>>includeStart('debug', pragmas.debug);
+    Check.defined("array", array);
+    //>>includeEnd('debug');
+
+    result.longitude = array[startingIndex++];
+    result.latitude = array[startingIndex++];
+    result.altitude = array[startingIndex];
+    return result;
+};
+
+/**
+ * 从数组生成Geographic实例
+ * @see Geographic.unpack
+*/
+Geographic.fromArray = Geographic.unpack;
+
+/**
+ * 将当前Geographic实例转换为数组
+ * @param  {Array} [array] 输出结果的数组
+ * @param  {number} [startingIndex = 0] 数组开始索引
+ * @return {Array&lt;number>} 返回修改后的array数组或创建一个新的数组
+*/
+Geographic.prototype.toArray = function (array, startingIndex) {
+    return Geographic.unpack(this, array, startingIndex);
+};
+
+/**
+ * 将Geographic实例数组打包到数组中
+ * @param  {Array&lt;Geographic>} geographics Geographic实例数组
+ * @param  {Array} [result] 输出结果的数组
+ * @return {Array&lt;number>} 返回修改后的result数组或创建一个新的数组
+ */
+Geographic.packArray = function (geographics, result = []) {
+    //>>includeStart('debug', pragmas.debug);
+    Check.typeOf.array("geographics", geographics);
+    //>>includeEnd('debug');
+
+    let startingIndex = 0;
+    for (let i = 0; i &lt; geographics.length; i++) {
+        Geographic.pack(geographics[i], result, startingIndex);
+        startingIndex += Geographic.packedLength;
+    }
+    return result;
+};
+
+/**
+ * 将数组解包为Geographic实例数组
+ * @param  {Array&lt;number>} array 输入的数组
+ * @param  {Array} [result] 输出结果的数组
+ * @return {Array&lt;Geographic>} 返回修改后的result数组或创建一个新的数组
+ */
+Geographic.unpackArray = function (array, result = []) {
+    //>>includeStart('debug', pragmas.debug);
+    Check.typeOf.array("array", array);
+    //>>includeEnd('debug');
+
+    result.length = array.length / Geographic.packedLength;
+
+    let startingIndex = 0;
+    for (let i = 0; i &lt; result.length; i++) {
+        result[i] = Geographic.unpack(array, startingIndex);
+        startingIndex += Geographic.packedLength;
+    }
+    return result;
+};
+
+/**
+ * 从数组生成Geographic实例数组
+ * @see Geographic.unpackArray
+*/
+Geographic.fromArray = Geographic.unpackArray;
+
+/**
+ * 将Geographic实例数组打包到二维数组中
+ * @param  {Array&lt;Geographic>} geographics Geographic实例数组
+ * @param  {Array&lt;Array&lt;number>>} [result] 输出结果的二维数组
+ * @return {Array&lt;Array&lt;number>>} 返回修改后的result数组或创建一个新的数组
+ */
+Geographic.pack2DArray = function (geographics, result = []) {
+    Check.typeOf.array('geographics', geographics);
+
+    for (let i = 0; i &lt; geographics.length; i++) {
+        result[i] = Geographic.pack(geographics[i], result[i]);
+    }
+    return result;
+};
+
+/**
+ * 将二维数组解包为Geographic实例数组
+ * @param  {Array&lt;Array&lt;number>>} array 输入的二维数组
+ * @param  {Array} [result] 输出结果的数组
+ * @return {Array&lt;Geographic>} 返回修改后的result数组或创建一个新的数组
+ */
+Geographic.unpack2DArray = function (array, result = []) {
+    //>>includeStart('debug', pragmas.debug);
+    Check.typeOf.array("array", array);
+    //>>includeEnd('debug');
+
+    for (let i = 0; i &lt; array.length; i++) {
+        result[i] = Geographic.unpack(array[i]);
+    }
+    return result;
+};
+
+/**
+ * 从二维数组生成Geographic实例数组
+ * @see Geographic.unpack2DArray
+*/
+Geographic.from2DArray = Geographic.unpack2DArray;
+
+/**
+ * 一个不可修改的，初始化值为(0.0, 0.0, 0.0)的Geographic实例
+ * @type {Geographic}
+ */
+Geographic.ZERO = Object.freeze(new Geographic(0.0, 0.0, 0.0));
+
+/**
+ * 将当前Geographic实例转换为字符串
+ * @returns {string} A string representing this Cartesian in the format 'Geographic(longitude, latitude, altitude)'.
+*/
+Geographic.prototype.toString = function () {
+    return `Geographic(${this.longitude}, ${this.latitude}, ${this.altitude})`;
+};
+
+export default Geographic;
+export { Geographic };
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.5</a> on Wed Oct 14 2026 14:08:50 GMT+0800 (中国标准时间) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+<script src="scripts/collapse.js" defer></script>
+
+
+</body>
+</html>

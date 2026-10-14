@@ -1,0 +1,29 @@
+{
+    "source": {
+        "include": [
+            "src/additions",
+            "src/parses",
+            "src/revisions",
+            "src/utils"
+        ],
+        "exclude": [
+            "src/utils/Scratch.js"
+        ]
+    },
+    "opts": {
+        "destination": "docs",
+        "recurse": true,
+        "template": "node_modules/docdash",
+        "readme": "./README.md"
+    },
+    "plugins": [
+        "plugins/markdown"
+    ],
+    "docdash": {
+        "static": true,
+        "sort": true,
+        "search": true,
+        "typedefs": true,
+        "collapse": true
+    }
+}

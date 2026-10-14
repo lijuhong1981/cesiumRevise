@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>revisions/PostProcessStageLibrary.revise.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Billboard.html">Billboard</a><ul class='members'><li data-type='member' style='display: none;'><a href="Billboard.html#.isBillboard">isBillboard</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="Billboard.html#_removeFromCollection">_removeFromCollection</a></li></ul></li><li><a href="BillboardCollection.html">BillboardCollection</a><ul class='methods'><li data-type='method' style='display: none;'><a href="BillboardCollection.html#getBoundingSphere">getBoundingSphere</a></li></ul></li><li><a href="BoundingSphere.html">BoundingSphere</a><ul class='methods'><li data-type='method' style='display: none;'><a href="BoundingSphere.html#distanceToCamera">distanceToCamera</a></li><li data-type='method' style='display: none;'><a href="BoundingSphere.html#distanceToCartesian">distanceToCartesian</a></li><li data-type='method' style='display: none;'><a href="BoundingSphere.html#.distanceToCamera">distanceToCamera</a></li><li data-type='method' style='display: none;'><a href="BoundingSphere.html#.distanceToCartesian">distanceToCartesian</a></li><li data-type='method' style='display: none;'><a href="BoundingSphere.html#.fromElements">fromElements</a></li><li data-type='method' style='display: none;'><a href="BoundingSphere.html#.fromGeographics">fromGeographics</a></li><li data-type='method' style='display: none;'><a href="BoundingSphere.html#.fromModelMatrix">fromModelMatrix</a></li></ul></li><li><a href="Camera.html">Camera</a><ul class='members'><li data-type='member' style='display: none;'><a href="Camera.html#originalFlyHome">originalFlyHome</a></li><li data-type='member' style='display: none;'><a href="Camera.html#originalFlyTo">originalFlyTo</a></li><li data-type='member' style='display: none;'><a href="Camera.html#originalSetView">originalSetView</a></li><li data-type='member' style='display: none;'><a href="Camera.html#.attitude">attitude</a></li><li data-type='member' style='display: none;'><a href="Camera.html#.ellipsoid">ellipsoid</a></li><li data-type='member' style='display: none;'><a href="Camera.html#.geographic">geographic</a></li><li data-type='member' style='display: none;'><a href="Camera.html#.headingDegrees">headingDegrees</a></li><li data-type='member' style='display: none;'><a href="Camera.html#.isFlighting">isFlighting</a></li><li data-type='member' style='display: none;'><a href="Camera.html#.orientation">orientation</a></li><li data-type='member' style='display: none;'><a href="Camera.html#.orientationDegrees">orientationDegrees</a></li><li data-type='member' style='display: none;'><a href="Camera.html#.pitchDegrees">pitchDegrees</a></li><li data-type='member' style='display: none;'><a href="Camera.html#.projectionMatrix">projectionMatrix</a></li><li data-type='member' style='display: none;'><a href="Camera.html#.rollDegrees">rollDegrees</a></li><li data-type='member' style='display: none;'><a href="Camera.html#.scene">scene</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="Camera.html#flyHome">flyHome</a></li><li data-type='method' style='display: none;'><a href="Camera.html#flyTo">flyTo</a></li><li data-type='method' style='display: none;'><a href="Camera.html#flyToRectangle">flyToRectangle</a></li><li data-type='method' style='display: none;'><a href="Camera.html#flyToViewPoint">flyToViewPoint</a></li><li data-type='method' style='display: none;'><a href="Camera.html#getDirectionRay">getDirectionRay</a></li><li data-type='method' style='display: none;'><a href="Camera.html#getMetersPerPixel">getMetersPerPixel</a></li><li data-type='method' style='display: none;'><a href="Camera.html#lookAtDirection">lookAtDirection</a></li><li data-type='method' style='display: none;'><a href="Camera.html#lookAtGeographic">lookAtGeographic</a></li><li data-type='method' style='display: none;'><a href="Camera.html#lookAtPosition">lookAtPosition</a></li><li data-type='method' style='display: none;'><a href="Camera.html#setDefaultView">setDefaultView</a></li><li data-type='method' style='display: none;'><a href="Camera.html#setHomeView">setHomeView</a></li><li data-type='method' style='display: none;'><a href="Camera.html#setView">setView</a></li></ul></li><li><a href="Cartesian2.html">Cartesian2</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Cartesian2.html#toFixed">toFixed</a></li><li data-type='method' style='display: none;'><a href="Cartesian2.html#.toFixed">toFixed</a></li></ul></li><li><a href="Cartesian3.html">Cartesian3</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Cartesian3.html#distance">distance</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#negate">negate</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#normalize">normalize</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#surfaceDistance">surfaceDistance</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#toArray">toArray</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#toCartographic">toCartographic</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#toFixed">toFixed</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#toGeographic">toGeographic</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#.fromCartographic">fromCartographic</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#.fromCartographicArray">fromCartographicArray</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#.fromGeographic">fromGeographic</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#.fromGeographicArray">fromGeographicArray</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#.surfaceDistance">surfaceDistance</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#.toCartographic">toCartographic</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#.toCartographicArray">toCartographicArray</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#.toFixed">toFixed</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#.toGeographic">toGeographic</a></li><li data-type='method' style='display: none;'><a href="Cartesian3.html#.toGeographicArray">toGeographicArray</a></li></ul></li><li><a href="Cartesian4.html">Cartesian4</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Cartesian4.html#toFixed">toFixed</a></li><li data-type='method' style='display: none;'><a href="Cartesian4.html#.toFixed">toFixed</a></li></ul></li><li><a href="Cartographic.html">Cartographic</a><ul class='members'><li data-type='member' style='display: none;'><a href="Cartographic.html#.altitude">altitude</a></li><li data-type='member' style='display: none;'><a href="Cartographic.html#.fromArray">fromArray</a></li><li data-type='member' style='display: none;'><a href="Cartographic.html#.packedLength">packedLength</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="Cartographic.html#distance">distance</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#moveToEast">moveToEast</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#moveToNorth">moveToNorth</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#moveToSouth">moveToSouth</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#moveToWest">moveToWest</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#surfaceDistance">surfaceDistance</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#toArray">toArray</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#toCartesian">toCartesian</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#toGeographic">toGeographic</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.distance">distance</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.fromCartesianArray">fromCartesianArray</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.fromGeographic">fromGeographic</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.fromGeographicArray">fromGeographicArray</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.moveToEast">moveToEast</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.moveToNorth">moveToNorth</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.moveToSouth">moveToSouth</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.moveToWest">moveToWest</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.pack">pack</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.pack2DArray">pack2DArray</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.packArray">packArray</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.surfaceDistance">surfaceDistance</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.toCartesianArray">toCartesianArray</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.toGeographic">toGeographic</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.toGeographicArray">toGeographicArray</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.unpack">unpack</a></li><li data-type='method' style='display: none;'><a href="Cartographic.html#.unpackArray">unpackArray</a></li></ul></li><li><a href="CesiumMath.html">CesiumMath</a><ul class='members'><li data-type='member' style='display: none;'><a href="CesiumMath.html#.WGS84_CIRCUM">WGS84_CIRCUM</a></li><li data-type='member' style='display: none;'><a href="CesiumMath.html#.WGS84_DEGREES_PER_METERS">WGS84_DEGREES_PER_METERS</a></li><li data-type='member' style='display: none;'><a href="CesiumMath.html#.WGS84_METERS_PER_DEGREES">WGS84_METERS_PER_DEGREES</a></li><li data-type='member' style='display: none;'><a href="CesiumMath.html#.WGS84_RADIUS">WGS84_RADIUS</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="CesiumMath.html#.between">between</a></li><li data-type='method' style='display: none;'><a href="CesiumMath.html#.randomInteger">randomInteger</a></li><li data-type='method' style='display: none;'><a href="CesiumMath.html#.randomIntegerBetween">randomIntegerBetween</a></li><li data-type='method' style='display: none;'><a href="CesiumMath.html#.randomNumber">randomNumber</a></li></ul></li><li><a href="Check.html">Check</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Check.html#.instanceOf">instanceOf</a></li></ul></li><li><a href="ClassificationPrimitive.html">ClassificationPrimitive</a><ul class='methods'><li data-type='method' style='display: none;'><a href="ClassificationPrimitive.html#getBoundingSphere">getBoundingSphere</a></li></ul></li><li><a href="Color.html">Color</a><ul class='members'><li data-type='member' style='display: none;'><a href="Color.html#.fromArray">fromArray</a></li><li data-type='member' style='display: none;'><a href="Color.html#.fromBytesArray">fromBytesArray</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="Color.html#cloneRgb">cloneRgb</a></li><li data-type='method' style='display: none;'><a href="Color.html#equalsRgb">equalsRgb</a></li><li data-type='method' style='display: none;'><a href="Color.html#toCartesian3">toCartesian3</a></li><li data-type='method' style='display: none;'><a href="Color.html#toCartesian4">toCartesian4</a></li><li data-type='method' style='display: none;'><a href="Color.html#toCssRgbString">toCssRgbString</a></li><li data-type='method' style='display: none;'><a href="Color.html#toCssRgbaString">toCssRgbaString</a></li><li data-type='method' style='display: none;'><a href="Color.html#.cloneRgb">cloneRgb</a></li><li data-type='method' style='display: none;'><a href="Color.html#.equalsRgb">equalsRgb</a></li><li data-type='method' style='display: none;'><a href="Color.html#.fromCartesian3">fromCartesian3</a></li><li data-type='method' style='display: none;'><a href="Color.html#.fromCssColorWithAlpha">fromCssColorWithAlpha</a></li><li data-type='method' style='display: none;'><a href="Color.html#.packArrayToBytes">packArrayToBytes</a></li><li data-type='method' style='display: none;'><a href="Color.html#.packToBytes">packToBytes</a></li><li data-type='method' style='display: none;'><a href="Color.html#.unpackArrayFromBytes">unpackArrayFromBytes</a></li><li data-type='method' style='display: none;'><a href="Color.html#.unpackFromBytes">unpackFromBytes</a></li></ul></li><li><a href="DistanceDisplayCondition.html">DistanceDisplayCondition</a><ul class='methods'><li data-type='method' style='display: none;'><a href="DistanceDisplayCondition.html#isDisplay">isDisplay</a></li><li data-type='method' style='display: none;'><a href="DistanceDisplayCondition.html#.isDisplay">isDisplay</a></li></ul></li><li><a href="Ellipsoid.html">Ellipsoid</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Ellipsoid.html#rayPosition">rayPosition</a></li><li data-type='method' style='display: none;'><a href="Ellipsoid.html#scaleGeodeticHeightOffset">scaleGeodeticHeightOffset</a></li><li data-type='method' style='display: none;'><a href="Ellipsoid.html#scaleToGeodeticHeight">scaleToGeodeticHeight</a></li></ul></li><li><a href="GeographicTransform.html">GeographicTransform</a><ul class='methods'><li data-type='method' style='display: none;'><a href="GeographicTransform.html#getGeographic">getGeographic</a></li><li data-type='method' style='display: none;'><a href="GeographicTransform.html#getPosition">getPosition</a></li><li data-type='method' style='display: none;'><a href="GeographicTransform.html#onDestroy">onDestroy</a></li><li data-type='method' style='display: none;'><a href="GeographicTransform.html#setGeographic">setGeographic</a></li><li data-type='method' style='display: none;'><a href="GeographicTransform.html#setPosition">setPosition</a></li><li data-type='method' style='display: none;'><a href="GeographicTransform.html#setTransforms">setTransforms</a></li><li data-type='method' style='display: none;'><a href="GeographicTransform.html#translateAltitude">translateAltitude</a></li><li data-type='method' style='display: none;'><a href="GeographicTransform.html#translateLatitude">translateLatitude</a></li><li data-type='method' style='display: none;'><a href="GeographicTransform.html#translateLongitude">translateLongitude</a></li><li data-type='method' style='display: none;'><a href="GeographicTransform.html#update">update</a></li><li data-type='method' style='display: none;'><a href="GeographicTransform.html#updateMatrix">updateMatrix</a></li></ul></li><li><a href="Geometry.html">Geometry</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Geometry.html#clone">clone</a></li><li data-type='method' style='display: none;'><a href="Geometry.html#getBoundingSphere">getBoundingSphere</a></li><li data-type='method' style='display: none;'><a href="Geometry.html#toWireframe">toWireframe</a></li><li data-type='method' style='display: none;'><a href="Geometry.html#.clone">clone</a></li><li data-type='method' style='display: none;'><a href="Geometry.html#.toWireframe">toWireframe</a></li></ul></li><li><a href="Globe.html">Globe</a><ul class='members'><li data-type='member' style='display: none;'><a href="Globe.html#.terrainAnalysis">terrainAnalysis</a></li></ul></li><li><a href="GlobeSurfaceTileProvider.html">GlobeSurfaceTileProvider</a><ul class='members'><li data-type='member' style='display: none;'><a href="GlobeSurfaceTileProvider.html#.terrainAnalysis">terrainAnalysis</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="GlobeSurfaceTileProvider.html#showTilesToRenderFrame">showTilesToRenderFrame</a></li></ul></li><li><a href="GroundPolylinePrimitive.html">GroundPolylinePrimitive</a><ul class='methods'><li data-type='method' style='display: none;'><a href="GroundPolylinePrimitive.html#getBoundingSphere">getBoundingSphere</a></li></ul></li><li><a href="GroundPrimitive.html">GroundPrimitive</a><ul class='methods'><li data-type='method' style='display: none;'><a href="GroundPrimitive.html#getBoundingSphere">getBoundingSphere</a></li></ul></li><li><a href="HeadingPitchRoll.html">HeadingPitchRoll</a><ul class='members'><li data-type='member' style='display: none;'><a href="HeadingPitchRoll.html#.ZERO">ZERO</a></li><li data-type='member' style='display: none;'><a href="HeadingPitchRoll.html#.headingDegrees">headingDegrees</a></li><li data-type='member' style='display: none;'><a href="HeadingPitchRoll.html#.packedLength">packedLength</a></li><li data-type='member' style='display: none;'><a href="HeadingPitchRoll.html#.pitchDegrees">pitchDegrees</a></li><li data-type='member' style='display: none;'><a href="HeadingPitchRoll.html#.rollDegrees">rollDegrees</a></li><li data-type='member' style='display: none;'><a href="HeadingPitchRoll.html#.yaw">yaw</a></li><li data-type='member' style='display: none;'><a href="HeadingPitchRoll.html#.yawDegrees">yawDegrees</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#inverse">inverse</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#toDegrees">toDegrees</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#toEuler">toEuler</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#toEulerDegrees">toEulerDegrees</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#toQuaternion">toQuaternion</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#.fromRadians">fromRadians</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#.fromRotationMatrix">fromRotationMatrix</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#.inverse">inverse</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#.pack">pack</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#.packArray">packArray</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#.toDegrees">toDegrees</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#.toEuler">toEuler</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#.toEulerDegrees">toEulerDegrees</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#.toQuaternion">toQuaternion</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#.unpack">unpack</a></li><li data-type='method' style='display: none;'><a href="HeadingPitchRoll.html#.unpackArray">unpackArray</a></li></ul></li><li><a href="JulianDate.html">JulianDate</a><ul class='methods'><li data-type='method' style='display: none;'><a href="JulianDate.html#toDate">toDate</a></li><li data-type='method' style='display: none;'><a href="JulianDate.html#toGregorianDate">toGregorianDate</a></li></ul></li><li><a href="Label.html">Label</a><ul class='members'><li data-type='member' style='display: none;'><a href="Label.html#.isLabel">isLabel</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="Label.html#_removeFromCollection">_removeFromCollection</a></li></ul></li><li><a href="LabelCollection.html">LabelCollection</a><ul class='methods'><li data-type='method' style='display: none;'><a href="LabelCollection.html#getBoundingSphere">getBoundingSphere</a></li></ul></li><li><a href="Material.html">Material</a><ul class='members'><li data-type='member' style='display: none;'><a href="Material.html#.BasicImageType">BasicImageType</a></li><li data-type='member' style='display: none;'><a href="Material.html#.ConverageAreaType">ConverageAreaType</a></li><li data-type='member' style='display: none;'><a href="Material.html#.ImageTransformType">ImageTransformType</a></li><li data-type='member' style='display: none;'><a href="Material.html#.PolylineTrailType">PolylineTrailType</a></li></ul></li><li><a href="MaterialProperty.html">MaterialProperty</a><ul class='methods'><li data-type='method' style='display: none;'><a href="MaterialProperty.html#.fromMaterial">fromMaterial</a></li><li data-type='method' style='display: none;'><a href="MaterialProperty.html#.fromType">fromType</a></li></ul></li><li><a href="Matrix3.html">Matrix3</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Matrix3.html#getColumn">getColumn</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#getHeadingPitchRoll">getHeadingPitchRoll</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#getQuaternion">getQuaternion</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#getRotation">getRotation</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#getRow">getRow</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#getScale">getScale</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#setHeadingPitchRoll">setHeadingPitchRoll</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#setQuaternion">setQuaternion</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#setRotation">setRotation</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#setScale">setScale</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#toArray">toArray</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#.getHeadingPitchRoll">getHeadingPitchRoll</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#.getQuaternion">getQuaternion</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#.setHeadingPitchRoll">setHeadingPitchRoll</a></li><li data-type='method' style='display: none;'><a href="Matrix3.html#.setQuaternion">setQuaternion</a></li></ul></li><li><a href="Matrix4.html">Matrix4</a><ul class='members'><li data-type='member' style='display: none;'><a href="Matrix4.html#.getRotationMatrix">getRotationMatrix</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="Matrix4.html#getColumn">getColumn</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#getEuler">getEuler</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#getHeadingPitchRoll">getHeadingPitchRoll</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#getQuaternion">getQuaternion</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#getRotation">getRotation</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#getRow">getRow</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#getScale">getScale</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#getTranslation">getTranslation</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#getTranslationRotationScale">getTranslationRotationScale</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#setEuler">setEuler</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#setHeadingPitchRoll">setHeadingPitchRoll</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#setQuaternion">setQuaternion</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#setRotation">setRotation</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#setScale">setScale</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#setTranslation">setTranslation</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#toArray">toArray</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.fromHeadingPitchRoll">fromHeadingPitchRoll</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.fromQuaternion">fromQuaternion</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.getEuler">getEuler</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.getHeadingPitchRoll">getHeadingPitchRoll</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.getQuaternion">getQuaternion</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.getTranslationRotationScale">getTranslationRotationScale</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.multiplyByEuler">multiplyByEuler</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.multiplyByHeadingPitchRoll">multiplyByHeadingPitchRoll</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.multiplyByQuaternion">multiplyByQuaternion</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.multiplyByRotation">multiplyByRotation</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.setEuler">setEuler</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.setHeadingPitchRoll">setHeadingPitchRoll</a></li><li data-type='method' style='display: none;'><a href="Matrix4.html#.setQuaternion">setQuaternion</a></li></ul></li><li><a href="ModelMatrixTransforms.html">ModelMatrixTransforms</a><ul class='methods'><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#getActualPosition">getActualPosition</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#getAttitude">getAttitude</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#getEuler">getEuler</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#getGeographic">getGeographic</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#getPosition">getPosition</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#getRotation">getRotation</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#getScale">getScale</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#getTranslation">getTranslation</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#onDestroy">onDestroy</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#onModelMatrixChanged">onModelMatrixChanged</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#raiseModelMatrixChangeEvent">raiseModelMatrixChangeEvent</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#rotate">rotate</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#rotateByEuler">rotateByEuler</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#rotateHeading">rotateHeading</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#rotateOnAxis">rotateOnAxis</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#rotatePitch">rotatePitch</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#rotateRoll">rotateRoll</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#rotateX">rotateX</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#rotateY">rotateY</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#rotateZ">rotateZ</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#setAttitude">setAttitude</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#setEuler">setEuler</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#setGeographic">setGeographic</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#setPosition">setPosition</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#setRotation">setRotation</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#setScale">setScale</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#setTransforms">setTransforms</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#setTranslation">setTranslation</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#translate">translate</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#translateAltitude">translateAltitude</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#translateLatitude">translateLatitude</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#translateLongitude">translateLongitude</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#translateOnAxis">translateOnAxis</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#translateX">translateX</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#translateY">translateY</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#translateZ">translateZ</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#update">update</a></li><li data-type='method' style='display: none;'><a href="ModelMatrixTransforms.html#updateModelMatrix">updateModelMatrix</a></li></ul></li><li><a href="Plane.html">Plane</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Plane.html#clone">clone</a></li><li data-type='method' style='display: none;'><a href="Plane.html#.fromCoplanarPoints">fromCoplanarPoints</a></li></ul></li><li><a href="PointPrimitive.html">PointPrimitive</a><ul class='members'><li data-type='member' style='display: none;'><a href="PointPrimitive.html#.isPointPrimitive">isPointPrimitive</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="PointPrimitive.html#_removeFromCollection">_removeFromCollection</a></li></ul></li><li><a href="PointPrimitiveCollection.html">PointPrimitiveCollection</a><ul class='methods'><li data-type='method' style='display: none;'><a href="PointPrimitiveCollection.html#getBoundingSphere">getBoundingSphere</a></li></ul></li><li><a href="PolylinePipeline.html">PolylinePipeline</a><ul class='methods'><li data-type='method' style='display: none;'><a href="PolylinePipeline.html#.computeLength">computeLength</a></li><li data-type='method' style='display: none;'><a href="PolylinePipeline.html#.computeSurfaceLength">computeSurfaceLength</a></li></ul></li><li><a href="PostProcessStage.html">PostProcessStage</a><ul class='methods'><li data-type='method' style='display: none;'><a href="PostProcessStage.html#setOptions">setOptions</a></li><li data-type='method' style='display: none;'><a href="PostProcessStage.html#.stage.addCircle">stage.addCircle</a></li><li data-type='method' style='display: none;'><a href="PostProcessStage.html#.stage.removeAllCircles">stage.removeAllCircles</a></li><li data-type='method' style='display: none;'><a href="PostProcessStage.html#.stage.removeCircleAt">stage.removeCircleAt</a></li></ul></li><li><a href="PostProcessStageLibrary.html">PostProcessStageLibrary</a><ul class='methods'><li data-type='method' style='display: none;'><a href="PostProcessStageLibrary.html#.createCircleScanStage">createCircleScanStage</a></li><li data-type='method' style='display: none;'><a href="PostProcessStageLibrary.html#.createExp2FogStage">createExp2FogStage</a></li><li data-type='method' style='display: none;'><a href="PostProcessStageLibrary.html#.createFogStage">createFogStage</a></li><li data-type='method' style='display: none;'><a href="PostProcessStageLibrary.html#.createHighlightStage">createHighlightStage</a></li><li data-type='method' style='display: none;'><a href="PostProcessStageLibrary.html#.createNearFarScalarFogStage">createNearFarScalarFogStage</a></li><li data-type='method' style='display: none;'><a href="PostProcessStageLibrary.html#.createSkylineState">createSkylineState</a></li></ul></li><li><a href="Primitive.html">Primitive</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Primitive.html#getBoundingSphere">getBoundingSphere</a></li></ul></li><li><a href="Property.html">Property</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Property.html#.getValue">getValue</a></li><li data-type='method' style='display: none;'><a href="Property.html#.isProperty">isProperty</a></li></ul></li><li><a href="PropertyChangedListener.html">PropertyChangedListener</a><ul class='methods'><li data-type='method' style='display: none;'><a href="PropertyChangedListener.html#onDestroy">onDestroy</a></li><li data-type='method' style='display: none;'><a href="PropertyChangedListener.html#onPropertyValueChanged">onPropertyValueChanged</a></li><li data-type='method' style='display: none;'><a href="PropertyChangedListener.html#raisePropertyChangeEvent">raisePropertyChangeEvent</a></li></ul></li><li><a href="Quaternion.html">Quaternion</a><ul class='methods'><li data-type='method' style='display: none;'><a href="Quaternion.html#toHeadingPitchRoll">toHeadingPitchRoll</a></li><li data-type='method' style='display: none;'><a href="Quaternion.html#.fromDegrees">fromDegrees</a></li><li data-type='method' style='display: none;'><a href="Quaternion.html#.fromRadians">fromRadians</a></li><li data-type='method' style='display: none;'><a href="Quaternion.html#.multiplyByVector">multiplyByVector</a></li></ul></li><li><a href="Rectangle.html">Rectangle</a><ul class='members'><li data-type='member' style='display: none;'><a href="Rectangle.html#.center">center</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.centerGeographic">centerGeographic</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.centreHeightInMeters">centreHeightInMeters</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.centreWidthInMeters">centreWidthInMeters</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.eastDegrees">eastDegrees</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.eastHeightInMeters">eastHeightInMeters</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.heightInDegrees">heightInDegrees</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.heightInMeters">heightInMeters</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.northDegrees">northDegrees</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.northWidthInMeters">northWidthInMeters</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.northeast">northeast</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.northwest">northwest</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.southDegrees">southDegrees</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.southWidthInMeters">southWidthInMeters</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.southeast">southeast</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.southwest">southwest</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.westDegrees">westDegrees</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.westHeightInMeters">westHeightInMeters</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.widthInDegrees">widthInDegrees</a></li><li data-type='member' style='display: none;'><a href="Rectangle.html#.widthInMeters">widthInMeters</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="Rectangle.html#containsCartographicPoint">containsCartographicPoint</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#containsGeographicPoint">containsGeographicPoint</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#containsPoint">containsPoint</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#toDegrees">toDegrees</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.computeCentreHeightInMeters">computeCentreHeightInMeters</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.computeCentreWidthInMeters">computeCentreWidthInMeters</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.computeEastHeightInMeters">computeEastHeightInMeters</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.computeNorthWidthInMeters">computeNorthWidthInMeters</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.computeRectangleCartographics">computeRectangleCartographics</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.computeRectangleGeographics">computeRectangleGeographics</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.computeRectanglePositions">computeRectanglePositions</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.computeSouthWidthInMeters">computeSouthWidthInMeters</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.computeWestHeightInMeters">computeWestHeightInMeters</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.containsCartographicPoint">containsCartographicPoint</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.containsGeographicPoint">containsGeographicPoint</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.containsPoint">containsPoint</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.fromCenterDimensions">fromCenterDimensions</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.fromCenterWidthHeight">fromCenterWidthHeight</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.fromGeographicArray">fromGeographicArray</a></li><li data-type='method' style='display: none;'><a href="Rectangle.html#.fromRectangles">fromRectangles</a></li></ul></li><li><a href="SceneTransforms.html">SceneTransforms</a><ul class='methods'><li data-type='method' style='display: none;'><a href="SceneTransforms.html#.cartesianToEyeCoordinates">cartesianToEyeCoordinates</a></li><li data-type='method' style='display: none;'><a href="SceneTransforms.html#.cartesianToNDC">cartesianToNDC</a></li><li data-type='method' style='display: none;'><a href="SceneTransforms.html#.ndcToWorldCoordinates">ndcToWorldCoordinates</a></li></ul></li><li><a href="Spherical.html">Spherical</a><ul class='members'><li data-type='member' style='display: none;'><a href="Spherical.html#.clockDegrees">clockDegrees</a></li><li data-type='member' style='display: none;'><a href="Spherical.html#.coneDegrees">coneDegrees</a></li></ul></li><li><a href="StTransforms.html">StTransforms</a><ul class='methods'><li data-type='method' style='display: none;'><a href="StTransforms.html#onDestroy">onDestroy</a></li><li data-type='method' style='display: none;'><a href="StTransforms.html#onStTransformChanged">onStTransformChanged</a></li><li data-type='method' style='display: none;'><a href="StTransforms.html#raiseStTransformChangeEvent">raiseStTransformChangeEvent</a></li><li data-type='method' style='display: none;'><a href="StTransforms.html#setTransforms">setTransforms</a></li><li data-type='method' style='display: none;'><a href="StTransforms.html#update">update</a></li><li data-type='method' style='display: none;'><a href="StTransforms.html#updateTransform">updateTransform</a></li></ul></li><li><a href="TranslationRotationScaleTransform.html">TranslationRotationScaleTransform</a><ul class='methods'><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#getAttitude">getAttitude</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#getEuler">getEuler</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#getRotation">getRotation</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#getScale">getScale</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#getTranslation">getTranslation</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#onDestroy">onDestroy</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#rotate">rotate</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#rotateByEuler">rotateByEuler</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#rotateHeading">rotateHeading</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#rotateOnAxis">rotateOnAxis</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#rotatePitch">rotatePitch</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#rotateRoll">rotateRoll</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#rotateX">rotateX</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#rotateY">rotateY</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#rotateZ">rotateZ</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#setAttitude">setAttitude</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#setEuler">setEuler</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#setRotation">setRotation</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#setScale">setScale</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#setTransforms">setTransforms</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#setTranslation">setTranslation</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#translate">translate</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#translateOnAxis">translateOnAxis</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#translateX">translateX</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#translateY">translateY</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#translateZ">translateZ</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#update">update</a></li><li data-type='method' style='display: none;'><a href="TranslationRotationScaleTransform.html#updateMatrix">updateMatrix</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#APPEARANCE">APPEARANCE</a></li><li><a href="global.html#ATTRIBUTE">ATTRIBUTE</a></li><li><a href="global.html#BooleanGeometryInstanceAttribute">BooleanGeometryInstanceAttribute</a></li><li><a href="global.html#CAMERA">CAMERA</a></li><li><a href="global.html#Cartesian3GeometryInstanceAttribute">Cartesian3GeometryInstanceAttribute</a></li><li><a href="global.html#FILLAPPEARANCE">FILLAPPEARANCE</a></li><li><a href="global.html#FILLGEOMETRY">FILLGEOMETRY</a></li><li><a href="global.html#FILLPRIMITIVE">FILLPRIMITIVE</a></li><li><a href="global.html#FloatGeometryInstanceAttribute">FloatGeometryInstanceAttribute</a></li><li><a href="global.html#FogType">FogType</a></li><li><a href="global.html#GEOMETRY">GEOMETRY</a></li><li><a href="global.html#Geographic">Geographic</a></li><li><a href="global.html#MATERIAL">MATERIAL</a></li><li><a href="global.html#MODELMATRIX">MODELMATRIX</a></li><li><a href="global.html#NONE">NONE</a></li><li><a href="global.html#OUTLINEGEOMETRY">OUTLINEGEOMETRY</a></li><li><a href="global.html#PRIMITIVE">PRIMITIVE</a></li><li><a href="global.html#PropertyType">PropertyType</a></li><li><a href="global.html#RotationFrameType">RotationFrameType</a></li><li><a href="global.html#TEXT3D">TEXT3D</a></li><li><a href="global.html#altitude">altitude</a></li><li><a href="global.html#componentDatatype">componentDatatype</a></li><li><a href="global.html#componentsPerAttribute">componentsPerAttribute</a></li><li><a href="global.html#computeCirclePositions">computeCirclePositions</a></li><li><a href="global.html#computeCircleRadius">computeCircleRadius</a></li><li><a href="global.html#computeModelMatrix">computeModelMatrix</a></li><li><a href="global.html#computeStTransform">computeStTransform</a></li><li><a href="global.html#createGeometry">createGeometry</a></li><li><a href="global.html#createPointCloudGeometry">createPointCloudGeometry</a></li><li><a href="global.html#decompose">decompose</a></li><li><a href="global.html#getAttributeComponentType">getAttributeComponentType</a></li><li><a href="global.html#getGeometryInstanceAttributes">getGeometryInstanceAttributes</a></li><li><a href="global.html#getPositionFromTarget">getPositionFromTarget</a></li><li><a href="global.html#getRenderState">getRenderState</a></li><li><a href="global.html#height">height</a></li><li><a href="global.html#isColorMaterial">isColorMaterial</a></li><li><a href="global.html#isTranslucent">isTranslucent</a></li><li><a href="global.html#latitude">latitude</a></li><li><a href="global.html#longitude">longitude</a></li><li><a href="global.html#normalize">normalize</a></li><li><a href="global.html#parseAltitude">parseAltitude</a></li><li><a href="global.html#parseArcType">parseArcType</a></li><li><a href="global.html#parseAttitudeToHeadingPitchRoll">parseAttitudeToHeadingPitchRoll</a></li><li><a href="global.html#parseAttitudeToMatrix3">parseAttitudeToMatrix3</a></li><li><a href="global.html#parseAttitudeToQuaternion">parseAttitudeToQuaternion</a></li><li><a href="global.html#parseCartographicToCartesian">parseCartographicToCartesian</a></li><li><a href="global.html#parseCartographicsToPositions">parseCartographicsToPositions</a></li><li><a href="global.html#parseClassificationType">parseClassificationType</a></li><li><a href="global.html#parseClockRange">parseClockRange</a></li><li><a href="global.html#parseColorBlendMode">parseColorBlendMode</a></li><li><a href="global.html#parseCornerType">parseCornerType</a></li><li><a href="global.html#parseCullFace">parseCullFace</a></li><li><a href="global.html#parseEulerToHeadingPitchRoll">parseEulerToHeadingPitchRoll</a></li><li><a href="global.html#parseEulerToQuaternion">parseEulerToQuaternion</a></li><li><a href="global.html#parseGeographicToCartesian">parseGeographicToCartesian</a></li><li><a href="global.html#parseGeographicsToPositions">parseGeographicsToPositions</a></li><li><a href="global.html#parseHeading">parseHeading</a></li><li><a href="global.html#parseHeightReference">parseHeightReference</a></li><li><a href="global.html#parseHoles">parseHoles</a></li><li><a href="global.html#parseHorizontalOrigin">parseHorizontalOrigin</a></li><li><a href="global.html#parseLabelStyle">parseLabelStyle</a></li><li><a href="global.html#parseLatitude">parseLatitude</a></li><li><a href="global.html#parseLongitude">parseLongitude</a></li><li><a href="global.html#parsePitch">parsePitch</a></li><li><a href="global.html#parseRoll">parseRoll</a></li><li><a href="global.html#parseRotationToHeadingPitchRoll">parseRotationToHeadingPitchRoll</a></li><li><a href="global.html#parseRotationToMatrix3">parseRotationToMatrix3</a></li><li><a href="global.html#parseRotationToQuaternion">parseRotationToQuaternion</a></li><li><a href="global.html#parseShadowMode">parseShadowMode</a></li><li><a href="global.html#parseToBoundingRectangle">parseToBoundingRectangle</a></li><li><a href="global.html#parseToCartesian2">parseToCartesian2</a></li><li><a href="global.html#parseToCartesian3">parseToCartesian3</a></li><li><a href="global.html#parseToCartesian3Array">parseToCartesian3Array</a></li><li><a href="global.html#parseToCartesian4">parseToCartesian4</a></li><li><a href="global.html#parseToCartographic">parseToCartographic</a></li><li><a href="global.html#parseToColor">parseToColor</a></li><li><a href="global.html#parseToDistanceDisplayCondition">parseToDistanceDisplayCondition</a></li><li><a href="global.html#parseToGeographic">parseToGeographic</a></li><li><a href="global.html#parseToHeadingPitchRange">parseToHeadingPitchRange</a></li><li><a href="global.html#parseToJulianDate">parseToJulianDate</a></li><li><a href="global.html#parseToNearFarScalar">parseToNearFarScalar</a></li><li><a href="global.html#parseToPlane">parseToPlane</a></li><li><a href="global.html#parseToPolygonHierarchy">parseToPolygonHierarchy</a></li><li><a href="global.html#parseToRange">parseToRange</a></li><li><a href="global.html#parseToRectangle">parseToRectangle</a></li><li><a href="global.html#parseToTimeInterval">parseToTimeInterval</a></li><li><a href="global.html#parseVerticalOrigin">parseVerticalOrigin</a></li><li><a href="global.html#resolveModelMatrixByFixedFrame">resolveModelMatrixByFixedFrame</a></li><li><a href="global.html#threeGeometryToCesiumGeometry">threeGeometryToCesiumGeometry</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">revisions/PostProcessStageLibrary.revise.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import setOptions from '@lijuhong1981/jslib/src/setParameters.js';
+import parseNumber from "@lijuhong1981/jsmath/src/parseNumber.js";
+import { Cartesian3, Cartesian4, Math as CesiumMath, Check, Color, createGuid, defined, DeveloperError, Matrix3, Matrix4, PostProcessStage, PostProcessStageComposite, PostProcessStageLibrary, Quaternion } from "cesium";
+import Geographic from '../additions/Geographic.js';
+import parseGeographicToCartesian from '../parses/parseGeographicToCartesian.js';
+import parseToCartesian3 from '../parses/parseToCartesian3.js';
+import parseToColor from '../parses/parseToColor.js';
+
+/**
+ * 扩展 Cesium 的 PostProcessStage 类，补充批量设置选项的方法。
+ * @class PostProcessStage
+ * @see {@link https://cesium.com/learn/cesiumjs/ref-doc/PostProcessStage.html}
+*/
+/**
+ * 扩展 Cesium 的 PostProcessStageLibrary 类，补充圆形扫描、迷雾、高亮、天际线等后处理阶段创建方法。
+ * @class PostProcessStageLibrary
+ * @see {@link https://cesium.com/learn/cesiumjs/ref-doc/PostProcessStageLibrary.html}
+*/
+
+/**
+ * 批量设置当前后处理阶段的选项与属性。
+ * @param {object} options 选项对象，其属性将被设置到当前 stage 上。
+ * @memberof PostProcessStage
+*/
+PostProcessStage.prototype.setOptions = function (options) {
+    setOptions(this, options);
+};
+
+//解析和检测圆环设置
+function parseAndCheckCircle(circle, defaultColor, defaultPower) {
+    circle.color = parseToColor(circle.color) ?? defaultColor;
+    Check.typeOf.number.greaterThan('radius', circle.radius, 0);
+    circle.power = circle.power ?? defaultPower;
+    Check.typeOf.number.greaterThanOrEquals('power', circle.power, 0);
+    // console.log('circle:', circle);
+}
+
+//解析和检测多重圆环设置
+function parseAndCheckCircles(circles, defaultColor, defaultPower) {
+    for (let i = circles.length - 1; i >= 0; i--) {
+        parseAndCheckCircle(circles[i], defaultColor, defaultPower);
+    }
+}
+
+//多重圆环排序，按半径大小升序排列
+function sortCircles(circles) {
+    let temp;
+    for (let i = 1; i &lt; circles.length; i++) {
+        for (let j = i; j > 0; j--) {
+            if (circles[j].radius &lt; circles[j - 1].radius) {
+                temp = circles[j];
+                circles[j] = circles[j - 1];
+                circles[j - 1] = temp;
+            }
+        }
+    }
+    // console.log('sortCircles:', circles);
+}
+
+//将多重圆环设置项分解至数组
+function decomposeCircles(circles, outColors, outRadii, outPowers) {
+    for (let i = 0; i &lt; circles.length; i++) {
+        outColors[i] = circles[i].color;
+        outRadii[i] = circles[i].radius;
+        outPowers[i] = circles[i].power;
+    }
+    // console.log('outColors:', outColors, 'outRadii:', outRadii);
+}
+
+/**
+ * 创建圆形扩散扫描后处理阶段。
+ * @param {object} options 配置项。
+ * @param {object} [options.map] Viewer 或 Scene 对象（与 scene 二选一），必需项之一。
+ * @param {object} [options.scene] Viewer 或 Scene 对象。
+ * @param {Geographic|Cartesian3|Cartographic|Array} [options.geographic] 圆心地理坐标。
+ * @param {Cartesian3} [options.position] 圆心位置。
+ * @param {Cartesian3} [options.center] 圆心位置（与 position 等效）。
+ * @param {string} [options.name] 阶段名称。
+ * @param {object} [options.properties] 自定义属性。
+ * @param {boolean} [options.circleDiffuse=true] 是否开启圆形扩散动画。
+ * @param {number} [options.radius=100] 扩散半径，单位米，须大于 0。
+ * @param {number} [options.duration=2.0] 扩散动画持续时间，单位秒。
+ * @param {Color|string} [options.color='#ff0000'] 扩散颜色。
+ * @param {number} [options.opacity=1] 透明度，取值 0 到 1。
+ * @param {boolean} [options.gradientColor=false] 是否启用渐变色。
+ * @param {Color|string} [options.startColor] 渐变起始颜色。
+ * @param {Color|string} [options.endColor] 渐变结束颜色。
+ * @param {number} [options.power=3.0] 扩散指数，值越小扩散环越厚。
+ * @param {boolean} [options.multiple=false] 是否开启多重圆环。
+ * @param {Array} [options.multiCircles=[]] 多重圆环设置数组。
+ * @param {boolean} [options.radarScan=false] 是否开启雷达扫描动画。
+ * @param {Color|string} [options.scanColor] 雷达扫描线颜色。
+ * @param {number} [options.scanPower=3.0] 雷达扫描线扩散指数。
+ * @param {number} [options.scanDuration=2.0] 雷达扫描动画持续时间，单位秒。
+ * @returns {PostProcessStage} 生成的圆形扩散扫描后处理阶段。
+ * @memberof PostProcessStageLibrary
+ * @static
+*/
+PostProcessStageLibrary.createCircleScanStage = function (options) {
+    Check.defined('options', options);
+
+    //Viewer或Scene对象，必需项
+    const scene = options.map ?? options.scene;
+    Check.defined('scene', scene);
+
+    const name = options.name ?? 'CircleScan_' + createGuid();
+    const properties = options.properties;
+
+    //获取圆心点位置，Cartesian3对象
+    let center;
+    if (defined(options.geographic))
+        center = parseGeographicToCartesian(options.geographic, undefined, scene.ellipsoid);
+    else if (defined(options.position) || defined(options.center))
+        center = parseToCartesian3(options.position || options.center);
+    else
+        throw new DeveloperError('geographic or postition or center undefined.');
+
+    //圆心位置，Cartesian4对象
+    const cartesian4Center = new Cartesian4();
+    //高度+500后的圆心位置，Cartesian4对象
+    const cartesian4CenterByHigher = new Cartesian4();
+    //经度+0.001后的圆心位置，Cartesian4对象
+    const cartesian4CenterByRight = new Cartesian4();
+
+    //更新圆心相关参数
+    function updateCenterCoordinates() {
+        cartesian4Center.x = center.x;
+        cartesian4Center.y = center.y;
+        cartesian4Center.z = center.z;
+        cartesian4Center.w = 1;
+
+        //获得当前圆心位置的地理坐标
+        const geographic = center.toGeographic();
+        //高度+500，用于计算平面法线
+        const geographicByHigher = Geographic.fromDegrees(geographic.longitude, geographic.latitude, geographic.height + 500);
+        const centerByHigher = geographicByHigher.toCartesian();
+        cartesian4CenterByHigher.x = centerByHigher.x;
+        cartesian4CenterByHigher.y = centerByHigher.y;
+        cartesian4CenterByHigher.z = centerByHigher.z;
+        cartesian4CenterByHigher.w = 1;
+        //经度+0.001，用于计算平面法线
+        const geographicByRight = Geographic.fromDegrees(geographic.longitude + 0.001, geographic.latitude, geographic.height);
+        const centerByRight = geographicByRight.toCartesian();
+        cartesian4CenterByRight.x = centerByRight.x;
+        cartesian4CenterByRight.y = centerByRight.y;
+        cartesian4CenterByRight.z = centerByRight.z;
+        cartesian4CenterByRight.w = 1;
+    }
+
+    updateCenterCoordinates();
+
+    const scratchViewMatrix = new Matrix4();
+    const scratchCartesian4Center = new Cartesian4();
+    const scratchCartesian4CenterByHigher = new Cartesian4();
+    const scratchCartesian4CenterByRight = new Cartesian4();
+    const scratchCartesian3Normal = new Cartesian3();
+    const scratchCartesian3Direction = new Cartesian3();
+    const scratchCartesian3RotateDirection = new Cartesian3();
+    const scratchQuaternion = new Quaternion();
+    const scratchMatrix3 = new Matrix3();
+
+    //转换至相机视图位置
+    function updateCenterCoordinatesToEye() {
+        if (!Matrix4.equals(scene.camera.viewMatrix, scratchViewMatrix)) {
+            Matrix4.clone(scene.camera.viewMatrix, scratchViewMatrix);
+
+            Matrix4.multiplyByVector(scratchViewMatrix, cartesian4Center, scratchCartesian4Center);
+            Matrix4.multiplyByVector(scratchViewMatrix, cartesian4CenterByHigher, scratchCartesian4CenterByHigher);
+            Matrix4.multiplyByVector(scratchViewMatrix, cartesian4CenterByRight, scratchCartesian4CenterByRight);
+
+            Cartesian3.subtract(scratchCartesian4CenterByHigher, scratchCartesian4Center, scratchCartesian3Normal);
+            Cartesian3.normalize(scratchCartesian3Normal, scratchCartesian3Normal);
+
+            Cartesian3.subtract(scratchCartesian4CenterByRight, scratchCartesian4Center, scratchCartesian3Direction);
+            Cartesian3.normalize(scratchCartesian3Direction, scratchCartesian3Direction);
+            // console.log('center:', scratchCartesian4Center);
+            // console.log('ndc:', Matrix4.multiplyByVector(map.camera.frustum.projectionMatrix, scratchCartesian4Center, new Cartesian4()));
+        }
+    }
+
+    updateCenterCoordinatesToEye();
+
+    //是否开启圆形扩散动画
+    let circleDiffuse = options.circleDiffuse ?? true;
+    Check.typeOf.bool('circleDiffuse', circleDiffuse);
+    //半径，单位米，必须大于0
+    let radius = options.radius ?? 100;
+    Check.typeOf.number.greaterThan('radius', radius, 0);
+    //动画持续时间，单位秒
+    let duration = options.duration ?? 2.0;
+    Check.typeOf.number('duration', duration);
+    let milliDuration = duration * 1000;
+    //颜色设置
+    let color = parseToColor(options.color ?? '#ff0000');
+    //透明度设置
+    let opacity = options.opacity ?? 1;
+    Check.typeOf.number.greaterThanOrEquals('opacity', opacity, 0);
+    Check.typeOf.number.lessThanOrEquals('opacity', opacity, 1);
+    color = color.withAlpha(opacity, color);
+    //是否启用渐变色
+    let gradientColor = options.gradientColor ?? false;
+    Check.typeOf.bool('gradientColor', gradientColor);
+    //开始颜色
+    let startColor;
+    if (options.startColor)
+        startColor = parseToColor(options.startColor);
+    //结束颜色
+    let endColor;
+    if (options.endColor)
+        endColor = parseToColor(options.endColor);
+    //扩散指数，值越小扩散环越厚，最小值0
+    let power = options.power ?? 3.0;
+    Check.typeOf.number.greaterThanOrEquals('power', power, 0);
+    //是否开启多重圆环
+    let multiple = options.multiple ?? false;
+    Check.typeOf.bool('multiple', multiple);
+    //多重圆环设置数组
+    let multiCircles = options.multiCircles ?? new Array();
+    Check.typeOf.array('multiCircles', multiCircles);
+    let numberOfMultiple = 1,
+        maxRadius;
+    let colors = new Array();
+    let radii = new Array();
+    let powers = new Array();
+    handleCircles(multiCircles);
+    //是否开启雷达扫描动画
+    let radarScan = options.radarScan ?? false;
+    Check.typeOf.bool('radarScan', radarScan);
+    //雷达扫描线颜色
+    let scanColor;
+    if (options.scanColor)
+        scanColor = parseToColor(options.scanColor);
+    //雷达扫描线扩散指数，值越小扩散环越厚，最小值0
+    let scanPower = options.scanPower ?? 3.0;
+    Check.typeOf.number.greaterThanOrEquals('scanPower', scanPower, 0);
+    //雷达扫描动画持续时间，单位秒
+    let scanDuration = options.scanDuration ?? 2.0;
+    Check.typeOf.number.greaterThan('scanDuration', scanDuration, 0);
+    let milliScanDuration = scanDuration * 1000;
+
+    //记录当前时间
+    const startTime = (new Date()).getTime();
+
+    //分解多重圆环
+    function resolveCircles(circles) {
+        colors = new Array();
+        radii = new Array();
+        powers = new Array();
+        decomposeCircles(circles, colors, radii, powers);
+
+        //获取最大半径
+        maxRadius = radii[radii.length - 1];
+        //获取多重圆环数量
+        numberOfMultiple = circles.length;
+    }
+
+    //处理多重圆环
+    function handleCircles(circles) {
+        if (circles.length > 0) {
+            parseAndCheckCircles(circles, color, power);
+            sortCircles(circles);
+            resolveCircles(circles);
+        } else {
+            multiple = false;
+        }
+    }
+
+    const fragmentShader =
+        "uniform sampler2D colorTexture;\n" +
+        "uniform sampler2D depthTexture;\n" +
+        "in vec2 v_textureCoordinates;\n" +
+        "uniform vec4 u_centerEC;\n" +
+        "uniform vec3 u_planeNormalEC;\n" +
+        "uniform vec3 u_scanLineDirectionEC;\n" +
+        "uniform bool u_circleDiffuse;\n" +
+        "uniform float u_radius;\n" +
+        "uniform float u_maxRadius;\n" +
+        "uniform vec4 u_diffuseColor;\n" +
+        "uniform bool u_gradientColor;\n" +
+        "uniform vec4 u_startColor;\n" +
+        "uniform vec4 u_endColor;\n" +
+        "uniform float u_power;\n" +
+        "uniform bool u_multiple;\n" +
+        "uniform vec4 u_diffuseColors[" + numberOfMultiple + "];\n" +
+        "uniform float u_radii[" + numberOfMultiple + "];\n" +
+        "uniform float u_powers[" + numberOfMultiple + "];\n" +
+        "uniform bool u_radarScan;\n" +
+        "uniform vec4 u_scanColor;\n" +
+        "uniform float u_scanPower;\n" +
+
+        "float getDepth(in vec4 depth)\n" +
+        "{\n" +
+        "   float z_window = czm_unpackDepth(depth);\n" +
+        "   z_window = czm_reverseLogDepth(z_window);\n" +
+        "   float near = czm_depthRange.near;\n" +
+        "   float far = czm_depthRange.far;\n" +
+        "   return (2.0 * z_window - near - far) / (far - near);\n" +
+        "}\n" +
+
+        "vec4 textureCoordinatesToEye(in vec2 uv, in float depth)\n" +
+        "{\n" +
+        "   vec2 xy = vec2((uv.x * 2.0 - 1.0), (uv.y * 2.0 - 1.0));\n" +
+        "   vec4 posInCamera = czm_inverseProjection * vec4(xy, depth, 1.0);\n" +
+        "   posInCamera = posInCamera / posInCamera.w;\n" +
+        "   return posInCamera;\n" +
+        "}\n" +
+
+        "vec3 pointProjectOnPlane(in vec3 planeNormal, in vec3 planeOrigin, in vec3 point)\n" +
+        "{\n" +
+        "   vec3 v01 = point - planeOrigin;\n" +
+        "   float d = dot(planeNormal, v01) ;\n" +
+        "   return (point - planeNormal * d);\n" +
+        "}\n" +
+
+        "bool isPointOnLineRight(in vec3 lineOrigin, in vec3 lineDirection, in vec3 lineNormal, in vec3 testPoint)\n" +
+        "{\n" +
+        "   vec3 direction = testPoint - lineOrigin;\n" +
+        "   normalize(direction);\n" +
+        "   vec3 temp = cross(direction, lineDirection);\n" +
+        "   float d = dot(temp, lineNormal);\n" +
+        "   return d > 0.5;\n" +
+        "}\n" +
+
+        "void main()\n" +
+        "{\n" +
+        "   out_FragColor = texture(colorTexture, v_textureCoordinates);\n" +
+        "   float depth = getDepth(texture(depthTexture, v_textureCoordinates));\n" +
+        "   vec4 eyePos = textureCoordinatesToEye(v_textureCoordinates, depth);\n" +
+        "   vec3 projectOnPlane = pointProjectOnPlane(u_planeNormalEC.xyz, u_centerEC.xyz, eyePos.xyz);\n" +
+        "   float dis = length(projectOnPlane.xyz - u_centerEC.xyz);\n" +
+        "   if (u_circleDiffuse &amp;&amp; dis &lt;= u_radius)\n" +
+        "   {\n" +
+        "       if(u_multiple &amp;&amp; " + numberOfMultiple + " > 0)\n" +
+        "       {\n" +
+        "           for(int i = 0; i &lt; " + numberOfMultiple + "; i++)\n" +
+        "           {\n" +
+        "               float radius = u_radii[i];\n" +
+        "               if(dis &lt;= radius)\n" +
+        "               {\n" +
+        "                   float f = 1.0 - abs(radius - dis) / radius;\n" +
+        "                   f = pow(f, u_powers[i]);\n" +
+        "                   vec4 diffuseColor = u_diffuseColors[i];\n" +
+        "                   out_FragColor = mix(out_FragColor, diffuseColor, f);\n" +
+        "                   break;\n" +
+        "               }\n" +
+        "           }\n" +
+        "       }\n" +
+        "       else\n" +
+        "       {\n" +
+        "           float f = 1.0 - abs(u_radius - dis) / u_radius;\n" +
+        "           f = pow(f, u_power);\n" +
+        "           if (u_gradientColor)\n" +
+        "           {\n" +
+        "               float p = dis / u_maxRadius;\n" +
+        "               vec4 diffuseColor = mix(u_startColor, u_endColor, p);\n" +
+        "               out_FragColor = mix(out_FragColor, diffuseColor, f);\n" +
+        "           }\n" +
+        "           else\n" +
+        "           {\n" +
+        "               out_FragColor = mix(out_FragColor, u_diffuseColor, f);\n" +
+        "           }\n" +
+        "       }\n" +
+        "   }\n" +
+        "   if (u_radarScan &amp;&amp; dis &lt;= u_maxRadius)\n" +
+        "   {\n" +
+        "       float diameter = u_maxRadius * 2.0;\n" +
+        "       if(isPointOnLineRight(u_centerEC.xyz, u_scanLineDirectionEC.xyz, u_planeNormalEC.xyz, projectOnPlane.xyz))\n" +
+        "       {\n" +
+        "           vec3 lineEndPoint = vec3(u_centerEC.xyz) + u_scanLineDirectionEC * u_maxRadius;\n" +
+        "           float dis1 = length(projectOnPlane.xyz - lineEndPoint);\n" +
+        "           float f = abs(diameter - dis1) / diameter;\n" +
+        "           f = pow(f, u_scanPower);\n" +
+        "           out_FragColor = mix(out_FragColor, u_scanColor, f);\n" +
+        "       }\n" +
+        "   }\n" +
+        "}\n";
+
+    const stage = new PostProcessStage({
+        name: name,
+        fragmentShader: fragmentShader,
+        uniforms: {
+            u_centerEC: function () {
+                updateCenterCoordinatesToEye();
+                return scratchCartesian4Center;
+            },
+            u_planeNormalEC: function () {
+                return scratchCartesian3Normal;
+            },
+            u_scanLineDirectionEC: function () {
+                const normal = scratchCartesian3Normal;
+                const direction = scratchCartesian3Direction.clone(scratchCartesian3RotateDirection);
+
+                const percent = (((new Date()).getTime() - startTime) % milliScanDuration) / milliScanDuration;
+                Quaternion.fromAxisAngle(normal, percent * CesiumMath.TWO_PI, scratchQuaternion);
+                Matrix3.fromQuaternion(scratchQuaternion, scratchMatrix3);
+                Matrix3.multiplyByVector(scratchMatrix3, direction, direction);
+                Cartesian3.normalize(direction, direction);
+                return direction;
+            },
+            u_circleDiffuse: function () {
+                return circleDiffuse;
+            },
+            u_radius: function () {
+                if (milliDuration &lt;= 0) {
+                    if (multiple)
+                        return maxRadius;
+                    else
+                        return radius;
+                } else {
+                    const percent = (((new Date()).getTime() - startTime) % milliDuration) / milliDuration;
+                    if (multiple)
+                        return maxRadius * percent;
+                    else
+                        return radius * percent;
+                }
+            },
+            u_maxRadius: function () {
+                if (multiple)
+                    return maxRadius;
+                else
+                    return radius;
+            },
+            u_diffuseColor: color,
+            u_gradientColor: function () {
+                if (gradientColor) {
+                    //开启渐变色时判断下startColor与endColor是否存在
+                    return defined(startColor) || defined(endColor);
+                }
+                return gradientColor;
+            },
+            u_startColor: function () {
+                return startColor || color;
+            },
+            u_endColor: function () {
+                return endColor || color;
+            },
+            u_power: function () {
+                return power;
+            },
+            u_multiple: function () {
+                return multiple;
+            },
+            u_diffuseColors: function () {
+                return colors;
+            },
+            u_radii: function () {
+                return radii;
+            },
+            u_powers: function () {
+                return powers;
+            },
+            u_radarScan: function () {
+                return radarScan;
+            },
+            u_scanColor: function () {
+                return scanColor || color;
+            },
+            u_scanPower: function () {
+                return scanPower;
+            }
+        }
+    });
+
+    Object.defineProperties(stage, {
+        properties: {
+            get: function () {
+                return properties;
+            }
+        },
+        geographic: {
+            set: function (value) {
+                this.center = parseGeographicToCartesian(value, center);
+            },
+            get: function () {
+                return this.center.toGeographic();
+            }
+        },
+        position: {
+            set: function (value) {
+                this.center = parseToCartesian3(value);
+            },
+            get: function () {
+                return this.center;
+            }
+        },
+        center: {
+            set: function (value) {
+                value = parseToCartesian3(value);
+                if (!Cartesian3.equals(value, center)) {
+                    center = value.clone(center);
+                    updateCenterCoordinates();
+                }
+            },
+            get: function () {
+                return center;
+            }
+        },
+        circleDiffuse: {
+            set: function (value) {
+                Check.typeOf.bool('circleDiffuse', value);
+                circleDiffuse = value;
+            },
+            get: function () {
+                return circleDiffuse;
+            }
+        },
+        color: {
+            set: function (value) {
+                value = parseToColor(value);
+                if (!Color.equals(value, color)) {
+                    color = value.clone(color);
+                    color = color.withAlpha(opacity, color);
+                }
+            },
+            get: function () {
+                return color;
+            }
+        },
+        opacity: {
+            set: function (value) {
+                Check.typeOf.number.greaterThanOrEquals('opacity', value, 0);
+                Check.typeOf.number.lessThanOrEquals('opacity', value, 1);
+                if (opacity !== value) {
+                    opacity = value;
+                    color = color.withAlpha(opacity, color);
+                }
+            },
+            get: function () {
+                return opacity;
+            }
+        },
+        gradientColor: {
+            set: function (value) {
+                Check.typeOf.bool('gradientColor', value);
+                gradientColor = value;
+            }
+        },
+        startColor: {
+            set: function (value) {
+                if (!defined(value)) {
+                    startColor = undefined;
+                    return;
+                }
+                value = parseToColor(value);
+                if (!Color.equals(value, startColor)) {
+                    startColor = value.clone(startColor);
+                }
+            },
+            get: function () {
+                return startColor;
+            }
+        },
+        endColor: {
+            set: function (value) {
+                if (!defined(value)) {
+                    endColor = undefined;
+                    return;
+                }
+                value = parseToColor(value);
+                if (!Color.equals(value, endColor)) {
+                    endColor = value.clone(endColor);
+                }
+            },
+            get: function () {
+                return endColor;
+            }
+        },
+        radius: {
+            set: function (value) {
+                Check.typeOf.number.greaterThan('radius', value, 0);
+                if (radius !== value)
+                    radius = value;
+            },
+            get: function () {
+                return radius;
+            }
+        },
+        duration: {
+            set: function (value) {
+                Check.typeOf.number('duration', value);
+                if (duration !== value) {
+                    duration = value;
+                    milliDuration = duration * 1000;
+                }
+            },
+            get: function () {
+                return duration;
+            }
+        },
+        power: {
+            set: function (value) {
+                Check.typeOf.number.greaterThanOrEquals('power', value, 0);
+                if (power !== value)
+                    power = value;
+            },
+            get: function () {
+                return power;
+            }
+        },
+        multiple: {
+            set: function (value) {
+                Check.typeOf.bool('multiple', value);
+                multiple = value;
+            },
+            get: function () {
+                return multiple;
+            }
+        },
+        multiCircles: {
+            set: function (value) {
+                Check.typeOf.array('multiCircles', value);
+                multiCircles = value;
+                handleCircles(multiCircles);
+            },
+            get: function () {
+                return multiCircles;
+            }
+        },
+        radarScan: {
+            set: function (value) {
+                Check.typeOf.bool('radarScan', value);
+                radarScan = value;
+            },
+            get: function () {
+                return radarScan;
+            }
+        },
+        scanColor: {
+            set: function (value) {
+                if (!defined(value)) {
+                    scanColor = undefined;
+                    return;
+                }
+                value = parseToColor(value);
+                if (!Color.equals(value, scanColor)) {
+                    endColor = value.clone(scanColor);
+                }
+            },
+            get: function () {
+                return scanColor || color;
+            }
+        },
+        scanDuration: {
+            set: function (value) {
+                Check.typeOf.number.greaterThan('scanDuration', value, 0);
+                if (scanDuration !== value) {
+                    scanDuration = value;
+                    milliScanDuration = scanDuration * 1000;
+                }
+            },
+            get: function () {
+                return scanDuration;
+            }
+        },
+        scanPower: {
+            set: function (value) {
+                Check.typeOf.number.greaterThanOrEquals('scanPower', value, 0);
+                if (scanPower !== value)
+                    scanPower = value;
+            },
+            get: function () {
+                return scanPower;
+            }
+        }
+    });
+
+    /**
+     * 向圆形扫描阶段添加一个圆环。
+     * @param {object} circle 圆环设置，包含 color、radius、power 属性。
+     * @memberof PostProcessStage
+    */
+    stage.addCircle = function (circle) {
+        parseAndCheckCircle(circle, color);
+        multiCircles.push(circle);
+        sortCircles(multiCircles);
+        resolveCircles(multiCircles);
+    };
+
+    /**
+     * 移除圆形扫描阶段指定索引的圆环。
+     * @param {number} index 待移除圆环的索引。
+     * @memberof PostProcessStage
+    */
+    stage.removeCircleAt = function (index) {
+        Check.typeOf.integer.greaterThanOrEquals('index', index, 0);
+        Check.typeOf.integer.lessThan('index', index, multiCircles.length);
+        multiCircles.splice(index, 1);
+        if (multiCircles.length === 0)
+            multiple = false;
+        else
+            numberOfMultiple = multiCircles.length;
+    };
+
+    /**
+     * 移除圆形扫描阶段的全部圆环。
+     * @memberof PostProcessStage
+    */
+    stage.removeAllCircles = function () {
+        multiple = false;
+        multiCircles = new Array();
+    };
+
+    stage.setOptions(options);
+    return stage;
+};
+
+const NearFarScalarFogFragmentShaderSource =
+    "float getDistance(sampler2D depthTexture, vec2 texCoords) \n" +
+    "{ \n" +
+    "    float depth = czm_unpackDepth(texture(depthTexture, texCoords)); \n" +
+    "    if (depth == 0.0) { \n" +
+    "        return czm_infinity; \n" +
+    "    } \n" +
+    "    vec4 eyeCoordinate = czm_windowToEyeCoordinates(gl_FragCoord.xy, depth); \n" +
+    "    return -eyeCoordinate.z / eyeCoordinate.w; \n" +
+    "} \n" +
+
+    "float interpolateByDistance(vec4 nearFarScalar, float distance) \n" +
+    "{ \n" +
+    "    float startDistance = nearFarScalar.x; \n" +
+    "    float startValue = nearFarScalar.y; \n" +
+    "    float endDistance = nearFarScalar.z; \n" +
+    "    float endValue = nearFarScalar.w; \n" +
+    "    float t = clamp((distance - startDistance) / (endDistance - startDistance), 0.0, 1.0); \n" +
+    "    return mix(startValue, endValue, t); \n" +
+    "} \n" +
+
+    "vec4 alphaBlend(vec4 sourceColor, vec4 destinationColor) \n" +
+    "{ \n" +
+    "    return sourceColor * vec4(sourceColor.aaa, 1.0) + destinationColor * (1.0 - sourceColor.a); \n" +
+    "} \n" +
+
+    "uniform sampler2D colorTexture; \n" +
+    "uniform sampler2D depthTexture; \n" +
+    "uniform bool u_fogEnable; \n" +
+    "uniform vec4 u_fogByDistance; \n" +
+    "uniform vec4 u_fogColor; \n" +
+    "in vec2 v_textureCoordinates; \n" +
+
+    "void main(void) \n" +
+    "{ \n" +
+    "    if (u_fogEnable) { \n" +
+    "       float distance = getDistance(depthTexture, v_textureCoordinates); \n" +
+    "       vec4 sceneColor = texture(colorTexture, v_textureCoordinates); \n" +
+    "       float blendAmount = interpolateByDistance(u_fogByDistance, distance); \n" +
+    "       vec4 finalFogColor = vec4(u_fogColor.rgb, u_fogColor.a * blendAmount); \n" +
+    "       out_FragColor = alphaBlend(finalFogColor, sceneColor); \n" +
+    "    } else { \n" +
+    "       out_FragColor = texture(colorTexture, v_textureCoordinates); \n" +
+    "    } \n" +
+    "} \n";
+
+/**
+ * 创建基于近远距离线性插值的迷雾后处理阶段。
+ * @param {object} [options={}] 配置项。
+ * @param {string} [options.name] 阶段名称。
+ * @param {object} [options.properties] 自定义属性。
+ * @param {boolean} [options.enable=true] 是否开启迷雾。
+ * @param {Color|string} [options.color='#fff'] 迷雾颜色。
+ * @param {number} [options.near=10] 近距。
+ * @param {number} [options.nearValue=0.0] 近距插值。
+ * @param {number} [options.far=500] 远距。
+ * @param {number} [options.farValue=1.0] 远距插值。
+ * @returns {PostProcessStage} 生成的迷雾后处理阶段。
+ * @memberof PostProcessStageLibrary
+ * @static
+*/
+PostProcessStageLibrary.createNearFarScalarFogStage = function (options = {}) {
+    const name = options.name ?? 'NearFarScalarFog_' + createGuid();
+    const properties = options.properties;
+
+    //是否开启迷雾
+    let fogEnable = options.enable ?? true;
+    //颜色设置
+    let fogColor = parseToColor(options.color ?? '#fff');
+    //近距
+    let near = options.near ?? 10;
+    //近距插入值
+    let nearValue = options.nearValue ?? 0.0;
+    //远距
+    let far = options.far ?? 500;
+    //远距插入值
+    let farValue = options.farValue ?? 1.0;
+
+    const fogByDistance = new Cartesian4(near, nearValue, far, farValue);
+
+    const stage = new PostProcessStage({
+        name: name,
+        fragmentShader: NearFarScalarFogFragmentShaderSource,
+        uniforms: {
+            u_fogEnable: function () {
+                return fogEnable;
+            },
+            u_fogColor: fogColor,
+            u_fogByDistance: fogByDistance,
+        }
+    });
+
+    Object.defineProperties(stage, {
+        properties: {
+            get: function () {
+                return properties;
+            }
+        },
+        enable: {
+            set: function (value) {
+                Check.typeOf.bool('enable', value);
+                fogEnable = value;
+            },
+            get: function () {
+                return fogEnable;
+            }
+        },
+        color: {
+            set: function (value) {
+                value = parseToColor(value);
+                Color.clone(value, fogColor);
+            },
+            get: function () {
+                return fogColor;
+            }
+        },
+        near: {
+            set: function (value) {
+                value = parseNumber(value);
+                fogByDistance.x = value;
+            },
+            get: function () {
+                return fogByDistance.x;
+            }
+        },
+        nearValue: {
+            set: function (value) {
+                value = parseNumber(value);
+                fogByDistance.y = value;
+            },
+            get: function () {
+                return fogByDistance.y;
+            }
+        },
+        far: {
+            set: function (value) {
+                value = parseNumber(value);
+                fogByDistance.z = value;
+            },
+            get: function () {
+                return fogByDistance.z;
+            }
+        },
+        farValue: {
+            set: function (value) {
+                value = parseNumber(value);
+                fogByDistance.w = value;
+            },
+            get: function () {
+                return fogByDistance.w;
+            }
+        }
+    });
+
+    stage.setOptions(options);
+    return stage;
+};
+
+const Exp2FogFragmentShaderSource =
+    "uniform sampler2D colorTexture;\n" +
+    "uniform sampler2D depthTexture;\n" +
+    "in vec2 v_textureCoordinates;\n" +
+    "uniform bool u_fogEnable;\n" +
+    "uniform vec4 u_fogColor;\n" +
+    "uniform float u_fogDensity;\n" +
+
+    "float getDepth(in vec4 depth)\n" +
+    "{\n" +
+    "   float z_window = czm_unpackDepth(depth);\n" +
+    "   z_window = czm_reverseLogDepth(z_window);\n" +
+    "   float near = czm_depthRange.near;\n" +
+    "   float far = czm_depthRange.far;\n" +
+    "   return (2.0 * z_window - near - far) / (far - near);\n" +
+    "}\n" +
+
+    "vec4 textureCoordinatesToEye(in vec2 uv, in float depth)\n" +
+    "{\n" +
+    "   vec2 xy = vec2((uv.x * 2.0 - 1.0), (uv.y * 2.0 - 1.0));\n" +
+    "   vec4 posInCamera = czm_inverseProjection * vec4(xy, depth, 1.0);\n" +
+    "   posInCamera = posInCamera / posInCamera.w;\n" +
+    "   return posInCamera;\n" +
+    "}\n" +
+
+    "void main()\n" +
+    "{\n" +
+    "   out_FragColor = texture(colorTexture, v_textureCoordinates);\n" +
+    "   if (u_fogEnable &amp;&amp; u_fogDensity > 0.0)\n" +
+    "   {\n" +
+    "       float depth = getDepth(texture(depthTexture, v_textureCoordinates));\n" +
+    "       vec4 eyePos = textureCoordinatesToEye(v_textureCoordinates, depth);\n" +
+    "       float fogDepth = -eyePos.z;" +
+    "       float fogFactor = 1.0 - exp(-u_fogDensity * u_fogDensity * fogDepth * fogDepth);\n" +
+    "       fogFactor = clamp(fogFactor, 0.0, 1.0);\n" +
+    "       out_FragColor.rgb = mix(out_FragColor.rgb, u_fogColor.rgb, fogFactor);\n" +
+    "   }\n" +
+    "}";
+
+/**
+ * 创建指数平方（Exp2）浓淡效果的迷雾后处理阶段。
+ * @param {object} [options={}] 配置项。
+ * @param {string} [options.name] 阶段名称。
+ * @param {object} [options.properties] 自定义属性。
+ * @param {boolean} [options.enable=true] 是否开启迷雾。
+ * @param {Color|string} [options.color='#fff'] 迷雾颜色。
+ * @param {number} [options.density=1] 迷雾密度。
+ * @returns {PostProcessStage} 生成的迷雾后处理阶段。
+ * @memberof PostProcessStageLibrary
+ * @static
+*/
+PostProcessStageLibrary.createExp2FogStage = function (options = {}) {
+    const name = options.name ?? 'Exp2Fog_' + createGuid();
+    const properties = options.properties;
+
+    //是否开启迷雾
+    let fogEnable = options.enable ?? true;
+    //颜色设置
+    let fogColor = parseToColor(options.color ?? '#fff');
+    //密度设置
+    let fogDensity = options.density ?? 1;
+
+    const stage = new PostProcessStage({
+        name: name,
+        fragmentShader: Exp2FogFragmentShaderSource,
+        uniforms: {
+            u_fogEnable: function () {
+                return fogEnable;
+            },
+            u_fogColor: fogColor,
+            u_fogDensity: function () {
+                return fogDensity / 500;
+            },
+        }
+    });
+
+    Object.defineProperties(stage, {
+        properties: {
+            get: function () {
+                return properties;
+            }
+        },
+        enable: {
+            set: function (value) {
+                Check.typeOf.bool('enable', value);
+                fogEnable = value;
+            },
+            get: function () {
+                return fogEnable;
+            }
+        },
+        color: {
+            set: function (value) {
+                value = parseToColor(value);
+                Color.clone(value, fogColor);
+            },
+            get: function () {
+                return fogColor;
+            }
+        },
+        density: {
+            set: function (value) {
+                value = parseNumber(value);
+                fogDensity = value;
+            },
+            get: function () {
+                return fogDensity;
+            }
+        },
+    });
+
+    stage.setOptions(options);
+    return stage;
+};
+
+/**
+ * 迷雾类型枚举。
+ * @type {object}
+ * @constant
+*/
+const FogType = Object.freeze({
+    NearFarScalar: 'NearFarScalar',
+    Exp2: 'Exp2',
+});
+
+/**
+ * 根据类型创建迷雾后处理阶段。
+ * @param {object} [options={}] 配置项。
+ * @param {string} [options.type=FogType.NearFarScalar] 迷雾类型，取值见 FogType。
+ * @returns {PostProcessStage} 生成的迷雾后处理阶段。
+ * @memberof PostProcessStageLibrary
+ * @static
+*/
+PostProcessStageLibrary.createFogStage = function (options = {}) {
+    const type = (options.type ?? FogType.NearFarScalar).toLocaleString();
+    switch (type) {
+        case FogType.Exp2:
+            return PostProcessStageLibrary.createExp2FogStage(options);
+        default:
+            return PostProcessStageLibrary.createNearFarScalarFogStage(options);
+    }
+};
+
+const HighlightFragmentShaderSource =
+    "uniform sampler2D colorTexture;\n" +
+    "in vec2 v_textureCoordinates;\n" +
+    "uniform vec4 highlight;\n" +
+    "void main() {\n" +
+    "    vec4 color = texture(colorTexture, v_textureCoordinates);\n" +
+    "    if (czm_selected()) {\n" +
+    "        vec3 highlighted = highlight.a * highlight.rgb + (1.0 - highlight.a) * color.rgb;\n" +
+    "        out_FragColor = vec4(highlighted, color.a);\n" +
+    "    } else { \n" +
+    "        out_FragColor = color;\n" +
+    "    }\n" +
+    "}\n";
+
+/**
+ * 创建高亮后处理阶段。
+ * @param {object} [options={}] 配置项。
+ * @param {Color|string} [options.color] 高亮颜色。
+ * @param {number} [options.intensity] 高亮强度，取值 0 到 1。
+ * @returns {PostProcessStage} 生成的高亮后处理阶段。
+ * @memberof PostProcessStageLibrary
+ * @static
+*/
+PostProcessStageLibrary.createHighlightStage = function (options = {}) {
+    const guid = createGuid();
+
+    const highlight = new Color(1.0, 1.0, 1.0, 0.5);
+
+    const stage = new PostProcessStage({
+        name: "czm_highlight_" + guid,
+        fragmentShader: HighlightFragmentShaderSource,
+        uniforms: {
+            highlight: function () {
+                return highlight;
+            },
+        },
+    });
+
+    Object.defineProperties(stage, {
+        color: {
+            set: function (value) {
+                value = parseToColor(value);
+                Color.cloneRgb(value, highlight);
+            },
+            get: function () {
+                return highlight;
+            }
+        },
+        intensity: {
+            set: function (value) {
+                Check.typeOf.number.greaterThanOrEquals('intensity', 0);
+                Check.typeOf.number.lessThanOrEquals('intensity', 1);
+                highlight.alpha = value;
+            },
+            get: function () {
+                return highlight.alpha;
+            }
+        }
+    });
+
+    stage.setOptions(options);
+    return stage;
+};
+
+const SkylineFragmentShaderSource =
+    "uniform sampler2D colorTexture;\n" +
+    "uniform sampler2D depthTexture;\n" +
+    "uniform sampler2D silhouetteTexture;\n" +
+    "in vec2 v_textureCoordinates;\n" +
+    "void main() {\n" +
+    "    float depth = czm_readDepth(depthTexture, v_textureCoordinates);" +
+    "    vec4 silhouetteColor = texture(silhouetteTexture, v_textureCoordinates);" +
+    "    vec4 color = texture(colorTexture, v_textureCoordinates);\n" +
+    "    if(depth >= 1.0 - 0.000001) {\n" +
+    "        out_FragColor = mix(color, silhouetteColor, silhouetteColor.a);\n" +
+    "    } else { \n" +
+    "        out_FragColor = color;\n" +
+    "    }\n" +
+    "}\n";
+
+/**
+ * 创建天际线（轮廓线）检测的后处理阶段组合。
+ * @param {object} [options={}] 配置项。
+ * @param {boolean} [options.enabled=true] 是否启用。
+ * @param {Color|string} [options.color=Color.RED] 轮廓线颜色。
+ * @param {number} [options.lineWidth=1.0] 轮廓线宽度，须大于 0。
+ * @returns {PostProcessStageComposite} 生成的天际线后处理阶段组合。
+ * @memberof PostProcessStageLibrary
+ * @static
+*/
+PostProcessStageLibrary.createSkylineState = function (options = {}) {
+    const edgeDetection = PostProcessStageLibrary.createEdgeDetectionStage();
+    const skilneStage = new PostProcessStage({
+        fragmentShader: SkylineFragmentShaderSource,
+        uniforms: {
+            silhouetteTexture: edgeDetection.name
+        }
+    });
+
+    const composite = new PostProcessStageComposite({
+        //PostProcessStage要按顺序执行 的stage或组合的数组。
+        stages: [edgeDetection, skilneStage],
+        //是否执行每个后处理阶段，其中一个阶段的输入是前一个阶段的输出。否则每个包含阶段的输入是组合之前执行的阶段的输出
+        inputPreviousStageTexture: false,
+    });
+
+    Object.defineProperties(composite, {
+        lineWidth: {
+            get: function () {
+                return edgeDetection.uniforms.lineWidth;
+            },
+            set: function (value) {
+                Check.typeOf.number.greaterThan('lineWidth', value, 0);
+                edgeDetection.uniforms.lineWidth = value;
+            }
+        },
+        color: {
+            get: function () {
+                return edgeDetection.uniforms.color;
+            },
+            set: function (value) {
+                value = parseToColor(value);
+                Color.cloneRgb(value, edgeDetection.uniforms.color);
+            }
+        },
+    });
+
+    composite.enabled = options.enabled ?? true;
+    composite.color = options.color ?? Color.RED;
+    composite.lineWidth = options.lineWidth ?? 1.0;
+
+    return composite;
+};
+
+export default PostProcessStageLibrary;
+export { FogType, PostProcessStage, PostProcessStageLibrary };
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.5</a> on Wed Oct 14 2026 14:08:50 GMT+0800 (中国标准时间) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+<script src="scripts/collapse.js" defer></script>
+
+
+</body>
+</html>
