@@ -29,8 +29,8 @@ import { Geographic, parseToCartesian3 } from '@lijuhong1981/cesium.utils';
 
 ## 依赖
 
-- `cesium`（peer，`>=1.107.0 <2.0.0`）
-- `@lijuhong1981/jslibs`（伞包，内含 `jsmath` / `jscheck` / `jslib` / `jsdestroy` 等公共包）
+- `cesium`（peer，`>=1.107.0`）
+- `@lijuhong1981/jsmath` / `jscheck` / `jslib` / `jsdestroy`（公共基础包）
 
 ## API 文档
 
