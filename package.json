@@ -16,9 +16,17 @@
   ],
   "keywords": [
     "cesium",
+    "cesiumjs",
     "3d",
+    "webgl",
     "gis",
+    "geospatial",
     "map",
+    "globe",
+    "3d-tiles",
+    "coordinate",
+    "transform",
+    "toolkit",
     "utils"
   ],
   "license": "MIT",
