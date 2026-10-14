@@ -1,6 +1,6 @@
 # cesium-utils
 
-Cesium 公共工具库。从 `pci-map-3d` 抽取的、与业务解耦的 Cesium 工具代码。
+Cesium 公共工具库。
 
 ## 目录结构
 
