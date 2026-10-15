@@ -3,9 +3,11 @@
         "include": [
             "src/additions",
             "src/defines",
+            "src/materials",
             "src/parses",
             "src/primitives",
             "src/revisions",
+            "src/tiles",
             "src/utils"
         ],
         "exclude": [

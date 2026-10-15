@@ -1,4 +1,4 @@
-import { Check, Cartesian3, Cartographic, defined as defined$1, EllipsoidGeodesic, Math as Math$1, Cartesian2, Cartesian4, Matrix3, Matrix4, BoundingRectangle, BoundingSphere, Color, DistanceDisplayCondition, HeadingPitchRange, HeadingPitchRoll, Interval as Interval$1, NearFarScalar, PerspectiveFrustum, Plane, Quaternion, Ray, Rectangle, DeveloperError, Transforms, Camera, Ellipsoid, IntersectionTests, Geometry as Geometry$1, PrimitiveType, GeometryPipeline, GlobeSurfaceTileProvider, Globe, JulianDate, MaterialProperty, Material, Event, TranslationRotationScale, Billboard, BillboardCollection, BoundingSphereState, Label, LabelCollection, PointPrimitive, PointPrimitiveCollection, PolylinePipeline, PostProcessStage, PostProcessStageLibrary, createGuid, PostProcessStageComposite, Primitive, GroundPrimitive, ClassificationPrimitive, GroundPolylinePrimitive, Property, SceneTransforms, Spherical, ArcType, ClassificationType, ClockRange, ColorBlendMode, CornerType, CullFace, HeightReference, HorizontalOrigin, LabelStyle, ShadowMode, PolygonHierarchy, TimeInterval, VerticalOrigin, EllipseGeometryLibrary, GeometryAttribute, ComponentDatatype, GeometryAttributes, ShowGeometryInstanceAttribute, ColorGeometryInstanceAttribute, DistanceDisplayConditionGeometryInstanceAttribute, defer, RuntimeError, BoxOutlineGeometry, BoxGeometry, CylinderOutlineGeometry, CylinderGeometry, EllipsoidOutlineGeometry, EllipsoidGeometry, destroyObject as destroyObject$1, GeometryInstance, PlaneGeometryUpdater, PlaneOutlineGeometry, PlaneGeometry } from 'cesium';
+import { Check, Cartesian3, Cartographic, defined as defined$1, EllipsoidGeodesic, Math as Math$1, Cartesian2, Cartesian4, Matrix3, Matrix4, BoundingRectangle, BoundingSphere, Color, DistanceDisplayCondition, HeadingPitchRange, HeadingPitchRoll, Interval as Interval$1, NearFarScalar, PerspectiveFrustum, Plane, Quaternion, Ray, Rectangle, DeveloperError, Transforms, Camera, Ellipsoid, IntersectionTests, Geometry as Geometry$1, PrimitiveType, GeometryPipeline, GlobeSurfaceTileProvider, Globe, JulianDate, MaterialProperty, Material, Event, TranslationRotationScale, Billboard, BillboardCollection, BoundingSphereState, Label, LabelCollection, PointPrimitive, PointPrimitiveCollection, PolylinePipeline, PostProcessStage, PostProcessStageLibrary, createGuid, PostProcessStageComposite, Primitive, GroundPrimitive, ClassificationPrimitive, GroundPolylinePrimitive, Property, SceneTransforms, Spherical, ArcType, ClassificationType, ClockRange, ColorBlendMode, CornerType, CullFace, HeightReference, HorizontalOrigin, LabelStyle, ShadowMode, PolygonHierarchy, TimeInterval, VerticalOrigin, EllipseGeometryLibrary, GeometryAttribute, ComponentDatatype, GeometryAttributes, ShowGeometryInstanceAttribute, ColorGeometryInstanceAttribute, DistanceDisplayConditionGeometryInstanceAttribute, defer, RuntimeError, PerInstanceColorAppearance, GeometryInstance, BoxOutlineGeometry, BoxGeometry, CylinderOutlineGeometry, CylinderGeometry, EllipsoidOutlineGeometry, EllipsoidGeometry, destroyObject as destroyObject$1, PlaneGeometryUpdater, PlaneOutlineGeometry, PlaneGeometry, GeographicTilingScheme, WebMercatorTilingScheme, Resource, Credit, ImageryProvider, WebMercatorProjection, DiscardMissingTileImagePolicy } from 'cesium';
 export { Billboard, BillboardCollection, BoundingSphere, Camera, Cartesian2, Cartesian3, Cartesian4, Cartographic, Math as CesiumMath, Check, ClassificationPrimitive, Color, DistanceDisplayCondition, Ellipsoid, Geometry, Globe, GlobeSurfaceTileProvider, GroundPolylinePrimitive, GroundPrimitive, HeadingPitchRoll, JulianDate, Label, LabelCollection, Material, MaterialProperty, Matrix3, Matrix4, Plane, PointPrimitive, PointPrimitiveCollection, PolylinePipeline, PostProcessStage, PostProcessStageLibrary, Primitive, Property, Quaternion, Rectangle, SceneTransforms, Spherical } from 'cesium';
 
 /**
@@ -11257,6 +11257,372 @@ class BasePrimitive extends PropertyChangedListener {
 }
 
 /**
+ * 给目标对象定义基础形状通用属性（id、pickId、show、形状类型、几何图元类型、距离显示条件、深度测试、异步创建及 getGeometryOptions 等）。
+ * @param {object} target 要挂载属性的目标对象（通常是某个 primitive 的 prototype）
+ * @returns {void}
+ */
+function defineBaseShapeProperties(target) {
+
+    // 唯一标识与拾取标识
+    if ('id' in target === false) {
+        Object.defineProperty(target, 'id', {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                if (this._id !== value)
+                    this._id = value;
+            },
+            get: function () {
+                return this._id;
+            }
+        });
+    }
+
+    if ('pickId' in target === false) {
+        Object.defineProperty(target, 'pickId', {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                if (this._pickId !== value)
+                    this._pickId = value;
+            },
+            get: function () {
+                return this._pickId;
+            }
+        });
+    }
+
+    // if ('pickPrimitive' in target === false) {
+    //     Object.defineProperty(target, 'pickPrimitive', {
+    //         configurable: true,
+    //         set: function (value) {
+    //             if (this._pickPrimitive !== value)
+    //                 this._pickPrimitive = value;
+    //         },
+    //         get: function () {
+    //             return this._pickPrimitive || this;
+    //         }
+    //     });
+    // }
+
+    // 可见性
+    if ('show' in target === false) {
+        Object.defineProperty(target, 'show', {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.bool('show', value);
+                if (this._show !== value) {
+                    this._show = value;
+                    this.raisePropertyChangeEvent('show', value, PropertyType.ATTRIBUTE);
+                }
+            },
+            get: function () {
+                return this._show;
+            }
+        });
+    }
+
+    Object.defineProperties(target, {
+        // 形状类型与几何图元类型
+        shapeType: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                throw new RuntimeError('shapeType property must be overwrite.');
+            }
+        },
+        primitiveGeometricType: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return PrimitiveType.TRIANGLES
+            },
+        },
+        // 距离显示条件
+        distanceDisplayCondition: {
+            configurable: true,
+            set: function (value) {
+                value = parseToDistanceDisplayCondition(value);
+                if (!DistanceDisplayCondition.equals(value, this._distanceDisplayCondition)) {
+                    this._distanceDisplayCondition = value.clone(this._distanceDisplayCondition);
+                    this.raisePropertyChangeEvent('distanceDisplayCondition', value, PropertyType.ATTRIBUTE);
+                }
+            },
+            get: function () {
+                return this._distanceDisplayCondition;
+            }
+        },
+        // 深度测试与异步创建
+        depthTest: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.bool('depthTest', value);
+                if (this._depthTest !== value) {
+                    this._depthTest = value;
+                    this.raisePropertyChangeEvent('depthTest', value, PropertyType.APPEARANCE);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._depthTest))
+                    this._depthTest = true;
+                return this._depthTest;
+            }
+        },
+        asynchronous: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.bool('asynchronous', value);
+                if (this._asynchronous !== value) {
+                    this._asynchronous = value;
+                    this.raisePropertyChangeEvent('asynchronous', PropertyType.PRIMITIVE);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._asynchronous))
+                    this._asynchronous = true;
+                return this._asynchronous;
+            }
+        },
+        // 几何体参数生成方法（须由子类覆盖实现）
+        getGeometryOptions: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                throw new DeveloperError('getGeometryOptions function must be overwrite.');
+            }
+        }
+    });
+
+}
+
+/**
+ * 基础形状图元类，所有形状图元的基类。
+ * @class BaseShapePrimitive
+ * @extends BasePrimitive
+ */
+class BaseShapePrimitive extends BasePrimitive {
+    /**
+     * 初始化基类属性并应用传入的选项。
+     * @param {object} options 选项
+     */
+    _init(options) {
+        super._init(options);
+
+        this.onInit(options);
+
+        this.setOptions(options);
+
+        if (options.material)
+            this.material = options.material;
+
+        this._readyCompleted();
+    }
+
+    /** 子类可覆盖的初始化钩子。 @param {object} options 选项 */
+    onInit(options) { }
+
+    /** 更新：依次调用 pre/post/last 三个阶段的钩子。 @param {object} frameState 帧状态 */
+    onUpdate(frameState) {
+        this.onPreUpdate(frameState);
+        this.onPostUpdate(frameState);
+        this.onLastUpdate(frameState);
+    }
+
+    /** 更新前钩子。 @param {object} frameState 帧状态 */
+    onPreUpdate(frameState) { }
+
+    /** 更新中钩子。 @param {object} frameState 帧状态 */
+    onPostUpdate(frameState) { }
+
+    /** 更新后钩子。 @param {object} frameState 帧状态 */
+    onLastUpdate(frameState) { }
+}
+
+defineBaseShapeProperties(BaseShapePrimitive.prototype);
+
+/**
+ * 简单形状图元类，负责管理外观与 Primitive 的创建/更新。
+ * @class SimpleShapePrimitive
+ * @extends BaseShapePrimitive
+ */
+class SimpleShapePrimitive extends BaseShapePrimitive {
+    /** @param {object} options 选项 */
+    onInit(options) {
+        super.onInit(options);
+
+        this.needsUpdatePrimitive = true;
+    }
+
+    /** 外观类型，默认逐实例着色外观。 @returns {object} */
+    get appearanceType() {
+        return PerInstanceColorAppearance;
+    }
+
+    /** 图元类型。 @returns {object} */
+    get primitiveType() {
+        return Primitive;
+    }
+
+    /** 属性变更分发。 @param {string} name 属性名 @param {*} value 属性值 @param {string} type 属性类型 */
+    onPropertyValueChanged(name, value, type) {
+        switch (type) {
+            case PropertyType.MATERIAL:
+            case PropertyType.APPEARANCE:
+                this.needsUpdateAppearance = true;
+                break;
+            case PropertyType.GEOMETRY:
+            case PropertyType.PRIMITIVE:
+                this.needsUpdatePrimitive = true;
+                break;
+            case PropertyType.ATTRIBUTE:
+                this.onGeometryInstanceAttributeChanged(name, value);
+                break;
+        }
+        super.onPropertyValueChanged(name, value, type);
+    }
+
+    /** 几何实例属性变更处理。 @param {string} name 属性名 @param {*} value 属性值 */
+    onGeometryInstanceAttributeChanged(name, value) {
+        if (this.primitive) {
+            const attributes = this.primitive.getGeometryInstanceAttributes(this.id);
+            switch (name) {
+                case 'show':
+                    if (attributes.show) {
+                        attributes.show = ShowGeometryInstanceAttribute.toValue(this.show, attributes.show);
+                    }
+                    this.primitive.show = this.show;
+                    break;
+                case 'color':
+                case 'opacity':
+                    if (attributes.color) {
+                        attributes.color = ColorGeometryInstanceAttribute.toValue(this.color, attributes.color);
+                    }
+                    if (attributes.instanceColor) {
+                        attributes.instanceColor = ColorGeometryInstanceAttribute.toValue(this.color, attributes.instanceColor);
+                    }
+                    if (this.appearance)
+                        this.appearance.translucent = isTranslucent(this.color);
+                    break;
+                case 'distanceDisplayCondition':
+                    if (attributes.distanceDisplayCondition) {
+                        attributes.distanceDisplayCondition = DistanceDisplayConditionGeometryInstanceAttribute.toValue(this.distanceDisplayCondition, attributes.distanceDisplayCondition);
+                    }
+                    break;
+                case 'width':
+                    if (attributes.width) {
+                        const result = attributes.width;
+                        result[0] = this.width;
+                        attributes.width = result;
+                    }
+                    break;
+                case 'pointSize':
+                    if (attributes.pointSize) {
+                        attributes.pointSize = FloatGeometryInstanceAttribute.toValue(this.pointSize, attributes.pointSize);
+                    }
+                    break;
+                case 'perVertexColors':
+                    if (attributes.perVertexColors) {
+                        attributes.perVertexColors = BooleanGeometryInstanceAttribute.toValue(this.perVertexColors, attributes.perVertexColors);
+                    }
+                    break;
+            }
+        }
+    }
+
+    /** 需要时更新外观。 @param {object} frameState 帧状态 */
+    _updateAppearance(frameState) {
+        if (this.needsUpdateAppearance) {
+            this.onUpdateAppearance(frameState);
+            this.needsUpdateAppearance = false;
+        }
+    }
+
+    /** 创建外观实例。 @returns {object} */
+    createAppearance() {
+        return new this.appearanceType({
+            material: this.material,
+            translucent: isTranslucent(this.color),
+            flat: this.flat,
+            faceForward: this.faceForward,
+            renderState: getRenderState({
+                depthTest: this.depthTest,
+                cullFace: this.cullFace,
+            }),
+        });
+    }
+
+    /** 重建并应用外观。 */
+    onUpdateAppearance() {
+        this.appearance = this.createAppearance();
+        if (this.primitive)
+            this.primitive.appearance = this.appearance;
+    }
+
+    /** 需要时重建图元。 @param {object} frameState 帧状态 */
+    _updatePrimitive(frameState) {
+        if (this.needsUpdatePrimitive) {
+            this.onUpdatePrimitive(frameState);
+            this.needsUpdatePrimitive = false;
+        }
+    }
+
+    /** 重建图元。 @param {object} frameState 帧状态 */
+    onUpdatePrimitive(frameState) {
+        this._destroyPrimitive();
+        const geometryInstance = this.createGeometryInstance(false);
+        if (!this.appearance)
+            this.appearance = this.createAppearance();
+        if (geometryInstance)
+            this.primitive = new this.primitiveType({
+                id: this.id,
+                show: this.show,
+                pickPrimitive: this.pickPrimitive,
+                asynchronous: this.asynchronous,
+                geometryInstances: geometryInstance,
+                appearance: this.appearance,
+                compressVertices: this.compressVertices,
+            });
+    }
+
+    /** 更新中钩子：更新外观与图元。 @param {object} frameState 帧状态 */
+    onPostUpdate(frameState) {
+        this._updateAppearance(frameState);
+        this._updatePrimitive(frameState);
+    }
+
+    /** 更新后钩子：驱动底层 Primitive。 @param {object} frameState 帧状态 */
+    onLastUpdate(frameState) {
+        if (this.primitive)
+            this.primitive.update(frameState);
+    }
+
+    /** 获取包围球。 @param {boolean} allowPartial 是否允许部分结果 @param {BoundingSphere} result 结果对象 */
+    getBoundingSphere(allowPartial, result) {
+        if (this.primitive)
+            return this.primitive.getBoundingSphere(allowPartial, result);
+        return BoundingSphereState.PENDING;
+    }
+
+    /** 销毁底层 Primitive。 */
+    _destroyPrimitive() {
+        if (this.primitive) {
+            this.primitive.destroy();
+            delete this.primitive;
+        }
+    }
+
+    /** 销毁回调。 */
+    onDestroy() {
+        this._destroyPrimitive();
+        super.onDestroy();
+    }
+}
+
+/**
  * 模型矩阵图元基类，继承自 BasePrimitive。
  * 在图元基础上维护一个模型矩阵，支持矩阵变更事件与回调，供需要直接控制模型矩阵的图元复用。
  */
@@ -11985,6 +12351,312 @@ const ShapeType = Object.freeze({
 });
 
 /**
+ * 为目标对象动态定义点云（PointCloud）类型的属性（点位置/颜色集合、增删操作、外观样式及几何/几何实例创建方法等），
+ * 并按需挂载模型矩阵变换属性。
+ * @param {object} target 要挂载属性的目标对象
+ * @returns {void}
+ */
+function definePointCloudProperties(target) {
+
+    // 按需挂载模型矩阵变换属性
+    if ('_updateModelMatrixTransforms' in target === false)
+        defineModelMatrixTransformsProperties(target);
+
+    Object.defineProperties(target, {
+        // 基础类型标识与图元配置（点图元、平面着色、面向前方、异步、顶点压缩）
+        shapeType: {
+            enumerable: true,
+            writable: false,
+            configurable: true,
+            value: ShapeType.PointCloud,
+        },
+        primitiveGeometricType: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return PrimitiveType.POINTS
+            },
+        },
+        flat: {
+            enumerable: true,
+            writable: false,
+            configurable: true,
+            value: true,
+        },
+        faceForward: {
+            enumerable: true,
+            writable: false,
+            configurable: true,
+            value: true,
+        },
+        asynchronous: {
+            enumerable: true,
+            writable: false,
+            configurable: true,
+            value: false,
+        },
+        compressVertices: {
+            enumerable: true,
+            writable: false,
+            configurable: true,
+            value: false,
+        },
+        // 点数据集合：位置数组、点数量与颜色数组
+        positions: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.defined('positions', value);
+                if (value instanceof ArrayBuffer)
+                    value = new Float64Array(value);
+                if (isTypedArray(value))
+                    value = Cartesian3.unpackArray(value);
+                else if (Array.isArray(value)) {
+                    if (typeof value[0] === "number")
+                        value = Cartesian3.unpackArray(value);
+                }
+                if (this._positions !== value) {
+                    this._positions = value;
+                    this.needsUpdateGeometry = true;
+                    this.raisePropertyChangeEvent('positions', value, PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._positions))
+                    this._positions = [];
+                return this._positions;
+            }
+        },
+        numberOfPoints: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return this.positions.length;
+            }
+        },
+        colors: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.defined('colors', value);
+                if (value instanceof ArrayBuffer)
+                    value = new Uint8Array(value);
+                if (isTypedArray(value))
+                    value = Color.unpackArrayFromBytes(value);
+                else if (Array.isArray(value)) {
+                    if (typeof value[0] === "number")
+                        value = Color.unpackArrayFromBytes(value);
+                }
+                if (this._colors !== value) {
+                    this._colors = value;
+                    this.needsUpdateGeometry = true;
+                    this.raisePropertyChangeEvent('colors', value, PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._colors))
+                    this._colors = [];
+                return this._colors;
+            }
+        },
+        // 点增删操作：添加单个/批量、按索引删除、清空
+        add: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (position, color) {
+                position = parseToCartesian3(position, undefined, false);
+                color = color ?
+                    parseToColor(color) :
+                    Color.fromRandom({
+                        alpha: 1.0,
+                    });
+                this.positions.push(position);
+                const index = this.positions.lastIndexOf(position);
+                this.colors[index] = color;
+                this.needsUpdateGeometry = true;
+                this.raisePropertyChangeEvent('positions', this.positions, PropertyType.GEOMETRY);
+                this.raisePropertyChangeEvent('colors', this.colors, PropertyType.GEOMETRY);
+            },
+        },
+        addArray: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (array) {
+                Check.typeOf.array('array', array);
+                array.forEach(element => {
+                    this.add(element.position, element.color);
+                });
+            },
+        },
+        removeAt: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (startIndex, deleteCount = 1) {
+                Check.typeOf.number('startIndex', startIndex);
+                this.positions.splice(startIndex, deleteCount);
+                this.colors.splice(startIndex, deleteCount);
+                this.raisePropertyChangeEvent('positions', this.positions, PropertyType.GEOMETRY);
+                this.raisePropertyChangeEvent('colors', this.colors, PropertyType.GEOMETRY);
+            }
+        },
+        removeAll: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                this.positions.length = 0;
+                this.colors.length = 0;
+                this.needsUpdateGeometry = true;
+                this.raisePropertyChangeEvent('positions', this.positions, PropertyType.GEOMETRY);
+                this.raisePropertyChangeEvent('colors', this.colors, PropertyType.GEOMETRY);
+            },
+        },
+        // 外观样式：整体颜色、透明度、点大小与逐顶点着色开关
+        color: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToColor(value);
+                if (!Color.equalsRgb(this._color, value)) {
+                    this._color = value.cloneRgb(this._color);
+                    this.raisePropertyChangeEvent('color', value, PropertyType.ATTRIBUTE);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._color))
+                    this._color = Color.DARKGRAY.clone();
+                return this._color;
+            }
+        },
+        opacity: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThanOrEquals('opacity', value, 0);
+                Check.typeOf.number.lessThanOrEquals('opacity', value, 1);
+                if (this.color.alpha !== value) {
+                    this.color.alpha = value;
+                    this.raisePropertyChangeEvent('opacity', value, PropertyType.ATTRIBUTE);
+                }
+            },
+            get: function () {
+                return this.color.alpha;
+            }
+        },
+        pointSize: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number('pointSize', value);
+                if (this._pointSize !== value) {
+                    this._pointSize = value;
+                    this.raisePropertyChangeEvent('pointSize', value, PropertyType.ATTRIBUTE);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._pointSize))
+                    this._pointSize = 3;
+                return this._pointSize;
+            },
+        },
+        perVertexColors: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.bool('perVertexColors', value);
+                if (this._perVertexColors !== value) {
+                    this._perVertexColors = value;
+                    this.raisePropertyChangeEvent('perVertexColors', value, PropertyType.ATTRIBUTE);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._perVertexColors))
+                    this._perVertexColors = true;
+                return this._perVertexColors;
+            }
+        },
+        // 几何构建：创建几何、获取几何实例属性与创建几何实例
+        createGeometry: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                if (this.needsUpdateGeometry || !this._geometry) {
+                    this._geometry = createPointCloudGeometry({
+                        positions: this.positions,
+                        colors: this.colors,
+                    });
+                    this.needsUpdateGeometry = false;
+                }
+                return this._geometry;
+            }
+        },
+        getGeometryInstanceAttributes: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                return getGeometryInstanceAttributes(this.show, undefined, this._distanceDisplayCondition, undefined, this.pointSize, this.perVertexColors, this.color);
+            }
+        },
+        createGeometryInstance: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (enableModelMatrix = true) {
+                if (this.numberOfPoints === 0)
+                    return;
+                const geometry = this.createGeometry();
+                const attributes = this.getGeometryInstanceAttributes();
+                return new GeometryInstance({
+                    id: this.id,
+                    pickId: this.pickId,
+                    geometry: geometry,
+                    attributes: attributes,
+                    modelMatrix: enableModelMatrix ? this.computedModelMatrix : undefined,
+                });
+            }
+        }
+    });
+
+}
+
+/**
+ * 点云图元类。
+ * @class PointCloudPrimitive
+ * @extends SimpleShapePrimitive
+ */
+class PointCloudPrimitive extends SimpleShapePrimitive {
+    /** 底层点云 Primitive。 @returns {object} */
+    get pointCloud() {
+        return this.primitive;
+    }
+
+    /** 更新前：更新模型矩阵变换。 @param {object} frameState 帧状态 */
+    onPreUpdate(frameState) {
+        this._updateModelMatrixTransforms(frameState);
+    }
+
+    /** 更新后：同步模型矩阵并驱动底层 Primitive。 @param {object} frameState 帧状态 */
+    onLastUpdate(frameState) {
+        if (this.primitive)
+            this.primitive.modelMatrix = this.computedModelMatrix;
+        super.onLastUpdate(frameState);
+    }
+
+    /** 销毁回调。 */
+    onDestroy() {
+        this._destroyModelMatrixTransforms();
+        super.onDestroy();
+    }
+}
+
+definePointCloudProperties(PointCloudPrimitive.prototype);
+
+/**
  * 给目标对象定义外观相关属性（flat、faceForward、cullFace、shadows）。
  * @param {object} target 要挂载属性的目标对象（通常是某个 primitive 的 prototype）
  * @param {boolean} [isFill] 是否为填充外观，用于区分属性变更事件类型，默认为 false
@@ -12057,149 +12729,6 @@ function defineAppearanceProperties(target, isFill = false) {
                 return this._shadows;
             }
         },
-    });
-
-}
-
-/**
- * 给目标对象定义基础形状通用属性（id、pickId、show、形状类型、几何图元类型、距离显示条件、深度测试、异步创建及 getGeometryOptions 等）。
- * @param {object} target 要挂载属性的目标对象（通常是某个 primitive 的 prototype）
- * @returns {void}
- */
-function defineBaseShapeProperties(target) {
-
-    // 唯一标识与拾取标识
-    if ('id' in target === false) {
-        Object.defineProperty(target, 'id', {
-            enumerable: true,
-            configurable: true,
-            set: function (value) {
-                if (this._id !== value)
-                    this._id = value;
-            },
-            get: function () {
-                return this._id;
-            }
-        });
-    }
-
-    if ('pickId' in target === false) {
-        Object.defineProperty(target, 'pickId', {
-            enumerable: true,
-            configurable: true,
-            set: function (value) {
-                if (this._pickId !== value)
-                    this._pickId = value;
-            },
-            get: function () {
-                return this._pickId;
-            }
-        });
-    }
-
-    // if ('pickPrimitive' in target === false) {
-    //     Object.defineProperty(target, 'pickPrimitive', {
-    //         configurable: true,
-    //         set: function (value) {
-    //             if (this._pickPrimitive !== value)
-    //                 this._pickPrimitive = value;
-    //         },
-    //         get: function () {
-    //             return this._pickPrimitive || this;
-    //         }
-    //     });
-    // }
-
-    // 可见性
-    if ('show' in target === false) {
-        Object.defineProperty(target, 'show', {
-            enumerable: true,
-            configurable: true,
-            set: function (value) {
-                Check.typeOf.bool('show', value);
-                if (this._show !== value) {
-                    this._show = value;
-                    this.raisePropertyChangeEvent('show', value, PropertyType.ATTRIBUTE);
-                }
-            },
-            get: function () {
-                return this._show;
-            }
-        });
-    }
-
-    Object.defineProperties(target, {
-        // 形状类型与几何图元类型
-        shapeType: {
-            enumerable: true,
-            configurable: true,
-            get: function () {
-                throw new RuntimeError('shapeType property must be overwrite.');
-            }
-        },
-        primitiveGeometricType: {
-            enumerable: true,
-            configurable: true,
-            get: function () {
-                return PrimitiveType.TRIANGLES
-            },
-        },
-        // 距离显示条件
-        distanceDisplayCondition: {
-            configurable: true,
-            set: function (value) {
-                value = parseToDistanceDisplayCondition(value);
-                if (!DistanceDisplayCondition.equals(value, this._distanceDisplayCondition)) {
-                    this._distanceDisplayCondition = value.clone(this._distanceDisplayCondition);
-                    this.raisePropertyChangeEvent('distanceDisplayCondition', value, PropertyType.ATTRIBUTE);
-                }
-            },
-            get: function () {
-                return this._distanceDisplayCondition;
-            }
-        },
-        // 深度测试与异步创建
-        depthTest: {
-            enumerable: true,
-            configurable: true,
-            set: function (value) {
-                Check.typeOf.bool('depthTest', value);
-                if (this._depthTest !== value) {
-                    this._depthTest = value;
-                    this.raisePropertyChangeEvent('depthTest', value, PropertyType.APPEARANCE);
-                }
-            },
-            get: function () {
-                if (!defined$1(this._depthTest))
-                    this._depthTest = true;
-                return this._depthTest;
-            }
-        },
-        asynchronous: {
-            enumerable: true,
-            configurable: true,
-            set: function (value) {
-                Check.typeOf.bool('asynchronous', value);
-                if (this._asynchronous !== value) {
-                    this._asynchronous = value;
-                    this.raisePropertyChangeEvent('asynchronous', PropertyType.PRIMITIVE);
-                }
-            },
-            get: function () {
-                if (!defined$1(this._asynchronous))
-                    this._asynchronous = true;
-                return this._asynchronous;
-            }
-        },
-        // 几何体参数生成方法（须由子类覆盖实现）
-        getGeometryOptions: {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: function () {
-                throw new DeveloperError('getGeometryOptions function must be overwrite.');
-            }
-        }
     });
 
 }
@@ -13902,280 +14431,6 @@ function definePlaneProperties(target) {
 }
 
 /**
- * 为目标对象动态定义点云（PointCloud）类型的属性（点位置/颜色集合、增删操作、外观样式及几何/几何实例创建方法等），
- * 并按需挂载模型矩阵变换属性。
- * @param {object} target 要挂载属性的目标对象
- * @returns {void}
- */
-function definePointCloudProperties(target) {
-
-    // 按需挂载模型矩阵变换属性
-    if ('_updateModelMatrixTransforms' in target === false)
-        defineModelMatrixTransformsProperties(target);
-
-    Object.defineProperties(target, {
-        // 基础类型标识与图元配置（点图元、平面着色、面向前方、异步、顶点压缩）
-        shapeType: {
-            enumerable: true,
-            writable: false,
-            configurable: true,
-            value: ShapeType.PointCloud,
-        },
-        primitiveGeometricType: {
-            enumerable: true,
-            configurable: true,
-            get: function () {
-                return PrimitiveType.POINTS
-            },
-        },
-        flat: {
-            enumerable: true,
-            writable: false,
-            configurable: true,
-            value: true,
-        },
-        faceForward: {
-            enumerable: true,
-            writable: false,
-            configurable: true,
-            value: true,
-        },
-        asynchronous: {
-            enumerable: true,
-            writable: false,
-            configurable: true,
-            value: false,
-        },
-        compressVertices: {
-            enumerable: true,
-            writable: false,
-            configurable: true,
-            value: false,
-        },
-        // 点数据集合：位置数组、点数量与颜色数组
-        positions: {
-            enumerable: true,
-            configurable: true,
-            set: function (value) {
-                Check.defined('positions', value);
-                if (value instanceof ArrayBuffer)
-                    value = new Float64Array(value);
-                if (isTypedArray(value))
-                    value = Cartesian3.unpackArray(value);
-                else if (Array.isArray(value)) {
-                    if (typeof value[0] === "number")
-                        value = Cartesian3.unpackArray(value);
-                }
-                if (this._positions !== value) {
-                    this._positions = value;
-                    this.needsUpdateGeometry = true;
-                    this.raisePropertyChangeEvent('positions', value, PropertyType.GEOMETRY);
-                }
-            },
-            get: function () {
-                if (!defined$1(this._positions))
-                    this._positions = [];
-                return this._positions;
-            }
-        },
-        numberOfPoints: {
-            enumerable: true,
-            configurable: true,
-            get: function () {
-                return this.positions.length;
-            }
-        },
-        colors: {
-            enumerable: true,
-            configurable: true,
-            set: function (value) {
-                Check.defined('colors', value);
-                if (value instanceof ArrayBuffer)
-                    value = new Uint8Array(value);
-                if (isTypedArray(value))
-                    value = Color.unpackArrayFromBytes(value);
-                else if (Array.isArray(value)) {
-                    if (typeof value[0] === "number")
-                        value = Color.unpackArrayFromBytes(value);
-                }
-                if (this._colors !== value) {
-                    this._colors = value;
-                    this.needsUpdateGeometry = true;
-                    this.raisePropertyChangeEvent('colors', value, PropertyType.GEOMETRY);
-                }
-            },
-            get: function () {
-                if (!defined$1(this._colors))
-                    this._colors = [];
-                return this._colors;
-            }
-        },
-        // 点增删操作：添加单个/批量、按索引删除、清空
-        add: {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: function (position, color) {
-                position = parseToCartesian3(position, undefined, false);
-                color = color ?
-                    parseToColor(color) :
-                    Color.fromRandom({
-                        alpha: 1.0,
-                    });
-                this.positions.push(position);
-                const index = this.positions.lastIndexOf(position);
-                this.colors[index] = color;
-                this.needsUpdateGeometry = true;
-                this.raisePropertyChangeEvent('positions', this.positions, PropertyType.GEOMETRY);
-                this.raisePropertyChangeEvent('colors', this.colors, PropertyType.GEOMETRY);
-            },
-        },
-        addArray: {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: function (array) {
-                Check.typeOf.array('array', array);
-                array.forEach(element => {
-                    this.add(element.position, element.color);
-                });
-            },
-        },
-        removeAt: {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: function (startIndex, deleteCount = 1) {
-                Check.typeOf.number('startIndex', startIndex);
-                this.positions.splice(startIndex, deleteCount);
-                this.colors.splice(startIndex, deleteCount);
-                this.raisePropertyChangeEvent('positions', this.positions, PropertyType.GEOMETRY);
-                this.raisePropertyChangeEvent('colors', this.colors, PropertyType.GEOMETRY);
-            }
-        },
-        removeAll: {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: function () {
-                this.positions.length = 0;
-                this.colors.length = 0;
-                this.needsUpdateGeometry = true;
-                this.raisePropertyChangeEvent('positions', this.positions, PropertyType.GEOMETRY);
-                this.raisePropertyChangeEvent('colors', this.colors, PropertyType.GEOMETRY);
-            },
-        },
-        // 外观样式：整体颜色、透明度、点大小与逐顶点着色开关
-        color: {
-            enumerable: true,
-            configurable: true,
-            set: function (value) {
-                value = parseToColor(value);
-                if (!Color.equalsRgb(this._color, value)) {
-                    this._color = value.cloneRgb(this._color);
-                    this.raisePropertyChangeEvent('color', value, PropertyType.ATTRIBUTE);
-                }
-            },
-            get: function () {
-                if (!defined$1(this._color))
-                    this._color = Color.DARKGRAY.clone();
-                return this._color;
-            }
-        },
-        opacity: {
-            enumerable: true,
-            configurable: true,
-            set: function (value) {
-                Check.typeOf.number.greaterThanOrEquals('opacity', value, 0);
-                Check.typeOf.number.lessThanOrEquals('opacity', value, 1);
-                if (this.color.alpha !== value) {
-                    this.color.alpha = value;
-                    this.raisePropertyChangeEvent('opacity', value, PropertyType.ATTRIBUTE);
-                }
-            },
-            get: function () {
-                return this.color.alpha;
-            }
-        },
-        pointSize: {
-            enumerable: true,
-            configurable: true,
-            set: function (value) {
-                Check.typeOf.number('pointSize', value);
-                if (this._pointSize !== value) {
-                    this._pointSize = value;
-                    this.raisePropertyChangeEvent('pointSize', value, PropertyType.ATTRIBUTE);
-                }
-            },
-            get: function () {
-                if (!defined$1(this._pointSize))
-                    this._pointSize = 3;
-                return this._pointSize;
-            },
-        },
-        perVertexColors: {
-            enumerable: true,
-            configurable: true,
-            set: function (value) {
-                Check.typeOf.bool('perVertexColors', value);
-                if (this._perVertexColors !== value) {
-                    this._perVertexColors = value;
-                    this.raisePropertyChangeEvent('perVertexColors', value, PropertyType.ATTRIBUTE);
-                }
-            },
-            get: function () {
-                if (!defined$1(this._perVertexColors))
-                    this._perVertexColors = true;
-                return this._perVertexColors;
-            }
-        },
-        // 几何构建：创建几何、获取几何实例属性与创建几何实例
-        createGeometry: {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: function () {
-                if (this.needsUpdateGeometry || !this._geometry) {
-                    this._geometry = createPointCloudGeometry({
-                        positions: this.positions,
-                        colors: this.colors,
-                    });
-                    this.needsUpdateGeometry = false;
-                }
-                return this._geometry;
-            }
-        },
-        getGeometryInstanceAttributes: {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: function () {
-                return getGeometryInstanceAttributes(this.show, undefined, this._distanceDisplayCondition, undefined, this.pointSize, this.perVertexColors, this.color);
-            }
-        },
-        createGeometryInstance: {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: function (enableModelMatrix = true) {
-                if (this.numberOfPoints === 0)
-                    return;
-                const geometry = this.createGeometry();
-                const attributes = this.getGeometryInstanceAttributes();
-                return new GeometryInstance({
-                    id: this.id,
-                    pickId: this.pickId,
-                    geometry: geometry,
-                    attributes: attributes,
-                    modelMatrix: enableModelMatrix ? this.computedModelMatrix : undefined,
-                });
-            }
-        }
-    });
-
-}
-
-/**
  * 为目标对象动态定义点图元（PointPrimitive）相关属性（标识、位置/地理坐标、大小、颜色/轮廓、距离缩放与显示控制等），
  * 内部委托给 PointPrimitive 实现。
  * @param {object} target 要挂载属性的目标对象
@@ -14712,5 +14967,3272 @@ function defineStTransformsProperties(target) {
 
 }
 
-export { BasePrimitive, BooleanGeometryInstanceAttribute, Cartesian3GeometryInstanceAttribute, FloatGeometryInstanceAttribute, FogType, Geographic, GeographicTransform, TranslationRotationScaleTransform as MatrixTransform, ModelMatrixPrimitive, ModelMatrixTransforms, PropertyChangedListener, PropertyType, RotationFrameType, Scratch, ShapeType, StTransforms, TransformsPrimitive, TranslationRotationScaleTransform, computeCirclePositions, computeCircleRadius, computeModelMatrix, computeStTransform, createGeometry, createPointCloudGeometry, defineAppearanceProperties, defineBaseShapeProperties, defineBoxProperties, defineCenterProperties, defineClampToGroundProperties, defineComputedModelMatrixProperties, defineCylinderProperties, defineEllipsoidProperties, defineLabelProperties, defineMeshProperties, defineModelMatrixTransformsProperties, defineOutlineProperties, definePlaneProperties, definePointCloudProperties, definePointPrimitiveProperties, definePolygonVolumeProperties, defineSizeInPixelsProperties, defineStTransformsProperties, getGeometryInstanceAttributes, getPositionFromTarget, getRenderState, isColorMaterial, isTranslucent, parseAltitude, parseArcType, parseAttitudeToHeadingPitchRoll, parseAttitudeToMatrix3, parseAttitudeToQuaternion, parseCartographicToCartesian, parseCartographicsToPositions, parseClassificationType, parseClockRange, parseColorBlendMode, parseCornerType, parseCullFace, parseEulerToHeadingPitchRoll, parseEulerToQuaternion, parseGeographicToCartesian, parseGeographicsToPositions, parseHeading, parseAltitude as parseHeight, parseHeightReference, parseHoles, parseHorizontalOrigin, parseLabelStyle, parseLatitude, parseLongitude, parsePitch, parseRoll, parseRotationToHeadingPitchRoll, parseRotationToMatrix3, parseRotationToQuaternion, parseShadowMode, parseToBoundingRectangle, parseToCartesian2, parseToCartesian3, parseToCartesian3Array, parseToCartesian4, parseToCartographic, parseToColor, parseToDistanceDisplayCondition, parseToGeographic, parseToHeadingPitchRange, parseToJulianDate, parseToNearFarScalar, parseToPlane, parseToPolygonHierarchy, parseToRange, parseToRectangle, parseToTimeInterval, parseVerticalOrigin, resolveModelMatrixByFixedFrame };
+/**
+ * 材质基类，封装 Cesium Material 对象的创建与生命周期管理，作为所有自定义材质的父类。
+ * 子类通过重写 materialType 指定材质类型，并可重写 onInit 完成初始化。
+ */
+class BaseMaterial extends Destroyable {
+    /**
+     * 创建材质实例。
+     * @param {object} [options={}] 配置项，包含 translucent 及材质自身参数
+     */
+    constructor(options = {}) {
+        super();
+        this._material = new Material({
+            fabric: {
+                type: this.materialType
+            },
+            translucent: options.translucent
+        });
+
+        this.onInit(options);
+    }
+
+    /**
+     * 获取材质类型标识，必须在子类中实现。
+     * @returns {string} 材质类型标识
+     */
+    get materialType() {
+        throw new Error('该方法必须在子类中实现');
+    }
+
+    /**
+     * 初始化钩子，子类可重写以处理自定义参数。
+     * @param {object} options 配置项
+     * @returns {void}
+     */
+    onInit(options) {
+        this.setOptions(options);
+    }
+
+    /**
+     * 将配置项属性批量赋值到当前实例。
+     * @param {object} options 配置项
+     * @returns {void}
+     */
+    setOptions(options) {
+        setParameters(this, options);
+    }
+
+    /**
+     * 获取底层的 Cesium Material 对象。
+     * @returns {Material} 材质对象
+     */
+    get material() {
+        return this._material;
+    }
+
+    /**
+     * 获取材质类型。
+     * @returns {string} 材质类型
+     */
+    get type() {
+        return this._material.type;
+    }
+
+    /**
+     * 获取材质着色器源码。
+     * @returns {string} 着色器源码
+     */
+    get shaderSource() {
+        return this._material.shaderSource;
+    }
+
+    /**
+     * 获取材质包含的子材质集合。
+     * @returns {object} 子材质集合
+     */
+    get materials() {
+        return this._material.materials;
+    }
+
+    /**
+     * 获取材质 uniform 变量集合。
+     * @returns {object} uniform 变量集合
+     */
+    get uniforms() {
+        return this._material.uniforms;
+    }
+
+    /**
+     * 获取材质内部维护的 uniform 变量集合。
+     * @returns {object} 内部 uniform 变量集合
+     */
+    get _uniforms() {
+        return this._material._uniforms;
+    }
+
+    // get _textures() {
+    //     return this._material._textures;
+    // }
+
+    /**
+     * 获取材质是否为半透明。
+     * @returns {boolean} 是否半透明
+     */
+    get translucent() {
+        return this._material.translucent;
+    }
+
+    /**
+     * 判断材质是否为半透明。
+     * @returns {boolean} 是否半透明
+     */
+    isTranslucent() {
+        return this._material.isTranslucent();
+    }
+
+    /**
+     * 更新材质。
+     * @param {object} context 渲染上下文
+     * @returns {void}
+     */
+    update(context) {
+        this._material.update(context);
+    }
+
+    /**
+     * 销毁材质，释放底层资源。
+     * @returns {void}
+     */
+    onDestroy() {
+        this._material.destroy();
+    }
+}
+
+/**
+ * 在目标对象上定义 color、opacity 属性访问器，供颜色类材质复用。
+ * @param {object} target 目标对象，通常为材质类的 prototype
+ * @returns {void}
+ */
+function defineColorMaterialProperties(target) {
+
+    Object.defineProperties(target, {
+        color: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToColor(value);
+                const color = this.uniforms.color;
+                if (!Cesium.Color.equalsRgb(value, color))
+                    this.uniforms.color = value.cloneRgb(color);
+            },
+            get: function () {
+                return this.uniforms.color;
+            }
+        },
+        opacity: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Cesium.Check.typeOf.number.greaterThanOrEquals('opacity', value, 0);
+                Cesium.Check.typeOf.number.lessThanOrEquals('opacity', value, 1);
+                this.color.alpha = value;
+            },
+            get: function () {
+                return this.color.alpha;
+            }
+        },
+    });
+
+}
+/**
+ * 在目标对象上定义折线虚线材质所需的属性访问器：
+ * color、opacity（若未定义则先定义）、gapColor、gapOpacity、dashLength、dashPattern。
+ * @param {object} target 目标对象，通常为材质类的 prototype
+ * @returns {void}
+ */
+function definePolylineDashMaterialProperties(target) {
+
+    if ('color' in target === false)
+        defineColorMaterialProperties(target);
+
+    Object.defineProperties(target, {
+        gapColor: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToColor(value);
+                const gapColor = this.uniforms.gapColor;
+                if (!Cesium.Color.equalsRgb(value, gapColor))
+                    this.uniforms.gapColor = value.cloneRgb(gapColor);
+            },
+            get: function () {
+                return this.uniforms.gapColor;
+            }
+        },
+        gapOpacity: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Cesium.Check.typeOf.number.greaterThanOrEquals('gapOpacity', value, 0);
+                Cesium.Check.typeOf.number.lessThanOrEquals('gapOpacity', value, 1);
+                this.gapColor.alpha = value;
+            },
+            get: function () {
+                return this.gapColor.alpha;
+            }
+        },
+        dashLength: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Cesium.Check.typeOf.number('dashLength', value);
+                this.uniforms.dashLength = value;
+            },
+            get: function () {
+                return this.uniforms.dashLength;
+            }
+        },
+        dashPattern: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Cesium.Check.typeOf.number('dashPattern', value);
+                this.uniforms.dashPattern = value;
+            },
+            get: function () {
+                return this.uniforms.dashPattern;
+            }
+        }
+    });
+
+}
+/**
+ * 在目标对象上定义折线发光材质所需的属性访问器：
+ * color、opacity（若未定义则先定义）、glowPower、taperPower。
+ * @param {object} target 目标对象，通常为材质类的 prototype
+ * @returns {void}
+ */
+function definePolylineGlowMaterialProperties(target) {
+
+    if ('color' in target === false)
+        defineColorMaterialProperties(target);
+
+    Object.defineProperties(target, {
+        glowPower: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Cesium.Check.typeOf.number('glowPower', value);
+                this.uniforms.glowPower = value;
+            },
+            get: function () {
+                return this.uniforms.glowPower;
+            }
+        },
+        taperPower: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Cesium.Check.typeOf.number('taperPower', value);
+                this.uniforms.taperPower = value;
+            },
+            get: function () {
+                return this.uniforms.taperPower;
+            }
+        }
+    });
+}
+/**
+ * 在目标对象上定义折线描边材质所需的属性访问器：
+ * color、opacity（若未定义则先定义）、outline、outlineColor、outlineOpacity、outlineWidth。
+ * @param {object} target 目标对象，通常为材质类的 prototype
+ * @returns {void}
+ */
+function definePolylineOutlineMaterialProperties(target) {
+
+    if ('color' in target === false)
+        defineColorMaterialProperties(target);
+
+    Object.defineProperties(target, {
+        outline: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Cesium.Check.typeOf.boolean('outline', value);
+                this.uniforms.outline = value;
+            },
+            get: function () {
+                return this.uniforms.outline;
+            }
+        },
+        outlineColor: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToColor(value);
+                const outlineColor = this.uniforms.outlineColor;
+                if (!Cesium.Color.equalsRgb(value, outlineColor))
+                    this.uniforms.outlineColor = value.cloneRgb(outlineColor);
+            },
+            get: function () {
+                return this.uniforms.outlineColor;
+            }
+        },
+        outlineOpacity: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Cesium.Check.typeOf.number.greaterThanOrEquals('outlineOpacity', value, 0);
+                Cesium.Check.typeOf.number.lessThanOrEquals('outlineOpacity', value, 1);
+                this.outlineColor.alpha = value;
+            },
+            get: function () {
+                return this.outlineColor.alpha;
+            }
+        },
+        outlineWidth: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Cesium.Check.typeOf.number('outlineWidth', value);
+                this.uniforms.outlineWidth = value;
+            },
+            get: function () {
+                return this.uniforms.outlineWidth;
+            }
+        },
+    });
+
+}
+
+/**
+ * 基础图像材质，基于 Cesium 内置 BasicImageType，为几何体渲染一张图片纹理。
+ */
+class BasicImageMaterial extends BaseMaterial {
+    // constructor(options) {
+    //     super(options);
+    // }
+
+    /**
+     * 获取材质类型。
+     * @returns {string} 材质类型标识
+     */
+    get materialType() {
+        return Material.BasicImageType;
+    }
+
+    /**
+     * 设置图片，传入空值时使用默认图片。
+     * @param {string|HTMLImageElement|HTMLCanvasElement} value 图片资源
+     * @returns {void}
+     */
+    set image(value) {
+        if (value)
+            this.uniforms.image = value;
+        else
+            this.uniforms.image = Material.DefaultImageId;
+    }
+
+    /**
+     * 获取图片。
+     * @returns {string|HTMLImageElement|HTMLCanvasElement} 图片资源
+     */
+    get image() {
+        return this.uniforms.image;
+    }
+}
+defineColorMaterialProperties(BasicImageMaterial.prototype);
+
+/**
+ * 颜色材质，基于 Cesium 内置 ColorType，以单一颜色填充几何体。
+ * color、opacity 属性由 defineColorMaterialProperties 注入。
+ */
+class ColorMaterial extends BaseMaterial {
+    // constructor(options) {
+    //     super(options);
+    // }
+
+    /**
+     * 获取材质类型。
+     * @returns {string} 材质类型标识
+     */
+    get materialType() {
+        return Material.ColorType;
+    }
+}
+defineColorMaterialProperties(ColorMaterial.prototype);
+
+/**
+ * 图像变换材质，基于 Cesium 内置 ImageTransformType，支持对图片纹理进行平移、旋转、缩放等变换。
+ * 纹理变换相关属性（stRepeat、stOffset、stRotation、stCenter 等）由 defineStTransformsProperties 注入。
+ */
+class ImageTransformMaterial extends BaseMaterial {
+    // constructor(options) {
+    //     super(options);
+    // }
+
+    /**
+     * 获取材质类型。
+     * @returns {string} 材质类型标识
+     */
+    get materialType() {
+        return Material.ImageTransformType;
+    }
+
+    /**
+     * 纹理变换变更回调，将变换结果写入材质 uniform。
+     * @param {Matrix3} transform 纹理变换矩阵
+     * @returns {void}
+     */
+    onStTransformChanged(transform) {
+        this.uniforms.stTransform = transform;
+    }
+
+    // set translucent(value) {
+    //     // Check.typeOf.bool('translucent', value);
+    //     if (this.uniforms)
+    //         this.uniforms.translucent = value;
+    // }
+
+    // get translucent() {
+    //     return this.uniforms.translucent;
+    // }
+
+    /**
+     * 设置图片，传入空值时使用默认图片。
+     * @param {string|HTMLImageElement|HTMLCanvasElement} value 图片资源
+     * @returns {void}
+     */
+    set image(value) {
+        if (value)
+            this.uniforms.image = value;
+        else
+            this.uniforms.image = Material.DefaultImageId;
+    }
+
+    /**
+     * 获取图片。
+     * @returns {string|HTMLImageElement|HTMLCanvasElement} 图片资源
+     */
+    get image() {
+        return this.uniforms.image;
+    }
+
+    /**
+     * 设置叠加颜色，会先转换为 Color 对象并按 RGB 更新。
+     * @param {Color|string|object} value 颜色
+     * @returns {void}
+     */
+    set color(value) {
+        value = parseToColor(value);
+        const color = this.uniforms.color;
+        if (!Color.equalsRgb(value, color)) {
+            this.uniforms.color = value.cloneRgb(color);
+        }
+    }
+
+    /**
+     * 获取叠加颜色。
+     * @returns {Color} 颜色
+     */
+    get color() {
+        return this.uniforms.color;
+    }
+
+    /**
+     * 设置不透明度，取值范围 0~1。
+     * @param {number} value 不透明度
+     * @returns {void}
+     */
+    set opacity(value) {
+        Check.typeOf.number.greaterThanOrEquals('opacity', value, 0);
+        Check.typeOf.number.lessThanOrEquals('opacity', value, 1);
+        this.color.alpha = value;
+    }
+
+    /**
+     * 获取不透明度。
+     * @returns {number} 不透明度
+     */
+    get opacity() {
+        return this.color.alpha;
+    }
+
+    /**
+     * 设置纹理重复次数。
+     * @deprecated 请使用 stRepeat 代替。
+     * @param {Cartesian2|object} value 纹理重复次数
+     * @returns {void}
+     */
+    // @deprecated
+    set repeat(value) {
+        console.warn('repeat property has deprecated, use stRepeat instead.');
+        this.stRepeat = value;
+    }
+
+    /**
+     * 获取纹理重复次数。
+     * @deprecated 请使用 stRepeat 代替。
+     * @returns {Cartesian2} 纹理重复次数
+     */
+    // @deprecated
+    get repeat() {
+        console.warn('repeat property has deprecated, use stRepeat instead.');
+        return this.stRepeat;
+    }
+
+    /**
+     * 设置纹理偏移量。
+     * @deprecated 请使用 stOffset 代替。
+     * @param {Cartesian2|object} value 纹理偏移量
+     * @returns {void}
+     */
+    // @deprecated
+    set offset(value) {
+        console.warn('offset property has deprecated, use stOffset instead.');
+        this.stOffset = value;
+    }
+
+    /**
+     * 获取纹理偏移量。
+     * @deprecated 请使用 stOffset 代替。
+     * @returns {Cartesian2} 纹理偏移量
+     */
+    // @deprecated
+    get offset() {
+        console.warn('offset property has deprecated, use stOffset instead.');
+        return this.stOffset;
+    }
+
+    /**
+     * 设置纹理旋转角度（弧度制）。
+     * @deprecated 请使用 stRotation 代替。
+     * @param {number} value 旋转角度（弧度制）
+     * @returns {void}
+     */
+    // @deprecated
+    set rotation(value) {
+        console.warn('rotation property has deprecated, use stRotation instead.');
+        this.stRotation = value;
+    }
+
+    /**
+     * 获取纹理旋转角度（弧度制）。
+     * @deprecated 请使用 stRotation 代替。
+     * @returns {number} 旋转角度（弧度制）
+     */
+    // @deprecated
+    get rotation() {
+        console.warn('rotation property has deprecated, use stRotation instead.');
+        return this.stRotation;
+    }
+
+    /**
+     * 设置纹理旋转角度（角度制）。
+     * @deprecated 请使用 stRotationDegrees 代替。
+     * @param {number} value 旋转角度（角度制）
+     * @returns {void}
+     */
+    // @deprecated
+    set rotationDegrees(value) {
+        console.warn('rotationDegrees property has deprecated, use stRotationDegrees instead.');
+        this.stRotationDegrees = value;
+    }
+
+    /**
+     * 获取纹理旋转角度（角度制）。
+     * @deprecated 请使用 stRotationDegrees 代替。
+     * @returns {number} 旋转角度（角度制）
+     */
+    // @deprecated
+    get rotationDegrees() {
+        console.warn('rotationDegrees property has deprecated, use stRotationDegrees instead.');
+        return this.stRotationDegrees;
+    }
+
+    /**
+     * 设置纹理旋转中心。
+     * @deprecated 请使用 stCenter 代替。
+     * @param {Cartesian2|object} value 旋转中心
+     * @returns {void}
+     */
+    // @deprecated
+    set center(value) {
+        console.warn('center property has deprecated, use stCenter instead.');
+        this.stCenter = value;
+    }
+
+    /**
+     * 获取纹理旋转中心。
+     * @deprecated 请使用 stCenter 代替。
+     * @returns {Cartesian2} 旋转中心
+     */
+    // @deprecated
+    get center() {
+        console.warn('center property has deprecated, use stCenter instead.');
+        return this.stCenter;
+    }
+
+    /**
+     * 更新材质，先更新纹理变换再调用父类更新。
+     * @param {object} context 渲染上下文
+     * @returns {void}
+     */
+    update(context) {
+        this._updateStTransforms();
+        super.update(context);
+    }
+
+    /**
+     * 销毁材质，先销毁纹理变换相关资源再调用父类销毁。
+     * @returns {void}
+     */
+    destroy() {
+        this._destroyStTransforms();
+        super.destroy();
+    }
+}
+defineStTransformsProperties(ImageTransformMaterial.prototype);
+
+/**
+ * 根据当前时间计算纹理流动偏移量。
+ * @param {number} startMillisecond 动画起始时间戳（毫秒）
+ * @param {number} millisecondDuration 动画周期（毫秒）
+ * @param {boolean} [reverse] 是否反向流动
+ * @param {boolean} [vertical] 是否沿垂直方向流动
+ * @returns {Cartesian2} 纹理偏移量
+ */
+function computeOffset$1(startMillisecond, millisecondDuration, reverse, vertical) {
+    //当前时间 - 起始时间 % 持续时间 /持续时间
+    let offset = (Date.now() - startMillisecond) % millisecondDuration / millisecondDuration;
+    if (reverse)
+        offset = 1 - offset;
+    if (vertical)
+        return new Cartesian2(0, offset);
+    else
+        return new Cartesian2(offset, 0);
+}
+
+/**
+ * 流动图像材质，在 ImageTransformMaterial 基础上按时间周期性改变纹理偏移，形成流动动画。
+ */
+class FlowImageMaterial extends ImageTransformMaterial {
+    // constructor(options) {
+    //     super(options);
+    // }
+
+    /**
+     * 初始化材质，读取流动动画、周期、方向等参数。
+     * @param {object} options 配置项
+     * @param {boolean} [options.animation=true] 是否启用流动动画
+     * @param {boolean} [options.vertical=false] 是否沿垂直方向流动
+     * @param {number} [options.duration=3.0] 单次流动周期，单位秒
+     * @param {boolean} [options.reverse=false] 是否反向流动
+     * @returns {void}
+     */
+    onInit(options) {
+        this.startMillisecond = Date.now();
+        this.animation = options.animation ?? true;
+        this.vertical = options.vertical ?? false;
+        this.duration = options.duration ?? 3.0;
+        this.reverse = options.reverse ?? false;
+
+        super.onInit(options);
+    }
+
+    /**
+     * 设置基础颜色。
+     * @param {Color|string|object} value 颜色
+     * @returns {void}
+     */
+    set baseColor(value) {
+        this.color = value;
+    }
+
+    /**
+     * 获取基础颜色。
+     * @returns {Color} 颜色
+     */
+    get baseColor() {
+        return this.color;
+    }
+
+    /**
+     * 设置基础不透明度。
+     * @param {number} value 不透明度
+     * @returns {void}
+     */
+    set baseOpacity(value) {
+        this.opacity = value;
+    }
+
+    /**
+     * 获取基础不透明度。
+     * @returns {number} 不透明度
+     */
+    get baseOpacity() {
+        return this.opacity;
+    }
+
+    /**
+     * 设置是否启用流动动画，启用时会重置起始时间，停用时偏移归零。
+     * @param {boolean} value 是否启用动画
+     * @returns {void}
+     */
+    set animation(value) {
+        Check.typeOf.bool('animation', value);
+        this._animation = value;
+        if (value)
+            this.startMillisecond = Date.now();
+        else
+            this.offset = Cartesian2.ZERO;
+    }
+
+    /**
+     * 获取是否启用流动动画。
+     * @returns {boolean} 是否启用动画
+     */
+    get animation() {
+        return this._animation;
+    }
+
+    /**
+     * 设置是否启用流动动画。
+     * @deprecated 请使用 animation 代替。
+     * @param {boolean} value 是否启用动画
+     * @returns {void}
+     */
+    // @deprecated
+    set flow(value) {
+        console.warn('flow property has deprecated, use animation instead.');
+        this.animation = value;
+    }
+
+    /**
+     * 获取是否启用流动动画。
+     * @deprecated 请使用 animation 代替。
+     * @returns {boolean} 是否启用动画
+     */
+    // @deprecated
+    get flow() {
+        console.warn('flow property has deprecated, use animation instead.');
+        return this._animation;
+    }
+
+    /**
+     * 设置是否沿垂直方向流动。
+     * @param {boolean} value 是否垂直流动
+     * @returns {void}
+     */
+    set vertical(value) {
+        Check.typeOf.bool('vertical', value);
+        this._vertical = value;
+    }
+
+    /**
+     * 获取是否沿垂直方向流动。
+     * @returns {boolean} 是否垂直流动
+     */
+    get vertical() {
+        return this._vertical;
+    }
+
+    /**
+     * 设置流动周期，单位秒，内部会换算为毫秒。
+     * @param {number} value 流动周期（秒）
+     * @returns {void}
+     */
+    set duration(value) {
+        Check.typeOf.number.greaterThan('duration', value, 0);
+        if (this._duration !== value) {
+            this._duration = value;
+            this.millisecondDuration = value * 1000;
+        }
+    }
+
+    /**
+     * 获取流动周期，单位秒。
+     * @returns {number} 流动周期（秒）
+     */
+    get duration() {
+        return this._duration;
+    }
+
+    // set repeatCount(value) {
+    //     Check.typeOf.integer('repeatCount', value);
+    //     if (this._repeatCount !== value) {
+    //         this._repeatCount = value;
+    //     }
+    // }
+
+    // get repeatCount() {
+    //     return this._repeatCount;
+    // }
+
+    /**
+     * 更新材质，启用动画时按时间计算并设置纹理偏移。
+     * @param {object} context 渲染上下文
+     * @returns {void}
+     */
+    update(context) {
+        if (this._animation)
+            this.stOffset = computeOffset$1(this.startMillisecond, this.millisecondDuration, this.reverse, this.vertical);
+        super.update(context);
+    }
+}
+/**
+ * 根据当前时间计算纹理旋转角度。
+ * @param {number} startMillisecond 动画起始时间戳（毫秒）
+ * @param {number} millisecondDuration 动画周期（毫秒）
+ * @param {boolean} [reverse] 是否反向旋转
+ * @returns {number} 旋转角度（弧度制）
+ */
+function computeRotation(startMillisecond, millisecondDuration, reverse) {
+    const percent = (Date.now() - startMillisecond) % millisecondDuration / millisecondDuration;
+    let rotation = percent * Math$1.TWO_PI;
+    if (reverse)
+        rotation = -rotation;
+    return rotation;
+}
+
+/**
+ * 旋转图像材质，在 ImageTransformMaterial 基础上按时间周期性设置纹理旋转角度，形成旋转动画。
+ */
+class RotateImageMaterial extends ImageTransformMaterial {
+    // constructor(options) {
+    //     super(options);
+    // }
+
+    /**
+     * 初始化材质，读取旋转动画、周期、方向等参数。
+     * @param {object} options 配置项
+     * @param {boolean} [options.animation=true] 是否启用旋转动画
+     * @param {number} [options.duration=60] 单次旋转周期，单位秒
+     * @param {boolean} [options.reverse=false] 是否反向旋转
+     * @returns {void}
+     */
+    onInit(options) {
+        this.startMillisecond = Date.now();
+        this.animation = options.animation ?? true;
+        this.duration = options.duration ?? 60;
+        this.reverse = options.reverse ?? false;
+
+        super.onInit(options);
+    }
+
+    /**
+     * 设置是否启用旋转动画，启用时会重置起始时间，停用时旋转角度归零。
+     * @param {boolean} value 是否启用动画
+     * @returns {void}
+     */
+    set animation(value) {
+        Check.typeOf.bool('animation', value);
+        this._animation = value;
+        if (value)
+            this.startMillisecond = Date.now();
+        else
+            this.stRotation = 0;
+    }
+
+    /**
+     * 获取是否启用旋转动画。
+     * @returns {boolean} 是否启用动画
+     */
+    get animation() {
+        return this._animation;
+    }
+
+    /**
+     * 设置是否启用旋转动画。
+     * @deprecated 请使用 animation 代替。
+     * @param {boolean} value 是否启用动画
+     * @returns {void}
+     */
+    // @deprecated
+    set rotate(value) {
+        console.warn('rotate property has deprecated, use animation instead.');
+        this.animation = value;
+    }
+
+    /**
+     * 获取是否启用旋转动画。
+     * @deprecated 请使用 animation 代替。
+     * @returns {boolean} 是否启用动画
+     */
+    // @deprecated
+    get rotate() {
+        console.warn('rotate property has deprecated, use animation instead.');
+        return this._animation;
+    }
+
+    /**
+     * 设置旋转周期，单位秒，内部会换算为毫秒。
+     * @param {number} value 旋转周期（秒）
+     * @returns {void}
+     */
+    set duration(value) {
+        Check.typeOf.number.greaterThan('duration', value, 0);
+        if (this._duration !== value) {
+            this._duration = value;
+            this.millisecondDuration = value * 1000;
+        }
+    }
+
+    /**
+     * 获取旋转周期，单位秒。
+     * @returns {number} 旋转周期（秒）
+     */
+    get duration() {
+        return this._duration;
+    }
+
+    /**
+     * 更新材质，启用动画时按时间计算并设置纹理旋转角度。
+     * @param {object} context 渲染上下文
+     * @returns {void}
+     */
+    update(context) {
+        if (this._animation)
+            this.stRotation = computeRotation(this.startMillisecond, this.millisecondDuration, this.reverse);
+        super.update(context);
+    }
+}
+
+/**
+ * 折线箭头材质，基于 Cesium 内置 PolylineArrowType，在折线末端绘制箭头。
+ * color、opacity 属性由 defineColorMaterialProperties 注入。
+ */
+class PolylineArrowMaterial extends BaseMaterial {
+    // constructor(options) {
+    //     super(options);
+    // }
+
+    /**
+     * 获取材质类型。
+     * @returns {string} 材质类型标识
+     */
+    get materialType() {
+        return Material.PolylineArrowType;
+    }
+}
+defineColorMaterialProperties(PolylineArrowMaterial.prototype);
+
+/**
+ * 折线虚线材质，基于 Cesium 内置 PolylineDashType，以虚线样式绘制折线。
+ * color、opacity、gapColor、gapOpacity、dashLength、dashPattern 属性由 definePolylineDashMaterialProperties 注入。
+ */
+class PolylineDashMaterial extends BaseMaterial {
+    // constructor(options) {
+    //     super(options);
+    // }
+
+    /**
+     * 获取材质类型。
+     * @returns {string} 材质类型标识
+     */
+    get materialType() {
+        return Material.PolylineDashType;
+    }
+}
+definePolylineDashMaterialProperties(PolylineDashMaterial.prototype);
+
+/**
+ * 折线发光材质，基于 Cesium 内置 PolylineGlowType，为折线添加发光描边效果。
+ * color、opacity、glowPower、taperPower 属性由 definePolylineGlowMaterialProperties 注入。
+ */
+class PolylineGlowMaterial extends BaseMaterial {
+    // constructor(options) {
+    //     super(options);
+    // }
+
+    /**
+     * 获取材质类型。
+     * @returns {string} 材质类型标识
+     */
+    get materialType() {
+        return Material.PolylineGlowType;
+    }
+}
+definePolylineGlowMaterialProperties(PolylineGlowMaterial.prototype);
+
+/**
+ * 折线描边材质，基于 Cesium 内置 PolylineOutlineType，为折线添加描边效果。
+ * color、opacity、outline、outlineColor、outlineOpacity、outlineWidth 属性由 definePolylineOutlineMaterialProperties 注入。
+ */
+class PolylineOutlineMaterial extends BaseMaterial {
+    // constructor(options) {
+    //     super(options);
+    // }
+
+    /**
+     * 获取材质类型。
+     * @returns {string} 材质类型标识
+     */
+    get materialType() {
+        return Material.PolylineOutlineType;
+    }
+}
+definePolylineOutlineMaterialProperties(PolylineOutlineMaterial.prototype);
+
+/**
+ * 根据当前时间计算折线拖尾偏移量。
+ * @param {number} startMillisecond 动画起始时间戳（毫秒）
+ * @param {number} speed 流动速度（每毫秒偏移量）
+ * @param {boolean} [reverse] 是否反向流动
+ * @returns {number} 拖尾偏移量
+ */
+function computeOffset(startMillisecond, speed, reverse) {
+    let offset = (Date.now() - startMillisecond) * speed;
+    if (reverse)
+        offset = -offset;
+    return offset;
+}
+
+/**
+ * 折线拖尾材质，基于 Cesium 内置 PolylineTrailType，沿折线方向按时间流动绘制带拖尾的纹理动画。
+ */
+class PolylineTrailMaterial extends BaseMaterial {
+    // constructor(options) {
+    //     super(options);
+    // }
+
+    /**
+     * 获取材质类型。
+     * @returns {string} 材质类型标识
+     */
+    get materialType() {
+        return Material.PolylineTrailType;
+    }
+
+    /**
+     * 初始化材质，读取动画与周期参数。
+     * @param {object} options 配置项
+     * @param {boolean} [options.animation=true] 是否启用拖尾动画
+     * @param {number} [options.duration=3.0] 单次拖尾周期，单位秒
+     * @returns {void}
+     */
+    onInit(options) {
+        this.animation = options.animation ?? true;
+        this.duration = options.duration ?? 3.0;
+
+        super.onInit(options);
+    }
+
+    /**
+     * 设置拖尾长度，取值范围 0~1。
+     * @param {number} value 拖尾长度
+     * @returns {void}
+     */
+    set trailLength(value) {
+        Check.typeOf.number.greaterThanOrEquals('trailLength', value, 0);
+        Check.typeOf.number.lessThanOrEquals('trailLength', value, 1);
+        this.uniforms.trailLength = value;
+    }
+
+    /**
+     * 获取拖尾长度。
+     * @returns {number} 拖尾长度
+     */
+    get trailLength() {
+        return this.uniforms.trailLength;
+    }
+
+    /**
+     * 设置拖尾颜色。
+     * @param {Color|string|object} value 拖尾颜色
+     * @returns {void}
+     */
+    set trailColor(value) {
+        value = parseToColor(value);
+        if (!Color.equalsRgb(value, this.uniforms.trailColor)) {
+            value.cloneRgb(this.uniforms.trailColor);
+        }
+    }
+
+    /**
+     * 获取拖尾颜色。
+     * @returns {Color} 拖尾颜色
+     */
+    get trailColor() {
+        return this.uniforms.trailColor;
+    }
+
+    /**
+     * 设置拖尾不透明度，取值范围 0~1。
+     * @param {number} value 拖尾不透明度
+     * @returns {void}
+     */
+    set trailOpacity(value) {
+        Check.typeOf.number.greaterThanOrEquals('trailOpacity', value, 0);
+        Check.typeOf.number.lessThanOrEquals('trailOpacity', value, 1);
+        this.uniforms.trailColor.alpha = value;
+    }
+
+    /**
+     * 获取拖尾不透明度。
+     * @returns {number} 拖尾不透明度
+     */
+    get trailOpacity() {
+        return this.uniforms.trailColor.alpha;
+    }
+
+    /**
+     * 设置拖尾图片，传入空值时使用默认图片。
+     * @param {string|HTMLImageElement|HTMLCanvasElement} value 拖尾图片资源
+     * @returns {void}
+     */
+    set trailImage(value) {
+        if (value)
+            this.uniforms.trailImage = value;
+        else
+            this.uniforms.trailImage = Material.DefaultImageId;
+    }
+
+    /**
+     * 获取拖尾图片。
+     * @returns {string|HTMLImageElement|HTMLCanvasElement} 拖尾图片资源
+     */
+    get trailImage() {
+        return this.uniforms.trailImage;
+    }
+
+    /**
+     * 设置是否启用发光效果。
+     * @param {boolean} value 是否启用发光
+     * @returns {void}
+     */
+    set enableGlow(value) {
+        Check.typeOf.bool('enableGlow', value);
+        this.uniforms.enableGlow = value;
+    }
+
+    /**
+     * 获取是否启用发光效果。
+     * @returns {boolean} 是否启用发光
+     */
+    get enableGlow() {
+        return this.uniforms.enableGlow;
+    }
+
+    /**
+     * 设置发光强度。
+     * @param {number} value 发光强度
+     * @returns {void}
+     */
+    set glowPower(value) {
+        Check.typeOf.number('glowPower', value);
+        this.uniforms.glowPower = value;
+    }
+
+    /**
+     * 获取发光强度。
+     * @returns {number} 发光强度
+     */
+    get glowPower() {
+        return this.uniforms.glowPower;
+    }
+
+    /**
+     * 设置拖尾偏移量。
+     * @param {number} value 拖尾偏移量
+     * @returns {void}
+     */
+    set offset(value) {
+        Check.typeOf.number('offset', value);
+        this.uniforms.offset = value;
+    }
+
+    /**
+     * 获取拖尾偏移量。
+     * @returns {number} 拖尾偏移量
+     */
+    get offset() {
+        return this.uniforms.offset;
+    }
+
+    /**
+     * 设置是否启用拖尾动画，启用时会重置起始时间，停用时偏移归零。
+     * @param {boolean} value 是否启用动画
+     * @returns {void}
+     */
+    set animation(value) {
+        Check.typeOf.bool('animation', value);
+        this._animation = value;
+        if (value)
+            this.startMillisecond = Date.now();
+        else
+            this.offset = 0;
+    }
+
+    /**
+     * 获取是否启用拖尾动画。
+     * @returns {boolean} 是否启用动画
+     */
+    get animation() {
+        return this._animation;
+    }
+
+    /**
+     * 设置拖尾周期，单位秒，内部会换算为流动速度。
+     * @param {number} value 拖尾周期（秒）
+     * @returns {void}
+     */
+    set duration(value) {
+        Check.typeOf.number.greaterThan('duration', value, 0);
+        if (this._duration !== value) {
+            this._duration = value;
+            this._speed = 1.0 / (value * 1000);
+        }
+    }
+
+    /**
+     * 获取拖尾周期，单位秒。
+     * @returns {number} 拖尾周期（秒）
+     */
+    get duration() {
+        return this._duration;
+    }
+
+    /**
+     * 设置是否反向流动。
+     * @param {boolean} value 是否反向流动
+     * @returns {void}
+     */
+    set reverse(value) {
+        Check.typeOf.bool('reverse', value);
+        this.uniforms.reverse = value;
+    }
+
+    /**
+     * 获取是否反向流动。
+     * @returns {boolean} 是否反向流动
+     */
+    get reverse() {
+        return this.uniforms.reverse;
+    }
+
+    /**
+     * 更新材质，启用动画时按时间计算并设置拖尾偏移量。
+     * @param {object} context 渲染上下文
+     * @returns {void}
+     */
+    update(context) {
+        if (this.animation)
+            this.offset = computeOffset(this.startMillisecond, this._speed, this.reverse);
+        super.update(context);
+    }
+}
+defineColorMaterialProperties(PolylineTrailMaterial.prototype);
+
+// 内联 Cesium 自带的 waterNormalsSmall 法线贴图，避免依赖外部 Assets 部署
+const WATER_NORMALS_MAP = 'data:image/jpeg;base64,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';
+
+
+/**
+ * 水面材质，基于 Cesium 内置 WaterType，通过法线贴图与动画模拟水面波光效果。
+ * 内置一份 Cesium waterNormalsSmall 法线贴图作为默认值，避免依赖外部 Assets 部署。
+ */
+class WaterMaterial extends BaseMaterial {
+    // constructor(options) {
+    //     super(options);
+    // }
+
+    /**
+     * 获取材质类型。
+     * @returns {string} 材质类型标识
+     */
+    get materialType() {
+        return Material.WaterType;
+    }
+
+    /**
+     * 初始化材质，未提供法线贴图时使用内置的默认法线贴图。
+     * @param {object} options 配置项
+     * @returns {void}
+     */
+    onInit(options) {
+        this.normalMap = options.normalMap ?? WATER_NORMALS_MAP;
+
+        super.onInit(options);
+    }
+
+    // onStTransformChanged(transform) {
+    //     this.uniforms.stTransform = transform;
+    // }
+
+    /**
+     * 设置水体颜色。
+     * @param {Color|string|object} value 水体颜色
+     * @returns {void}
+     */
+    set waterColor(value) {
+        value = parseToColor(value);
+        let _waterColor = this.uniforms.baseWaterColor;
+        if (!Color.equalsRgb(value, _waterColor))
+            this.uniforms.baseWaterColor = value.cloneRgb(_waterColor);
+    }
+
+    /**
+     * 获取水体颜色。
+     * @returns {Color} 水体颜色
+     */
+    get waterColor() {
+        return this.uniforms.baseWaterColor;
+    }
+
+    /**
+     * 设置水体不透明度，取值范围 0~1。
+     * @param {number} value 水体不透明度
+     * @returns {void}
+     */
+    set waterOpacity(value) {
+        Check.typeOf.number.greaterThanOrEquals('waterOpacity', value, 0);
+        Check.typeOf.number.lessThanOrEquals('waterOpacity', value, 1);
+        this.uniforms.baseWaterColor.alpha = value;
+    }
+
+    /**
+     * 获取水体不透明度。
+     * @returns {number} 水体不透明度
+     */
+    get waterOpacity() {
+        return this.uniforms.baseWaterColor.alpha;
+    }
+
+    /**
+     * 设置颜色（等同于 waterColor）。
+     * @param {Color|string|object} value 颜色
+     * @returns {void}
+     */
+    set color(value) {
+        this.waterColor = value;
+    }
+
+    /**
+     * 获取颜色（等同于 waterColor）。
+     * @returns {Color} 颜色
+     */
+    get color() {
+        return this.waterColor;
+    }
+
+    /**
+     * 设置不透明度（等同于 waterOpacity）。
+     * @param {number} value 不透明度
+     * @returns {void}
+     */
+    set opacity(value) {
+        this.waterOpacity = value;
+    }
+
+    /**
+     * 获取不透明度（等同于 waterOpacity）。
+     * @returns {number} 不透明度
+     */
+    get opacity() {
+        return this.waterOpacity;
+    }
+
+    /**
+     * 设置混合颜色。
+     * @param {Color|string|object} value 混合颜色
+     * @returns {void}
+     */
+    set blendColor(value) {
+        value = parseToColor(value);
+        let _blendColor = this.uniforms.blendColor;
+        if (!Color.equalsRgb(value, _blendColor))
+            this.uniforms.blendColor = value.cloneRgb(_blendColor);
+    }
+
+    /**
+     * 获取混合颜色。
+     * @returns {Color} 混合颜色
+     */
+    get blendColor() {
+        return this.uniforms.blendColor;
+    }
+
+    /**
+     * 设置混合不透明度，取值范围 0~1。
+     * @param {number} value 混合不透明度
+     * @returns {void}
+     */
+    set blendOpacity(value) {
+        Check.typeOf.number.greaterThanOrEquals('blendOpacity', value, 0);
+        Check.typeOf.number.lessThanOrEquals('blendOpacity', value, 1);
+        this.uniforms.blendColor.alpha = value;
+    }
+
+    /**
+     * 获取混合不透明度。
+     * @returns {number} 混合不透明度
+     */
+    get blendOpacity() {
+        return this.uniforms.blendColor.alpha;
+    }
+
+    /**
+     * 设置高光贴图。
+     * @param {string|HTMLImageElement|HTMLCanvasElement} value 高光贴图
+     * @returns {void}
+     */
+    set specularMap(value) {
+        Check.defined('specularMap', value);
+        this.uniforms.specularMap = value;
+    }
+
+    /**
+     * 获取高光贴图。
+     * @returns {string|HTMLImageElement|HTMLCanvasElement} 高光贴图
+     */
+    get specularMap() {
+        return this.uniforms.specularMap;
+    }
+
+    /**
+     * 设置法线贴图。
+     * @param {string|HTMLImageElement|HTMLCanvasElement} value 法线贴图
+     * @returns {void}
+     */
+    set normalMap(value) {
+        Check.defined('normalMap', value);
+        this.uniforms.normalMap = value;
+    }
+
+    /**
+     * 获取法线贴图。
+     * @returns {string|HTMLImageElement|HTMLCanvasElement} 法线贴图
+     */
+    get normalMap() {
+        return this.uniforms.normalMap;
+    }
+
+    /**
+     * 设置波纹频率。
+     * @param {number} value 波纹频率
+     * @returns {void}
+     */
+    set frequency(value) {
+        Check.typeOf.number('frequency', value);
+        this.uniforms.frequency = value;
+    }
+
+    /**
+     * 获取波纹频率。
+     * @returns {number} 波纹频率
+     */
+    get frequency() {
+        return this.uniforms.frequency;
+    }
+
+    /**
+     * 设置动画速度。
+     * @param {number} value 动画速度
+     * @returns {void}
+     */
+    set animationSpeed(value) {
+        Check.typeOf.number('animationSpeed', value);
+        this.uniforms.animationSpeed = value;
+    }
+
+    /**
+     * 获取动画速度。
+     * @returns {number} 动画速度
+     */
+    get animationSpeed() {
+        return this.uniforms.animationSpeed;
+    }
+
+    /**
+     * 设置波浪振幅。
+     * @param {number} value 波浪振幅
+     * @returns {void}
+     */
+    set amplitude(value) {
+        Check.typeOf.number('amplitude', value);
+        this.uniforms.amplitude = value;
+    }
+
+    /**
+     * 获取波浪振幅。
+     * @returns {number} 波浪振幅
+     */
+    get amplitude() {
+        return this.uniforms.amplitude;
+    }
+
+    /**
+     * 设置高光强度。
+     * @param {number} value 高光强度
+     * @returns {void}
+     */
+    set specularIntensity(value) {
+        Check.typeOf.number('specularIntensity', value);
+        this.uniforms.specularIntensity = value;
+    }
+
+    /**
+     * 获取高光强度。
+     * @returns {number} 高光强度
+     */
+    get specularIntensity() {
+        return this.uniforms.specularIntensity;
+    }
+
+    /**
+     * 设置边缘淡出系数。
+     * @param {number} value 边缘淡出系数
+     * @returns {void}
+     */
+    set fadeFactor(value) {
+        Check.typeOf.number('fadeFactor', value);
+        this.uniforms.fadeFactor = value;
+    }
+
+    /**
+     * 获取边缘淡出系数。
+     * @returns {number} 边缘淡出系数
+     */
+    get fadeFactor() {
+        return this.uniforms.fadeFactor;
+    }
+
+    /**
+     * 设置纹理重复次数。
+     * @deprecated 请使用 stRepeat 代替。
+     * @param {Cartesian2|object} value 纹理重复次数
+     * @returns {void}
+     */
+    // @deprecated
+    set repeat(value) {
+        console.warn('repeat property has deprecated, use stRepeat instead.');
+        this.stRepeat = value;
+    }
+
+    /**
+     * 获取纹理重复次数。
+     * @deprecated 请使用 stRepeat 代替。
+     * @returns {Cartesian2} 纹理重复次数
+     */
+    // @deprecated
+    get repeat() {
+        console.warn('repeat property has deprecated, use stRepeat instead.');
+        return this.stRepeat;
+    }
+
+    /**
+     * 设置纹理偏移量。
+     * @deprecated 请使用 stOffset 代替。
+     * @param {Cartesian2|object} value 纹理偏移量
+     * @returns {void}
+     */
+    // @deprecated
+    set offset(value) {
+        console.warn('offset property has deprecated, use stOffset instead.');
+        this.stOffset = value;
+    }
+
+    /**
+     * 获取纹理偏移量。
+     * @deprecated 请使用 stOffset 代替。
+     * @returns {Cartesian2} 纹理偏移量
+     */
+    // @deprecated
+    get offset() {
+        console.warn('offset property has deprecated, use stOffset instead.');
+        return this.stOffset;
+    }
+
+    /**
+     * 设置纹理旋转角度（弧度制）。
+     * @deprecated 请使用 stRotation 代替。
+     * @param {number} value 旋转角度（弧度制）
+     * @returns {void}
+     */
+    // @deprecated
+    set rotation(value) {
+        console.warn('rotation property has deprecated, use stRotation instead.');
+        this.stRotation = value;
+    }
+
+    /**
+     * 获取纹理旋转角度（弧度制）。
+     * @deprecated 请使用 stRotation 代替。
+     * @returns {number} 旋转角度（弧度制）
+     */
+    // @deprecated
+    get rotation() {
+        console.warn('rotation property has deprecated, use stRotation instead.');
+        return this.stRotation;
+    }
+
+    /**
+     * 设置纹理旋转角度（角度制）。
+     * @deprecated 请使用 stRotationDegrees 代替。
+     * @param {number} value 旋转角度（角度制）
+     * @returns {void}
+     */
+    // @deprecated
+    set rotationDegrees(value) {
+        console.warn('rotationDegrees property has deprecated, use stRotationDegrees instead.');
+        this.stRotationDegrees = value;
+    }
+
+    /**
+     * 获取纹理旋转角度（角度制）。
+     * @deprecated 请使用 stRotationDegrees 代替。
+     * @returns {number} 旋转角度（角度制）
+     */
+    // @deprecated
+    get rotationDegrees() {
+        console.warn('rotationDegrees property has deprecated, use stRotationDegrees instead.');
+        return this.stRotationDegrees;
+    }
+
+    /**
+     * 设置纹理旋转中心。
+     * @deprecated 请使用 stCenter 代替。
+     * @param {Cartesian2|object} value 旋转中心
+     * @returns {void}
+     */
+    // @deprecated
+    set center(value) {
+        console.warn('center property has deprecated, use stCenter instead.');
+        this.stCenter = value;
+    }
+
+    /**
+     * 获取纹理旋转中心。
+     * @deprecated 请使用 stCenter 代替。
+     * @returns {Cartesian2} 旋转中心
+     */
+    // @deprecated
+    get center() {
+        console.warn('center property has deprecated, use stCenter instead.');
+        return this.stCenter;
+    }
+}
+// defineStTransformsProperties(WaterMaterial.prototype);
+
+let defaultMaterial, defaultWaterColor, defaultBlendColor;
+
+/**
+ * 为 WaterMaterial 定义静态默认值访问器：default（默认材质实例）、defaultWaterColor（默认水体颜色）、defaultBlendColor（默认混合颜色）。
+ */
+Object.defineProperties(WaterMaterial, {
+    default: {
+        get: function () {
+            if (!defaultMaterial)
+                defaultMaterial = new WaterMaterial();
+            return defaultMaterial;
+        }
+    },
+    defaultWaterColor: {
+        get: function () {
+            if (!defaultWaterColor)
+                defaultWaterColor = this.default.waterColor.clone();
+            return defaultWaterColor;
+        }
+    },
+    defaultBlendColor: {
+        get: function () {
+            if (!defaultBlendColor)
+                defaultBlendColor = this.default.blendColor.clone();
+            return defaultBlendColor;
+        }
+    },
+});
+
+const defaultOrigin = Object.freeze({ x: -180, y: 90 });
+
+/**
+ * 获取默认的原点坐标
+ *
+ * @param {CustomTilingScheme} that
+ * @returns {{x:number, y:number}}
+ */
+function getDefaultOrigin(that) {
+    if (that.isGeographic) {
+        return defaultOrigin;
+    } else {
+        const rectangleInMeters = that._webMercatorTilingScheme.rectangleInMeters;
+        return Object.freeze({
+            x: rectangleInMeters.west,
+            y: rectangleInMeters.north,
+        });
+    }
+}
+
+/**
+ * 根据层级分辨率计算层级相关参数
+ * @param {Object} origin 地图原点
+ * @param {Array} resolutions 分辨率数组
+ * @param {number} tilePixelWidth 地图瓦片像素宽
+ * @param {number} tilePixelHeight 地图瓦片像素高
+ * @param {Rectangle} rectangle 地图范围Rectange
+ * @returns {Array} 返回层级信息数组
+ */
+function computeLods(origin, resolutions, tilePixelWidth, tilePixelHeight, rectangle) {
+    //地球地图范围
+    const west = rectangle.west,
+        north = rectangle.north,
+        east = rectangle.east,
+        south = rectangle.south;
+    const longitudeLength = east - west; //经度范围总长度
+    const latitudeLength = north - south; //纬度范围总长度
+    const result = [];
+    for (let i = 0; i < resolutions.length; i++) {
+        const resolution = resolutions[i];
+        if (!defined$1(resolution))
+            continue;
+        const lod = {};
+        lod.level = i;
+        lod.pixelWidth = Math.round(longitudeLength / resolution); //计算该层级的像素总宽度
+        lod.pixelHeight = Math.round(latitudeLength / resolution); //计算该层级的像素总高度
+        lod.numberOfTileX = Math.round(lod.pixelWidth / tilePixelWidth); //计算横向的瓦片数量
+        lod.numberOfTileY = Math.round(lod.pixelHeight / tilePixelHeight); //计算纵向的瓦片数量
+        const tileDegreesWidth = tilePixelWidth * resolution; //计算地图瓦片角度单位的宽度
+        const tileDegreesHeight = tilePixelHeight * resolution; //计算地图瓦片角度单位的高度
+        lod.startOfTileX = Math.floor((west - origin.x) / tileDegreesWidth); //计算横向的瓦片起始编号
+        lod.startOfTileY = Math.floor((origin.y - north) / tileDegreesHeight); //计算纵向的瓦片起始编号
+        lod.endOfTileX = lod.startOfTileX + lod.numberOfTileX; //计算横向的瓦片结束编号
+        lod.endOfTileY = lod.startOfTileY + lod.numberOfTileY; //计算纵向的瓦片结束编号
+        // lod.endOfTileX = Math.ceil((east - origin.x) / tileDegreesWidth); //计算横向的瓦片结束编号
+        // lod.endOfTileY = Math.ceil((origin.y - south) / tileDegreesHeight); //计算纵向的瓦片结束编号
+        // lod.numberOfTileX = lod.endOfTileX - lod.startOfTileX; //计算横向的瓦片数量
+        // lod.numberOfTileY = lod.endOfTileY - lod.startOfTileY; //计算纵向的瓦片数量
+        result[i] = lod;
+        console.log('computeLod:', i, lod);
+    }
+    return result;
+}
+/**
+ * 自定义切片方案，按照 Cesium 切片方案接口实现，支持以度数（经纬度）或米（Web 墨卡托）为单位的
+ * 自定义范围、原点、分辨率与层级参数，用于在内置切片方案无法匹配时提供瓦片坐标换算能力。
+ * 通过 unit（'degrees' 或 'meters'）决定底层使用地理切片方案还是 Web 墨卡托切片方案。
+ */
+class CustomTilingScheme {
+    /**
+     * 创建自定义切片方案实例。
+     * @param {object} [options={}] 配置项
+     * @param {Array|object} [options.extent] 地图范围，[west, south, east, north] 数组或带 xmin/ymin/xmax/ymax 的对象
+     * @param {string} [options.unit='degrees'] 坐标单位，'degrees' 或 'meters'
+     * @param {number} [options.tileWidth=256] 瓦片像素宽度
+     * @param {number} [options.tileHeight=256] 瓦片像素高度
+     * @param {boolean} [options.reverseX=false] 是否反转 X 方向瓦片编号
+     * @param {boolean} [options.reverseY=false] 是否反转 Y 方向瓦片编号
+     * @param {Cartesian2|Array|object} [options.origin] 瓦片原点坐标
+     * @param {Array} [options.lods] 直接指定的层级（LOD）信息数组
+     * @param {Array} [options.resolutions] 各层级分辨率数组，用于自动计算层级信息
+     * @param {Ellipsoid} [options.ellipsoid] 参考椭球体
+     */
+    constructor(options = {}) {
+        const extent = this._extent = options.extent;
+        this._unit = options.unit ?? 'degrees';
+        const tileWidth = options.tileWidth ?? 256;
+        const tileHeight = options.tileHeight ?? 256;
+        const reverseX = this._reverseX = options.reverseX ?? false;
+        const reverseY = this._reverseY = options.reverseY ?? false;
+
+        this._geographicTilingScheme = new GeographicTilingScheme({
+            ellipsoid: options.ellipsoid,
+        });
+        this._webMercatorTilingScheme = new WebMercatorTilingScheme({
+            ellipsoid: options.ellipsoid,
+        });
+
+        if (extent) {
+            const west = extent[0] || extent.xmin;
+            const south = extent[1] || extent.ymin;
+            const east = extent[2] || extent.xmax;
+            const north = extent[3] || extent.ymax;
+            if (this.isGeographic) {
+                const rectangle = Rectangle.fromDegrees(west, south, east, north);
+                this._geographicTilingScheme._rectangle = rectangle;
+                this._webMercatorTilingScheme.updateFromRectangle(rectangle);
+            } else {
+                this._webMercatorTilingScheme.updateRectangle({
+                    rectangleSouthwestInMeters: {
+                        x: west,
+                        y: south,
+                    },
+                    rectangleNortheastInMeters: {
+                        x: east,
+                        y: north,
+                    },
+                });
+                this._geographicTilingScheme._rectangle = this._webMercatorTilingScheme.rectangle;
+            }
+        }
+
+        const origin = parseToCartesian2(options.origin ?? getDefaultOrigin(this));
+        if (reverseX)
+            origin.x = -origin.x;
+        if (reverseY)
+            origin.y = -origin.y;
+        if (options.lods)
+            this._lods = options.lods;
+        else if (options.resolutions)
+            this._lods = computeLods(origin, options.resolutions, tileWidth, tileHeight, this.isGeographic ? this._geographicTilingScheme._rectangle.toDegrees() : this._webMercatorTilingScheme._rectangleInMeters);
+        else
+            this._lods = [];
+    }
+
+    /**
+     * 获取坐标单位。
+     * @returns {string} 坐标单位，'degrees' 或 'meters'
+     */
+    get unit() {
+        return this._unit;
+    }
+
+    /**
+     * 获取是否为经纬度（度数）切片方案。
+     * @returns {boolean} 是否为度数单位
+     */
+    get isGeographic() {
+        return this._unit === 'degrees';
+    }
+
+    /**
+     * 获取是否为 Web 墨卡托（米）切片方案。
+     * @returns {boolean} 是否为米单位
+     */
+    get isWebMercator() {
+        return this._unit === 'meters';
+    }
+
+    /**
+     * 获取层级（LOD）信息数组。
+     * @returns {Array} 层级信息数组
+     */
+    get lods() {
+        return this._lods;
+    }
+
+    /**
+     * 获取参考椭球体。
+     * @returns {Ellipsoid} 参考椭球体
+     */
+    get ellipsoid() {
+        return this.isGeographic ? this._geographicTilingScheme._ellipsoid : this._webMercatorTilingScheme._ellipsoid;
+    }
+
+    /**
+     * 获取地图范围。
+     * @returns {Rectangle} 地图范围
+     */
+    get rectangle() {
+        return this.isGeographic ? this._geographicTilingScheme._rectangle : this._webMercatorTilingScheme._rectangle;
+    }
+
+    /**
+     * 获取投影对象。
+     * @returns {object} 投影对象
+     */
+    get projection() {
+        return this.isGeographic ? this._geographicTilingScheme._projection : this._webMercatorTilingScheme._projection;
+    }
+
+    /**
+     * 获取指定层级的 X 方向瓦片数量。
+     * @param {number} level 层级
+     * @returns {number} X 方向瓦片数量
+     */
+    getNumberOfXTilesAtLevel(level) {
+        if (defined$1(this._lods[level]))
+            return this._lods[level].numberOfTileX;
+        return this.isGeographic ? this._geographicTilingScheme.getNumberOfXTilesAtLevel(level) : this._webMercatorTilingScheme.getNumberOfXTilesAtLevel(level);    }
+
+    /**
+     * 获取指定层级的 Y 方向瓦片数量。
+     * @param {number} level 层级
+     * @returns {number} Y 方向瓦片数量
+     */
+    getNumberOfYTilesAtLevel(level) {
+        if (defined$1(this._lods[level]))
+            return this._lods[level].numberOfTileY;
+        return this.isGeographic ? this._geographicTilingScheme.getNumberOfYTilesAtLevel(level) : this._webMercatorTilingScheme.getNumberOfYTilesAtLevel(level);
+    }
+
+    /**
+     * 结合反转配置与层级起始编号，将瓦片坐标换算为实际瓦片编号。
+     * @param {number} x 瓦片 X 坐标
+     * @param {number} y 瓦片 Y 坐标
+     * @param {number} level 层级
+     * @returns {{x:number, y:number, level:number}} 实际瓦片编号
+     */
+    getTileActualNumber(x, y, level) {
+        const lod = this._lods[level];
+        if (this._reverseX) {
+            const xTiles = this.getNumberOfXTilesAtLevel(level);
+            x = xTiles - x - 1;
+        }
+        if (this._reverseY) {
+            const yTiles = this.getNumberOfYTilesAtLevel(level);
+            y = yTiles - y - 1;
+        }
+        if (defined$1(lod)) {
+            x += lod.startOfTileX;
+            y += lod.startOfTileY;
+        }
+        return {
+            x: x,
+            y: y,
+            level: level,
+        }
+    }
+
+    /**
+     * 将弧度制矩形转换为当前切片方案的原生坐标矩形（度数单位输出度数，米单位输出投影米坐标）。
+     * @param {Rectangle} rectangle 弧度制矩形
+     * @param {Rectangle} [result] 用于存储结果的实例
+     * @returns {Rectangle} 原生坐标矩形
+     */
+    rectangleToNativeRectangle(rectangle, result = new Rectangle()) {
+        //>>includeStart('debug', pragmas.debug);
+        Check.defined("rectangle", rectangle);
+        //>>includeEnd('debug');
+
+        if (this.isGeographic) {
+            const west = Math$1.toDegrees(rectangle.west);
+            const south = Math$1.toDegrees(rectangle.south);
+            const east = Math$1.toDegrees(rectangle.east);
+            const north = Math$1.toDegrees(rectangle.north);
+
+            result.west = west;
+            result.south = south;
+            result.east = east;
+            result.north = north;
+        } else {
+            const projection = this._webMercatorTilingScheme._projection;
+            const southwest = projection.project(Rectangle.southwest(rectangle));
+            const northeast = projection.project(Rectangle.northeast(rectangle));
+
+            result.west = southwest.x;
+            result.south = southwest.y;
+            result.east = northeast.x;
+            result.north = northeast.y;
+        }
+        return result;
+    }
+
+    /**
+     * 将瓦片坐标转换为原生坐标矩形。
+     * @param {number} x 瓦片 X 坐标
+     * @param {number} y 瓦片 Y 坐标
+     * @param {number} level 层级
+     * @param {Rectangle} [result] 用于存储结果的实例
+     * @returns {Rectangle} 原生坐标矩形
+     */
+    tileXYToNativeRectangle(x, y, level, result = new Rectangle()) {
+        if (this.isGeographic) {
+            const rectangleRadians = this.tileXYToRectangle(x, y, level, result);
+            rectangleRadians.west = Math$1.toDegrees(rectangleRadians.west);
+            rectangleRadians.south = Math$1.toDegrees(rectangleRadians.south);
+            rectangleRadians.east = Math$1.toDegrees(rectangleRadians.east);
+            rectangleRadians.north = Math$1.toDegrees(rectangleRadians.north);
+            return rectangleRadians;
+        } else {
+            const xTiles = this.getNumberOfXTilesAtLevel(level);
+            const yTiles = this.getNumberOfYTilesAtLevel(level);
+
+            const xTileWidth =
+                (this._webMercatorTilingScheme._rectangleNortheastInMeters.x - this._webMercatorTilingScheme._rectangleSouthwestInMeters.x) /
+                xTiles;
+            const west = this._webMercatorTilingScheme._rectangleSouthwestInMeters.x + x * xTileWidth;
+            const east = this._webMercatorTilingScheme._rectangleSouthwestInMeters.x + (x + 1) * xTileWidth;
+
+            const yTileHeight =
+                (this._webMercatorTilingScheme._rectangleNortheastInMeters.y - this._webMercatorTilingScheme._rectangleSouthwestInMeters.y) /
+                yTiles;
+            const north = this._webMercatorTilingScheme._rectangleNortheastInMeters.y - y * yTileHeight;
+            const south = this._webMercatorTilingScheme._rectangleNortheastInMeters.y - (y + 1) * yTileHeight;
+
+            result.west = west;
+            result.south = south;
+            result.east = east;
+            result.north = north;
+            return result;
+        }
+    }
+
+    /**
+     * 将瓦片坐标转换为弧度制矩形。
+     * @param {number} x 瓦片 X 坐标
+     * @param {number} y 瓦片 Y 坐标
+     * @param {number} level 层级
+     * @param {Rectangle} [result] 用于存储结果的实例
+     * @returns {Rectangle} 弧度制矩形
+     */
+    tileXYToRectangle(x, y, level, result = new Rectangle()) {
+        if (this.isGeographic) {
+            const rectangle = this.rectangle;
+
+            const xTiles = this.getNumberOfXTilesAtLevel(level);
+            const yTiles = this.getNumberOfYTilesAtLevel(level);
+
+            const xTileWidth = rectangle.width / xTiles;
+            const west = x * xTileWidth + rectangle.west;
+            const east = (x + 1) * xTileWidth + rectangle.west;
+
+            const yTileHeight = rectangle.height / yTiles;
+            const north = rectangle.north - y * yTileHeight;
+            const south = rectangle.north - (y + 1) * yTileHeight;
+
+            result.west = west;
+            result.south = south;
+            result.east = east;
+            result.north = north;
+            return result;
+        } else {
+            const nativeRectangle = this.tileXYToNativeRectangle(x, y, level, result);
+
+            const projection = this._webMercatorTilingScheme._projection;
+            const southwest = projection.unproject(
+                new Cartesian2(nativeRectangle.west, nativeRectangle.south),
+            );
+            const northeast = projection.unproject(
+                new Cartesian2(nativeRectangle.east, nativeRectangle.north),
+            );
+
+            nativeRectangle.west = southwest.longitude;
+            nativeRectangle.south = southwest.latitude;
+            nativeRectangle.east = northeast.longitude;
+            nativeRectangle.north = northeast.latitude;
+            return nativeRectangle;
+        }
+    }
+
+    /**
+     * 将经纬度位置转换为瓦片坐标，位置不在切片方案范围内时返回 undefined。
+     * @param {Cartographic} position 经纬度位置
+     * @param {number} level 层级
+     * @param {Cartesian2} [result] 用于存储结果的实例
+     * @returns {Cartesian2|undefined} 瓦片坐标
+     */
+    positionToTileXY(position, level, result = new Cartesian2()) {
+        const rectangle = this.rectangle;
+        if (!Rectangle.contains(rectangle, position)) {
+            // outside the bounds of the tiling scheme
+            return undefined;
+        }
+
+        const xTiles = this.getNumberOfXTilesAtLevel(level);
+        const yTiles = this.getNumberOfYTilesAtLevel(level);
+
+        if (this.isGeographic) {
+            const xTileWidth = rectangle.width / xTiles;
+            const yTileHeight = rectangle.height / yTiles;
+
+            let longitude = position.longitude;
+            if (rectangle.east < rectangle.west) {
+                longitude += Math$1.TWO_PI;
+            }
+
+            let xTileCoordinate = ((longitude - rectangle.west) / xTileWidth) | 0;
+            if (xTileCoordinate >= xTiles) {
+                xTileCoordinate = xTiles - 1;
+            }
+
+            let yTileCoordinate =
+                ((rectangle.north - position.latitude) / yTileHeight) | 0;
+            if (yTileCoordinate >= yTiles) {
+                yTileCoordinate = yTiles - 1;
+            }
+
+            result.x = xTileCoordinate;
+            result.y = yTileCoordinate;
+        } else {
+            const overallWidth =
+                this._webMercatorTilingScheme._rectangleNortheastInMeters.x - this._webMercatorTilingScheme._rectangleSouthwestInMeters.x;
+            const xTileWidth = overallWidth / xTiles;
+            const overallHeight =
+                this._webMercatorTilingScheme._rectangleNortheastInMeters.y - this._webMercatorTilingScheme._rectangleSouthwestInMeters.y;
+            const yTileHeight = overallHeight / yTiles;
+
+            const projection = this._webMercatorTilingScheme._projection;
+
+            const webMercatorPosition = projection.project(position);
+            const distanceFromWest =
+                webMercatorPosition.x - this._webMercatorTilingScheme._rectangleSouthwestInMeters.x;
+            const distanceFromNorth =
+                this._webMercatorTilingScheme._rectangleNortheastInMeters.y - webMercatorPosition.y;
+
+            let xTileCoordinate = (distanceFromWest / xTileWidth) | 0;
+            if (xTileCoordinate >= xTiles) {
+                xTileCoordinate = xTiles - 1;
+            }
+            let yTileCoordinate = (distanceFromNorth / yTileHeight) | 0;
+            if (yTileCoordinate >= yTiles) {
+                yTileCoordinate = yTiles - 1;
+            }
+
+            result.x = xTileCoordinate;
+            result.y = yTileCoordinate;
+        }
+        return result;
+    }
+
+    /**
+     * 静态方法：根据原点、分辨率、瓦片尺寸与地图范围计算层级（LOD）信息数组。
+     * @param {object} origin 地图原点
+     * @param {Array} resolutions 分辨率数组
+     * @param {number} tilePixelWidth 瓦片像素宽度
+     * @param {number} tilePixelHeight 瓦片像素高度
+     * @param {Rectangle} rectangle 地图范围
+     * @returns {Array} 层级信息数组
+     */
+    static computeLods(origin, resolutions, tilePixelWidth, tilePixelHeight, rectangle) {
+        return computeLods(origin, resolutions, tilePixelWidth, tilePixelHeight, rectangle);
+    };
+}
+
+const dynamicDomainTag = /{s}/g;
+
+const defaultRange = Object.freeze({
+    min: 1,
+    max: 9
+});
+
+/**
+ * 将 URL 中的动态域名标记 {s} 替换为指定范围内的随机整数。
+ * @param {ArcGisMapImageryProvider} imageryProvider 影像提供者
+ * @param {string} url 原始 URL
+ * @returns {string} 替换后的 URL
+ */
+function buildDynamicDomainUrl(imageryProvider, url) {
+    const range = imageryProvider._dynamicDomainRange;
+    const randomInt = Math$1.randomInteger(range.min, range.max);
+    return url.replace(dynamicDomainTag, randomInt);
+}
+
+/**
+ * 根据瓦片行列号与层级构建影像瓦片请求 URL。
+ * @param {ArcGisMapImageryProvider} imageryProvider 影像提供者
+ * @param {number} x 瓦片 X 坐标
+ * @param {number} y 瓦片 Y 坐标
+ * @param {number} level 层级
+ * @returns {string} 瓦片请求 URL
+ */
+function buildImageUrl(imageryProvider, x, y, level) {
+    let url = imageryProvider.url + "/tile/{z}/{y}/{x}";
+    if (imageryProvider._useDynamicDomain) {
+        url = buildDynamicDomainUrl(imageryProvider, url);
+    }
+
+    url = url
+        .replace('{x}', x)
+        .replace('{y}', y)
+        .replace('{z}', level);
+    return url;
+}
+
+/**
+ * ArcGIS 地图影像提供者，通过 ArcGIS 服务的元数据（tileInfo）动态构建切片方案，
+ * 支持动态子域名（{s}）、Web 墨卡托与经纬度两种空间参考，并按需请求瓦片影像。
+ */
+class ArcGisMapImageryProvider extends Destroyable {
+    /**
+     * 创建 ArcGIS 地图影像提供者实例。
+     * @param {object} options 配置项
+     * @param {string} options.url 服务地址（必填）
+     * @param {string} [options.token] 访问令牌
+     * @param {object} [options.tileDiscardPolicy] 瓦片丢弃策略
+     * @param {number} [options.tileWidth=256] 瓦片像素宽度
+     * @param {number} [options.tileHeight=256] 瓦片像素高度
+     * @param {number} [options.minimumLevel=0] 最小层级
+     * @param {number} [options.maximumLevel] 最大层级
+     * @param {TilingScheme} [options.tilingScheme] 切片方案
+     * @param {Ellipsoid} [options.ellipsoid] 参考椭球体
+     * @param {boolean} [options.usePreCachedTilesIfAvailable=true] 是否优先使用服务预缓存切片
+     * @param {Rectangle} [options.rectangle] 地图范围
+     * @param {object} [options.dynamicDomainRange] 动态域名随机范围 {min, max}
+     * @param {string|Credit} [options.credit] 版权信息
+     */
+    constructor(options = {}) {
+        super();
+        Check.defined('options.url', options.url);
+
+        const resource = Resource.createIfNeeded(options.url);
+        // resource.appendForwardSlash();
+
+        if (defined$1(options.token)) {
+            resource.setQueryParameters({
+                token: options.token
+            });
+        }
+
+        this._resource = resource;
+        this._tileDiscardPolicy = options.tileDiscardPolicy;
+
+        this._tileWidth = options.tileWidth ?? 256;
+        this._tileHeight = options.tileHeight ?? 256;
+        this._minimumLevel = options.minimumLevel ?? 0;
+        this._maximumLevel = options.maximumLevel ?? Number.MAX_SAFE_INTEGER;
+        this._tilingScheme = options.tilingScheme ?? new GeographicTilingScheme({ ellipsoid: options.ellipsoid });
+        this._useTiles = options.usePreCachedTilesIfAvailable ?? true;
+        this._rectangle = options.rectangle || Rectangle.MAX_VALUE.clone();
+        if (this.url.match(dynamicDomainTag)) {
+            this._useDynamicDomain = true;
+            this._dynamicDomainRange = options.dynamicDomainRange ?? defaultRange;
+            const url = buildDynamicDomainUrl(this, this.url);
+            this._metadataResource = new Resource({
+                url: url,
+                queryParameters: {
+                    f: 'json'
+                }
+            });
+        } else {
+            this._metadataResource = this._resource.getDerivedResource({
+                queryParameters: {
+                    f: 'json'
+                }
+            });
+        }
+
+        const credit = options.credit;
+        if (typeof credit === 'string') {
+            credit = new Credit(credit);
+        }
+        this._credit = credit;
+
+        this._errorEvent = new Event();
+
+        this._ready = false;
+        this._readyPromise = defer();
+
+        const metadataSuccess = (data) => {
+            if (this.isDestroyed()) {
+                console.warn('the provider isDestroyed.', options);
+                return;
+            }
+            this._metadata = data;
+            const tileInfo = data.tileInfo;
+            if (!defined$1(tileInfo)) {
+                this._useTiles = false;
+            } else {
+                const tileWidth = this._tileWidth = tileInfo.rows;
+                const tileHeight = this._tileHeight = tileInfo.cols;
+                const wkid = this._wkid = tileInfo.spatialReference.wkid;
+                const origin = this._origin = tileInfo.origin;
+                this._useTms = tileInfo.tms;
+                const fullExtent = this._fullExtent = data.fullExtent;
+
+                const lods = tileInfo.lods;
+                this._minimumLevel = lods[0].level;
+                const length = lods.length;
+                this._maximumLevel = lods[length - 1].level;
+                console.log('parse minimumLevel:', this._minimumLevel, 'maximumLevel:', this._maximumLevel);
+
+                if (wkid === 102100 || wkid === 102113 || wkid === 3857) {
+                    this._tilingScheme = new WebMercatorTilingScheme({
+                        ellipsoid: options.ellipsoid
+                    });
+
+                    const projection = new WebMercatorProjection(options.ellipsoid);
+                    const sw = projection.unproject(new Cartesian3(Math.max(fullExtent.xmin, -this._tilingScheme.ellipsoid.maximumRadius * Math.PI), Math.max(fullExtent.ymin, -this._tilingScheme.ellipsoid.maximumRadius * Math.PI), 0.0));
+                    const ne = projection.unproject(new Cartesian3(Math.min(fullExtent.xmax, this._tilingScheme.ellipsoid.maximumRadius * Math.PI), Math.min(fullExtent.ymax, this._tilingScheme.ellipsoid.maximumRadius * Math.PI), 0.0));
+                    this._rectangle = new Rectangle(sw.longitude, sw.latitude, ne.longitude, ne.latitude);
+                } else if (wkid === 4326 || wkid === 4490) {
+                    this._rectangle = Rectangle.fromDegrees(fullExtent.xmin, fullExtent.ymin, fullExtent.xmax, fullExtent.ymax);
+
+                    const resolutions = [];
+                    for (let i = lods.length - 1; i >= 0; i--) {
+                        resolutions[lods[i].level] = lods[i].resolution;
+                    }
+                    this._tilingScheme = new CustomTilingScheme({
+                        ellipsoid: options.ellipsoid,
+                        wkid: wkid,
+                        origin: origin,
+                        resolutions: resolutions,
+                        tileWidth: tileWidth,
+                        tileHeight: tileHeight,
+                        rectangle: this._rectangle,
+                    });
+                } else {
+                    const message = 'Tile spatial reference WKID ' + wkid + ' is not supported.';
+                    const error = new RuntimeError(message);
+                    this._readyPromise.reject(error);
+                    return;
+                }
+
+                // Install the default tile discard policy if none has been supplied.
+                if (!defined$1(this._tileDiscardPolicy)) {
+                    this._tileDiscardPolicy = new DiscardMissingTileImagePolicy({
+                        missingImageUrl: buildImageUrl(this, 0, 0, this._maximumLevel),
+                        pixelsToCheck: [new Cartesian2(0, 0), new Cartesian2(200, 20), new Cartesian2(20, 200), new Cartesian2(80, 110), new Cartesian2(160, 130)],
+                        disableCheckIfAllPixelsAreTransparent: true
+                    });
+                }
+
+                this._useTiles = true;
+            }
+
+            if (defined$1(data.copyrightText) && data.copyrightText.length > 0) {
+                this._credit = new Credit(data.copyrightText);
+            }
+
+            // resource.appendForwardSlash();
+            this._ready = true;
+            this._readyPromise.resolve(true);
+        };
+
+        const metadataFailure = (e) => {
+            const message = 'An error occurred while accessing ' + this._resource.url + '.';
+            const error = new RuntimeError(message);
+            this._readyPromise.reject(error);
+        };
+
+        const requestMetadata = () => {
+            this._metadataResource.fetchJsonp()
+                .then(metadataSuccess)
+                .catch(metadataFailure);
+        };
+
+        if (this._useTiles) {
+            requestMetadata();
+        } else {
+            this._ready = true;
+            this._readyPromise.resolve(true);
+        }
+    }
+
+    /**
+     * 获取服务地址。
+     * @returns {string} 服务地址
+     */
+    get url() {
+        return this._resource._url;
+    }
+
+    /**
+     * 获取访问令牌。
+     * @returns {string} 访问令牌
+     */
+    get token() {
+        return this._resource.queryParameters.token;
+    }
+
+    /**
+     * 获取代理对象。
+     * @returns {object} 代理对象
+     */
+    get proxy() {
+        return this._resource.proxy;
+    }
+
+    /**
+     * 获取瓦片像素宽度。
+     * @returns {number} 瓦片像素宽度
+     */
+    get tileWidth() {
+        if (!this._ready) {
+            throw new DeveloperError('tileWidth must not be called before the imagery provider is ready.');
+        }
+        return this._tileWidth;
+    }
+
+    /**
+     * 获取瓦片像素高度。
+     * @returns {number} 瓦片像素高度
+     */
+    get tileHeight() {
+        if (!this._ready) {
+            throw new DeveloperError('tileHeight must not be called before the imagery provider is ready.');
+        }
+        return this._tileHeight;
+    }
+
+    /**
+     * 获取最大层级。
+     * @returns {number} 最大层级
+     */
+    get maximumLevel() {
+        if (!this._ready) {
+            throw new DeveloperError('maximumLevel must not be called before the imagery provider is ready.');
+        }
+        return this._maximumLevel;
+    }
+
+    /**
+     * 获取最小层级。
+     * @returns {number} 最小层级
+     */
+    get minimumLevel() {
+        if (!this._ready) {
+            throw new DeveloperError('minimumLevel must not be called before the imagery provider is ready.');
+        }
+        return this._minimumLevel;
+    }
+
+    /**
+     * 获取切片方案。
+     * @returns {TilingScheme} 切片方案
+     */
+    get tilingScheme() {
+        if (!this._ready) {
+            throw new DeveloperError('tilingScheme must not be called before the imagery provider is ready.');
+        }
+        return this._tilingScheme;
+    }
+
+    /**
+     * 获取地图范围。
+     * @returns {Rectangle} 地图范围
+     */
+    get rectangle() {
+        if (!this._ready) {
+            throw new DeveloperError('rectangle must not be called before the imagery provider is ready.');
+        }
+        return this._rectangle;
+    }
+
+    /**
+     * 获取瓦片丢弃策略。
+     * @returns {object} 瓦片丢弃策略
+     */
+    get tileDiscardPolicy() {
+        if (!this._ready) {
+            throw new DeveloperError('tileDiscardPolicy must not be called before the imagery provider is ready.');
+        }
+        return this._tileDiscardPolicy;
+    }
+
+    /**
+     * 获取错误事件对象。
+     * @returns {Event} 错误事件对象
+     */
+    get errorEvent() {
+        return this._errorEvent;
+    }
+
+    /**
+     * 获取影像提供者是否已就绪。
+     * @returns {boolean} 是否已就绪
+     */
+    get ready() {
+        return this._ready;
+    }
+
+    /**
+     * 获取就绪 Promise。
+     * @returns {Promise<boolean>} 就绪 Promise
+     */
+    get readyPromise() {
+        return this._readyPromise.promise;
+    }
+
+    /**
+     * 获取版权信息。
+     * @returns {Credit} 版权信息
+     */
+    get credit() {
+        return this._credit;
+    }
+
+    /**
+     * 获取是否使用服务预缓存切片。
+     * @returns {boolean} 是否使用预缓存切片
+     */
+    get usingPrecachedTiles() {
+        return this._useTiles;
+    }
+
+    /**
+     * 获取瓦片是否包含 Alpha 通道。
+     * @returns {boolean} 是否包含 Alpha 通道，恒为 true
+     */
+    get hasAlphaChannel() {
+        return true;
+    }
+
+    /**
+     * 获取服务元数据。
+     * @returns {object} 服务元数据
+     */
+    get metadata() {
+        return this._metadata;
+    }
+
+    /**
+     * 获取空间参考 WKID。
+     * @returns {number} 空间参考 WKID
+     */
+    get wkid() {
+        return this._wkid;
+    }
+
+    /**
+     * 获取瓦片原点坐标。
+     * @returns {object} 瓦片原点坐标
+     */
+    get origin() {
+        return this._origin;
+    }
+
+    /**
+     * 获取服务完整范围。
+     * @returns {object} 服务完整范围
+     */
+    get fullExtent() {
+        return this._fullExtent;
+    }
+
+    /**
+     * 获取指定瓦片的版权信息。
+     * @param {number} x 瓦片 X 坐标
+     * @param {number} y 瓦片 Y 坐标
+     * @param {number} level 层级
+     * @returns {Credit[]|undefined} 版权信息数组，当前恒为 undefined
+     */
+    getTileCredits(x, y, level) {
+        return undefined;
+    }
+
+    /**
+     * 请求指定瓦片的影像。
+     * @param {number} x 瓦片 X 坐标
+     * @param {number} y 瓦片 Y 坐标
+     * @param {number} level 层级
+     * @param {Request} [request] 请求对象
+     * @returns {Promise<HTMLImageElement|HTMLCanvasElement>} 影像加载 Promise
+     */
+    requestImage(x, y, level, request) {
+        if (!this._ready) {
+            throw new DeveloperError('requestImage must not be called before the imagery provider is ready.');
+        }
+
+        if (typeof this._tilingScheme.getTileActualNumber === 'function') {
+            const actualNumber = this._tilingScheme.getTileActualNumber(x, y, level);
+            x = actualNumber.x;
+            y = actualNumber.y;
+            level = actualNumber.level;
+        }
+        if (this._useTms) {
+            // tms切片以左下为原点排序，所以y方向序号需要反序
+            y = this._tilingScheme.getNumberOfYTilesAtLevel(level) - y;
+        }
+        const url = buildImageUrl(this, x, y, level);
+        return ImageryProvider.loadImage(this, url);
+    }
+
+    /**
+     * 拾取指定位置的要素，当前未实现。
+     * @param {number} x 瓦片 X 坐标
+     * @param {number} y 瓦片 Y 坐标
+     * @param {number} level 层级
+     * @param {number} longitude 经度
+     * @param {number} latitude 纬度
+     * @returns {undefined} 当前无返回值
+     */
+    pickFeatures(x, y, level, longitude, latitude) {
+        // TODO
+    }
+}
+
+const crsMatchPattern = /\b(4326|4490)\b/;
+
+/**
+ * WMTS 切片方案，继承自 CustomTilingScheme，依据解析出的瓦片矩阵集（TileMatrixSet）
+ * 提供瓦片数量与实际瓦片编号换算，坐标单位由瓦片矩阵集的 CRS 自动判定。
+ */
+class WebMapTileServiceTilingScheme extends CustomTilingScheme {
+    /**
+     * 创建 WMTS 切片方案实例。
+     * @param {object} options 配置项，除 CustomTilingScheme 的参数外还包含以下属性：
+     * @param {object} options.tileMatrixSets 以标识为键的瓦片矩阵集映射
+     * @param {string} options.tileMatrixSetID 瓦片矩阵集标识
+     */
+    constructor(options) {
+        super(options);
+        Check.defined('tileMatrixSets', options.tileMatrixSets);
+        Check.defined('tileMatrixSetID', options.tileMatrixSetID);
+        this._tileMatrixSets = options.tileMatrixSets;
+        this.tileMatrixSetID = options.tileMatrixSetID;
+    }
+
+    /**
+     * 设置瓦片矩阵集标识，并依据其 CRS 判定坐标单位（是经纬度还是米）。
+     * @param {string} value 瓦片矩阵集标识
+     * @returns {void}
+     */
+    set tileMatrixSetID(value) {
+        Check.typeOf.string('tileMatrixSetID', value);
+        this._tileMatrixSetID = value;
+        this._tileMatrixSet = this._tileMatrixSets[this._tileMatrixSetID];
+        this._crs = this._tileMatrixSet.crs;
+        if (this._crs.match(crsMatchPattern)) {
+            this._unit = "degrees";
+        } else {
+            this._unit = "meters";
+        }
+    }
+
+    /**
+     * 获取瓦片矩阵集标识。
+     * @returns {string} 瓦片矩阵集标识
+     */
+    get tileMatrixSetID() {
+        return this._tileMatrixSetID;
+    }
+
+    /**
+     * 获取当前瓦片矩阵集。
+     * @returns {object} 当前瓦片矩阵集
+     */
+    get tileMatrixSet() {
+        return this._tileMatrixSet;
+    }
+
+    /**
+     * 获取坐标参考系（CRS）标识。
+     * @returns {string} CRS 标识
+     */
+    get crs() {
+        return this._crs;
+    }
+
+    /**
+     * 获取指定层级的 X 方向瓦片数量，优先使用瓦片矩阵集中的定义。
+     * @param {number} level 层级
+     * @returns {number} X 方向瓦片数量
+     */
+    getNumberOfXTilesAtLevel(level) {
+        if (defined$1(this._tileMatrixSet)) {
+            const lod = this._tileMatrixSet.tileMatrices[level];
+            if (defined$1(lod)) {
+                return lod.numberOfTileX;
+            }
+        }
+        return super.getNumberOfXTilesAtLevel(level);
+    }
+
+    /**
+     * 获取指定层级的 Y 方向瓦片数量，优先使用瓦片矩阵集中的定义。
+     * @param {number} level 层级
+     * @returns {number} Y 方向瓦片数量
+     */
+    getNumberOfYTilesAtLevel(level) {
+        if (defined$1(this._tileMatrixSet)) {
+            const lod = this._tileMatrixSet.tileMatrices[level];
+            if (defined$1(lod)) {
+                return lod.numberOfTileY;
+            }
+        }
+        return super.getNumberOfYTilesAtLevel(level);
+    }
+
+    /**
+     * 结合瓦片矩阵集的起始编号，将瓦片坐标换算为实际瓦片编号。
+     * @param {number} x 瓦片 X 坐标
+     * @param {number} y 瓦片 Y 坐标
+     * @param {number} level 层级
+     * @returns {{x:number, y:number, level:number}} 实际瓦片编号
+     */
+    getTileActualNumber(x, y, level) {
+        if (defined$1(this._tileMatrixSet)) {
+            const lod = this._tileMatrixSet.tileMatrices[level];
+            if (defined$1(lod)) {
+                x += lod.startOfTileX;
+                y += lod.startOfTileY;
+            }
+        }
+        return {
+            x: x,
+            y: y,
+            level: level,
+        }
+    }
+}
+
+/**
+ * 根据比例尺分母计算分辨率（度/像素）。
+ * @param {number} scaleDenominator 比例尺分母
+ * @param {number} [dpi=96] 屏幕分辨率（DPI）
+ * @returns {number} 分辨率（度/像素）
+ */
+function computeResolution(scaleDenominator, dpi = 96) {
+    return scaleDenominator * 0.0254 * 10000 / dpi / Math$1.WGS84_METERS_PER_DEGREES / 10000;
+}
+
+/**
+ * 解析 WMTS 中的原点坐标字符串（如 "lon lat"）。
+ * @param {string} value 原点坐标字符串
+ * @param {boolean} [reverse] 是否交换 x、y 顺序
+ * @returns {{x:number, y:number}} 原点坐标
+ */
+function parseOrigin(value, reverse) {
+    const arr = value.split(' ');
+    arr[0] = parseNumber(arr[0]);
+    arr[1] = parseNumber(arr[1]);
+    return {
+        x: reverse ? arr[1] : arr[0],
+        y: reverse ? arr[0] : arr[1],
+    }
+}
+
+// function parseRectangle(lowerCorner, upperCorner) {
+//     const lowerOrigin = parseOrigin(lowerCorner);
+//     const upperOrigin = parseOrigin(upperCorner);
+//     return Rectangle.fromDegrees(lowerOrigin.x, lowerOrigin.y, upperOrigin.x, upperOrigin.y);
+// }
+
+/**
+ * 解析单个 TileMatrix 节点，提取标识、比例尺、瓦片尺寸、瓦片数量与起始编号等信息。
+ * @param {Element} TileMatrix TileMatrix XML 节点
+ * @param {object} rectangle 地图范围（含 westDegrees、northDegrees）
+ * @returns {object} 层级信息对象
+ */
+function parseTileMatrix(TileMatrix, rectangle) {
+    const result = {};
+    result.id = TileMatrix.getElementsByTagName('ows:Identifier')[0].textContent;
+    // let idx = value.lastIndexOf(':');
+    // if (idx !== -1) {
+    //     value = value.substring(idx + 1);
+    // }
+    // result.level = parseNumber(value);
+    result.scaleDenominator = parseNumber(TileMatrix.getElementsByTagName('ScaleDenominator')[0].textContent);
+    result.tileWidth = parseNumber(TileMatrix.getElementsByTagName('TileWidth')[0].textContent);
+    result.tileHeight = parseNumber(TileMatrix.getElementsByTagName('TileHeight')[0].textContent);
+    result.numberOfTileX = parseNumber(TileMatrix.getElementsByTagName('MatrixWidth')[0].textContent);
+    result.numberOfTileY = parseNumber(TileMatrix.getElementsByTagName('MatrixHeight')[0].textContent);
+    result.resolution = computeResolution(result.scaleDenominator);
+    result.origin = parseOrigin(TileMatrix.getElementsByTagName('TopLeftCorner')[0].textContent, true);
+
+    const tileDegreesWidth = result.tileWidth * result.resolution; //计算地图瓦片角度单位的宽度
+    const tileDegreesHeight = result.tileHeight * result.resolution; //计算地图瓦片角度单位的高度
+    result.startOfTileX = Math.floor((rectangle.westDegrees - result.origin.x) / tileDegreesWidth); //计算横向的瓦片起始编号
+    result.startOfTileY = Math.floor((result.origin.y - rectangle.northDegrees) / tileDegreesHeight); //计算纵向的瓦片起始编号
+    result.endOfTileX = result.startOfTileX + result.numberOfTileX; //计算横向的瓦片结束编号
+    result.endOfTileY = result.startOfTileY + result.numberOfTileY; //计算纵向的瓦片结束编号
+
+    return result;
+}
+
+/**
+ * 解析 TileMatrixSet 节点，汇总其下所有 TileMatrix 层级信息。
+ * @param {Element} TileMatrixSet TileMatrixSet XML 节点
+ * @param {Rectangle} [rectangle=Rectangle.MAX_VALUE] 地图范围
+ * @returns {object} 瓦片矩阵集信息对象
+ */
+function parseTileMatrixSet(TileMatrixSet, rectangle = Rectangle.MAX_VALUE) {
+    const result = {};
+    result.id = TileMatrixSet.getElementsByTagName('ows:Identifier')[0].textContent;
+    result.crs = TileMatrixSet.getElementsByTagName('ows:SupportedCRS')[0].textContent;
+    result.tileMatrices = [];
+    const TileMatrices = TileMatrixSet.getElementsByTagName('TileMatrix');
+    for (let i = 0; i < TileMatrices.length; i++) {
+        const tileMatrix = parseTileMatrix(TileMatrices[i], rectangle);
+        tileMatrix.level = i;
+        result.tileMatrices[tileMatrix.level] = tileMatrix;
+        if (i === 0) {
+            result.tileWidth = tileMatrix.tileWidth;
+            result.tileHeight = tileMatrix.tileHeight;
+        }
+    }
+    result.minimumLevel = 0;
+    result.maximumLevel = TileMatrices.length - 1;
+
+    return result;
+}
+
+const defaultParameters = Object.freeze({
+    service: 'WMTS',
+    version: '1.0.0',
+    request: 'GetTile'
+});
+
+/**
+ * WMTS（Web Map Tile Service）影像提供者，通过 GetCapabilities 获取服务能力文档，
+ * 解析图层、格式、瓦片矩阵集等信息并据此构建切片方案，支持通过代理访问。
+ */
+class WebMapTileServiceImageryProvider extends Destroyable {
+    /**
+     * 创建 WMTS 影像提供者实例。
+     * @param {object} options 配置项
+     * @param {string} options.url 服务地址（必填）
+     * @param {boolean} [options.getCapabilities=true] 是否请求 GetCapabilities 获取能力文档
+     * @param {string} [options.layer] 图层标识
+     * @param {string} [options.style] 样式标识
+     * @param {string} [options.tileMatrixSetID] 瓦片矩阵集标识
+     * @param {string} [options.tileMatrixSet] 瓦片矩阵集标识（tileMatrixSetID 的别名）
+     * @param {string} [options.format] 瓦片格式
+     * @param {number} [options.tileWidth=256] 瓦片像素宽度
+     * @param {number} [options.tileHeight=256] 瓦片像素高度
+     * @param {number} [options.minimumLevel=0] 最小层级
+     * @param {number} [options.maximumLevel=23] 最大层级
+     * @param {TilingScheme} [options.tilingScheme] 切片方案
+     * @param {Ellipsoid} [options.ellipsoid] 参考椭球体
+     * @param {Rectangle} [options.rectangle] 地图范围
+     * @param {string} [options.proxyUrl] 代理地址
+     * @param {string|Credit} [options.credit] 版权信息
+     */
+    constructor(options = {}) {
+        super();
+        Check.defined('url', options.url);
+
+        const getCapabilities = options.getCapabilities ?? true;
+        if (getCapabilities === false) {
+            Check.defined('layer', options.layer);
+        }
+
+        const resource = Resource.createIfNeeded(options.url);
+
+        this._resource = resource;
+        this._options = Object.assign({}, options);
+        this._layer = options.layer;
+        this._style = options.style;
+        this._tileMatrixSetID = options.tileMatrixSetID || options.tileMatrixSet;
+        this._format = options.format;
+        this._tileWidth = options.tileWidth ?? 256;
+        this._tileHeight = options.tileHeight ?? 256;
+        this._minimumLevel = options.minimumLevel ?? 0;
+        this._maximumLevel = options.maximumLevel ?? 23;
+        this._tilingScheme = options.tilingScheme ?? new WebMercatorTilingScheme({
+            ellipsoid: options.ellipsoid
+        });
+        this._rectangle = options.rectangle || Rectangle.MAX_VALUE.clone();
+        if (defined$1(options.proxyUrl)) {
+            this._proxyUrl = options.proxyUrl;
+            this._proxyResource = Resource.createIfNeeded(options.proxyUrl);
+        }
+
+        const credit = options.credit;
+        if (typeof credit === 'string') {
+            credit = new Credit(credit);
+        }
+        this._credit = credit;
+
+        this._errorEvent = new Event();
+
+        this._ready = false;
+        this._readyPromise = defer();
+
+        if (getCapabilities === false) {
+            this._ready = true;
+            this._readyPromise.resolve(true);
+            return;
+        }
+
+        const getCapabilitiesSuccess = (xml) => {
+            // console.log('GetCapabilities result:', xml);
+            const Capabilities = xml.getElementsByTagName('Capabilities')[0];
+            // Capabilities.getAttribute('version');
+            const Contents = Capabilities.getElementsByTagName('Contents')[0];
+            const Layer = Contents.getElementsByTagName('Layer')[0];
+            const Format = Layer.getElementsByTagName('Format');
+            const Style = Layer.getElementsByTagName('Style')[0];
+            // const BoundingBox = Layer.getElementsByTagName('ows:WGS84BoundingBox')[0] || Layer.getElementsByTagName('ows:BoundingBox')[0];
+            const TileMatrixSet = Contents.getElementsByTagName('TileMatrixSet');
+
+            if (!defined$1(this._layer))
+                this._layer = Layer.getElementsByTagName('ows:Identifier')[0].textContent;
+            else
+                this._layerName = Layer.getElementsByTagName('ows:Identifier')[0].textContent;
+
+            this._formats = [];
+            for (let i = 0; i < Format.length; i++) {
+                this._formats.push(Format[i].textContent);
+            }
+            if (!defined$1(this._format)) {
+                this._format = this._formats[0];
+            }
+
+            this._style = Style.getElementsByTagName('ows:Identifier')[0].textContent;
+
+            // const lowerCorner = BoundingBox.getElementsByTagName('ows:LowerCorner')[0].textContent;
+            // const upperCorner = BoundingBox.getElementsByTagName('ows:UpperCorner')[0].textContent;
+            // this._rectangle = parseRectangle(lowerCorner, upperCorner);
+
+            this._tileMatrixSets = [];
+            this._tileMatrixSetIDs = [];
+            for (let i = 0; i < TileMatrixSet.length; i++) {
+                if (TileMatrixSet[i].getElementsByTagName('TileMatrix').length === 0)
+                    continue;
+                const tileMatrixSet = parseTileMatrixSet(TileMatrixSet[i], this._rectangle);
+                console.log('parseTileMatrixSet:', tileMatrixSet);
+                this._tileMatrixSets[tileMatrixSet.id] = tileMatrixSet;
+                this._tileMatrixSetIDs.push(tileMatrixSet.id);
+            }
+            if (!defined$1(this._tileMatrixSetID) || !defined$1(this._tileMatrixSets[this._tileMatrixSetID])) {
+                this._tileMatrixSetID = this._tileMatrixSetIDs[0];
+            }
+            // console.log('tileMatrixSets:', this._tileMatrixSets);
+
+            this._tilingScheme = new WebMapTileServiceTilingScheme({
+                ellipsoid: options.ellipsoid,
+                tileMatrixSets: this._tileMatrixSets,
+                tileMatrixSetID: this._tileMatrixSetID
+            });
+
+            const tileMatrixSet = this._tilingScheme.tileMatrixSet;
+            if (defined$1(tileMatrixSet)) {
+                // console.log('tileMatrixSet', tileMatrixSet);
+                // const tileMatrices = tileMatrixSet.tileMatrices;
+                // const length = tileMatrices.length;
+                // for (let i = 0; i < length; i++) {
+                //     if (defined(tileMatrices[i])) {
+                //         this._minimumLevel = i;
+                //         break;
+                //     }
+                // }
+                // this._maximumLevel = length - 1;
+                this._minimumLevel = this._options.minimumLevel ?? tileMatrixSet.minimumLevel;
+                this._maximumLevel = this._options.maximumLevel ?? tileMatrixSet.maximumLevel;
+                this._tileWidth = this._options.tileWidth ?? tileMatrixSet.tileWidth;
+                this._tileHeight = this._options.tileHeight ?? tileMatrixSet.tileHeight;
+                console.log('minimumLevel=', this._minimumLevel, 'maximumLevel=', this._maximumLevel);
+            }
+
+            this._ready = true;
+            this._readyPromise.resolve(true);
+        };
+
+        const getCapabilitiesFailure = (e) => {
+            const message = 'An error occurred while accessing ' + this._resource.url + '.';
+            const error = new RuntimeError(message);
+            this._readyPromise.reject(error);
+        };
+
+        const requestGetCapabilities = () => {
+            const queryParameters = {
+                service: 'WMTS',
+                request: 'GetCapabilities'
+            };
+            if (defined$1(this._layer))
+                queryParameters.layer = this._layer;
+            if (defined$1(this._tileMatrixSetID))
+                queryParameters.tileMatrixSet = this._tileMatrixSetID;
+            const resource = this._resource.getDerivedResource({
+                queryParameters: queryParameters
+            });
+            if (defined$1(this._proxyResource)) {
+                this._proxyResource.setQueryParameters({
+                    url: resource.url,
+                });
+                this._proxyResource.fetchXML()
+                    .then(getCapabilitiesSuccess)
+                    .catch(getCapabilitiesFailure);
+            } else {
+                resource.fetchXML()
+                    .then(getCapabilitiesSuccess)
+                    .catch(getCapabilitiesFailure);
+            }
+        };
+
+        requestGetCapabilities();
+    }
+
+    /**
+     * 获取服务地址。
+     * @returns {string} 服务地址
+     */
+    get url() {
+        return this._resource._url;
+    }
+
+    /**
+     * 设置图层标识。
+     * @param {string} value 图层标识
+     * @returns {void}
+     */
+    set layer(value) {
+        Check.typeOf.string('layer', value);
+        this._layer = value;
+    }
+
+    /**
+     * 获取图层标识。
+     * @returns {string} 图层标识
+     */
+    get layer() {
+        return this._layer;
+    }
+
+    /**
+     * 设置样式标识。
+     * @param {string} value 样式标识
+     * @returns {void}
+     */
+    set style(value) {
+        Check.typeOf.string('style', value);
+        this._style = value;
+    }
+
+    /**
+     * 获取样式标识。
+     * @returns {string} 样式标识
+     */
+    get style() {
+        return this._style;
+    }
+
+    /**
+     * 设置瓦片格式。
+     * @param {string} value 瓦片格式
+     * @returns {void}
+     */
+    set format(value) {
+        Check.typeOf.string('format', value);
+        this._format = value;
+    }
+
+    /**
+     * 获取瓦片格式。
+     * @returns {string} 瓦片格式
+     */
+    get format() {
+        return this._format;
+    }
+
+    /**
+     * 获取服务支持的瓦片格式列表。
+     * @returns {string[]} 支持的瓦片格式列表
+     */
+    get supportedFormats() {
+        if (!this._ready) {
+            throw new DeveloperError('formats must not be called before the imagery provider is ready.');
+        }
+        return this._formats;
+    }
+
+    /**
+     * 设置瓦片矩阵集标识，并同步更新内部切片方案及层级、瓦片尺寸等参数。
+     * @param {string} value 瓦片矩阵集标识
+     * @returns {void}
+     */
+    set tileMatrixSetID(value) {
+        Check.typeOf.string('tileMatrixSetID', value);
+        this._tileMatrixSetID = value;
+        if (defined$1(this._tilingScheme)) {
+            this._tilingScheme.tileMatrixSetID = value;
+            const tileMatrixSet = this._tilingScheme.tileMatrixSet;
+            if (defined$1(tileMatrixSet)) {
+                // const tileMatrices = tileMatrixSet.tileMatrices;
+                // const length = tileMatrices.length;
+                // for (let i = 0; i < length; i++) {
+                //     if (defined(tileMatrices[i])) {
+                //         this._minimumLevel = i;
+                //         break;
+                //     }
+                // }
+                // this._maximumLevel = length - 1;
+                this._minimumLevel = this._options.minimumLevel ?? tileMatrixSet.minimumLevel;
+                this._maximumLevel = this._options.maximumLevel ?? tileMatrixSet.maximumLevel;
+                this._tileWidth = this._options.tileWidth ?? tileMatrixSet.tileWidth;
+                this._tileHeight = this._options.tileHeight ?? tileMatrixSet.tileHeight;
+            }
+        }
+    }
+
+    /**
+     * 获取瓦片矩阵集标识。
+     * @returns {string} 瓦片矩阵集标识
+     */
+    get tileMatrixSetID() {
+        return this._tileMatrixSetID;
+    }
+
+    /**
+     * 获取服务支持的瓦片矩阵集标识列表。
+     * @returns {string[]} 支持的瓦片矩阵集标识列表
+     */
+    get supportedTileMatrixSetIDs() {
+        if (!this._ready) {
+            throw new DeveloperError('tileMatrixSetIDs must not be called before the imagery provider is ready.');
+        }
+        return this._tileMatrixSetIDs;
+    }
+
+    /**
+     * 获取服务支持的瓦片矩阵集映射。
+     * @returns {object} 以标识为键的瓦片矩阵集映射
+     */
+    get supportedTileMatrixSets() {
+        if (!this._ready) {
+            throw new DeveloperError('tileMatrixSets must not be called before the imagery provider is ready.');
+        }
+        return this._tileMatrixSets;
+    }
+
+    /**
+     * 获取瓦片像素宽度。
+     * @returns {number} 瓦片像素宽度
+     */
+    get tileWidth() {
+        if (!this._ready) {
+            throw new DeveloperError('tileWidth must not be called before the imagery provider is ready.');
+        }
+        return this._tileWidth;
+    }
+
+    /**
+     * 获取瓦片像素高度。
+     * @returns {number} 瓦片像素高度
+     */
+    get tileHeight() {
+        if (!this._ready) {
+            throw new DeveloperError('tileHeight must not be called before the imagery provider is ready.');
+        }
+        return this._tileHeight;
+    }
+
+    /**
+     * 获取最大层级。
+     * @returns {number} 最大层级
+     */
+    get maximumLevel() {
+        if (!this._ready) {
+            throw new DeveloperError('maximumLevel must not be called before the imagery provider is ready.');
+        }
+        return this._maximumLevel;
+    }
+
+    /**
+     * 获取最小层级。
+     * @returns {number} 最小层级
+     */
+    get minimumLevel() {
+        if (!this._ready) {
+            throw new DeveloperError('minimumLevel must not be called before the imagery provider is ready.');
+        }
+        return this._minimumLevel;
+    }
+
+    /**
+     * 获取切片方案。
+     * @returns {TilingScheme} 切片方案
+     */
+    get tilingScheme() {
+        if (!this._ready) {
+            throw new DeveloperError('tilingScheme must not be called before the imagery provider is ready.');
+        }
+        return this._tilingScheme;
+    }
+
+    /**
+     * 获取地图范围。
+     * @returns {Rectangle} 地图范围
+     */
+    get rectangle() {
+        if (!this._ready) {
+            throw new DeveloperError('rectangle must not be called before the imagery provider is ready.');
+        }
+        return this._rectangle;
+    }
+
+    /**
+     * 获取错误事件对象。
+     * @returns {Event} 错误事件对象
+     */
+    get errorEvent() {
+        return this._errorEvent;
+    }
+
+    /**
+     * 获取影像提供者是否已就绪。
+     * @returns {boolean} 是否已就绪
+     */
+    get ready() {
+        return this._ready;
+    }
+
+    /**
+     * 获取就绪 Promise。
+     * @returns {Promise<boolean>} 就绪 Promise
+     */
+    get readyPromise() {
+        return this._readyPromise.promise;
+    }
+
+    /**
+     * 获取版权信息。
+     * @returns {Credit} 版权信息
+     */
+    get credit() {
+        return this._credit;
+    }
+
+    /**
+     * 获取瓦片是否包含 Alpha 通道。
+     * @returns {boolean} 是否包含 Alpha 通道，恒为 true
+     */
+    get hasAlphaChannel() {
+        return true;
+    }
+
+    /**
+     * 获取服务能力文档。
+     * @returns {object} 服务能力文档
+     */
+    get capabilities() {
+        return this._capabilities;
+    }
+
+    /**
+     * 请求指定瓦片的影像，按 WMTS 规范组装查询参数，支持通过代理访问。
+     * @param {number} x 瓦片 X 坐标
+     * @param {number} y 瓦片 Y 坐标
+     * @param {number} level 层级
+     * @param {Request} [request] 请求对象
+     * @returns {Promise<HTMLImageElement|HTMLCanvasElement>} 影像加载 Promise
+     */
+    requestImage(x, y, level, request) {
+        if (!this._ready) {
+            throw new DeveloperError('requestImage must not be called before the imagery provider is ready.');
+        }
+
+        if (typeof this._tilingScheme.getTileActualNumber === 'function') {
+            const actualNumber = this._tilingScheme.getTileActualNumber(x, y, level);
+            x = actualNumber.x;
+            y = actualNumber.y;
+            level = actualNumber.level;
+        }
+        const query = {};
+        query.layer = this._layer;
+        if (defined$1(this._layerName))
+            query.layerName = this._layerName;
+        if (defined$1(this._style))
+            query.style = this._style;
+        const tileMatrixSet = this._tilingScheme.tileMatrixSet;
+        if (defined$1(tileMatrixSet)) {
+            const tileMatrix = tileMatrixSet.tileMatrices[level];
+            if (defined$1(tileMatrix))
+                query.tilematrix = tileMatrix.id;
+            else
+                query.tilematrix = level;
+        } else
+            query.tilematrix = level;
+        query.tilerow = y;
+        query.tilecol = x;
+        if (defined$1(this._tileMatrixSetID))
+            query.tilematrixset = this._tileMatrixSetID;
+        query.format = this._format ?? 'image/jpeg';
+        const resource = this._resource.getDerivedResource({
+            queryParameters: query,
+            request: request
+        });
+        resource.setQueryParameters(defaultParameters);
+        if (defined$1(this._proxyResource)) {
+            const proxyResource = this._proxyResource.getDerivedResource({
+                queryParameters: {
+                    url: resource.url
+                },
+                request: request
+            });
+            return ImageryProvider.loadImage(this, proxyResource);
+        } else {
+            return ImageryProvider.loadImage(this, resource);
+        }
+    }
+
+    /**
+     * 拾取指定位置的要素，当前未实现。
+     * @param {number} x 瓦片 X 坐标
+     * @param {number} y 瓦片 Y 坐标
+     * @param {number} level 层级
+     * @param {number} longitude 经度
+     * @param {number} latitude 纬度
+     * @returns {undefined} 当前无返回值
+     */
+    pickFeatures(x, y, level, longitude, latitude) {
+        // TODO
+    }
+}
+
+export { ArcGisMapImageryProvider, BasePrimitive, BaseShapePrimitive, BasicImageMaterial, BooleanGeometryInstanceAttribute, Cartesian3GeometryInstanceAttribute, ColorMaterial, CustomTilingScheme, FloatGeometryInstanceAttribute, FlowImageMaterial, FlowImageMaterial as FlowMaterial, FogType, Geographic, GeographicTransform, ImageTransformMaterial as ImageMaterial, ImageTransformMaterial, TranslationRotationScaleTransform as MatrixTransform, ModelMatrixPrimitive, ModelMatrixTransforms, PointCloudPrimitive, PolylineArrowMaterial, PolylineDashMaterial, PolylineGlowMaterial, PolylineOutlineMaterial, PolylineTrailMaterial, PropertyChangedListener, PropertyType, RotateImageMaterial, RotateImageMaterial as RotateMaterial, RotationFrameType, Scratch, ShapeType, SimpleShapePrimitive, StTransforms, TransformsPrimitive, TranslationRotationScaleTransform, WaterMaterial, WebMapTileServiceImageryProvider, WebMapTileServiceTilingScheme, computeCirclePositions, computeCircleRadius, computeModelMatrix, computeStTransform, createGeometry, createPointCloudGeometry, defineAppearanceProperties, defineBaseShapeProperties, defineBoxProperties, defineCenterProperties, defineClampToGroundProperties, defineComputedModelMatrixProperties, defineCylinderProperties, defineEllipsoidProperties, defineLabelProperties, defineMeshProperties, defineModelMatrixTransformsProperties, defineOutlineProperties, definePlaneProperties, definePointCloudProperties, definePointPrimitiveProperties, definePolygonVolumeProperties, defineSizeInPixelsProperties, defineStTransformsProperties, getGeometryInstanceAttributes, getPositionFromTarget, getRenderState, isColorMaterial, isTranslucent, parseAltitude, parseArcType, parseAttitudeToHeadingPitchRoll, parseAttitudeToMatrix3, parseAttitudeToQuaternion, parseCartographicToCartesian, parseCartographicsToPositions, parseClassificationType, parseClockRange, parseColorBlendMode, parseCornerType, parseCullFace, parseEulerToHeadingPitchRoll, parseEulerToQuaternion, parseGeographicToCartesian, parseGeographicsToPositions, parseHeading, parseAltitude as parseHeight, parseHeightReference, parseHoles, parseHorizontalOrigin, parseLabelStyle, parseLatitude, parseLongitude, parsePitch, parseRoll, parseRotationToHeadingPitchRoll, parseRotationToMatrix3, parseRotationToQuaternion, parseShadowMode, parseToBoundingRectangle, parseToCartesian2, parseToCartesian3, parseToCartesian3Array, parseToCartesian4, parseToCartographic, parseToColor, parseToDistanceDisplayCondition, parseToGeographic, parseToHeadingPitchRange, parseToJulianDate, parseToNearFarScalar, parseToPlane, parseToPolygonHierarchy, parseToRange, parseToRectangle, parseToTimeInterval, parseVerticalOrigin, resolveModelMatrixByFixedFrame };
 //# sourceMappingURL=cesium.utils.esm.js.map
