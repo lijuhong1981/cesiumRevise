@@ -15,7 +15,9 @@ src/
 
 ## 使用
 
-本库是 ES Module，`cesium` 作为 peerDependency 由使用方提供（确保扩展与使用方共享同一个 Cesium 实例，monkey-patch 才能全局生效）。
+### 方式一：ES Module（npm 引入）
+
+适用于用打包工具（webpack / vite / rollup 等）构建的项目。`cesium` 作为 peerDependency 由使用方提供，确保扩展与使用方共享同一个 Cesium 实例，monkey-patch 才能全局生效。
 
 ```bash
 npm install @lijuhong1981/cesium.utils cesium
@@ -26,6 +28,42 @@ import * as CesiumUtils from '@lijuhong1981/cesium.utils';
 // 或按需引入
 import { Geographic, parseToCartesian3 } from '@lijuhong1981/cesium.utils';
 ```
+
+### 方式二：浏览器全局（`<script>` 标签）
+
+适用于不用打包工具、直接通过 `<script>` 标签加载 Cesium（全局 `window.Cesium`）的项目。使用本库的 UMD 产物，它会把 revisions 的补丁自动应用到全局 `Cesium` 上。
+
+```html
+<script src="Cesium/Cesium.js"></script>
+<script src="cesium.utils.min.js"></script>
+<script>
+  // 此时 revisions 的 monkey-patch 已作用于全局 Cesium
+  const c3 = CesiumUtils.parseToCartesian3([120, 30, 100]);
+  const geo = new CesiumUtils.Geographic(120, 30, 100);
+</script>
+```
+
+也可通过 CDN 直接引入：
+
+```html
+<script src="https://unpkg.com/@lijuhong1981/cesium.utils/dist/cesium.utils.min.js"></script>
+```
+
+产物说明：
+
+| 文件 | 格式 | 说明 |
+| --- | --- | --- |
+| `dist/cesium.utils.umd.js` | UMD | 未压缩，便于调试，全局名 `CesiumUtils` |
+| `dist/cesium.utils.min.js` | UMD | 压缩版，供 CDN / 生产使用 |
+| `dist/cesium.utils.esm.js` | ESM | 单文件打包版 |
+
+## 构建
+
+```bash
+npm run build   # rollup 打包，输出到 dist/
+```
+
+`cesium` 在打包时作为 external，映射到全局 `Cesium`；`@lijuhong1981/*` 等依赖会一并打入产物。
 
 ## 依赖
 

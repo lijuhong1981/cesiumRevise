@@ -1,4 +1,4 @@
-export * from "./Scratch.js";
+export { Scratch } from "./Scratch.js";
 export * from "./computeCirclePositions.js";
 export * from "./computeCircleRadius.js";
 export * from "./computeModelMatrix.js";
