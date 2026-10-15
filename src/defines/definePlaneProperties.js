@@ -1,4 +1,5 @@
-import { Cartesian2, Cartesian3, Check, Plane, PlaneGeometry, PlaneGeometryUpdater, PlaneOutlineGeometry } from 'cesium';
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { Cartesian2, Cartesian3, Plane, PlaneGeometry, PlaneGeometryUpdater, PlaneOutlineGeometry } from 'cesium';
 import parseToCartesian2 from '../parses/parseToCartesian2.js';
 import parseToCartesian3 from '../parses/parseToCartesian3.js';
 import parseToPlane from '../parses/parseToPlane.js';

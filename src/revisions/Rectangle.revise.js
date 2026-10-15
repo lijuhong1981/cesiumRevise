@@ -1,4 +1,5 @@
-import { Cartesian3, Cartographic, Math as CesiumMath, Check, DeveloperError, Rectangle, defined } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { Cartesian3, Cartographic, Math as CesiumMath, DeveloperError, Rectangle, defined } from "cesium";
 import Geographic from "../additions/Geographic.js";
 import parseToCartesian3 from "../parses/parseToCartesian3.js";
 import parseToCartographic from "../parses/parseToCartographic.js";

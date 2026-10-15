@@ -1,6 +1,7 @@
+import Check from "@lijuhong1981/jscheck/src/Check.js";
 import Destroyable from "@lijuhong1981/jsdestroy/src/Destroyable.js";
 import parseNumber from "@lijuhong1981/jsmath/src/parseNumber.js";
-import { Math as CesiumMath, Check, Credit, defer, defined, DeveloperError, Event, ImageryProvider, Rectangle, Resource, RuntimeError, WebMercatorTilingScheme } from "cesium";
+import { Math as CesiumMath, Credit, defer, defined, DeveloperError, Event, ImageryProvider, Rectangle, Resource, RuntimeError, WebMercatorTilingScheme } from "cesium";
 import WebMapTileServiceTilingScheme from "./WebMapTileServiceTilingScheme.js";
 
 /**

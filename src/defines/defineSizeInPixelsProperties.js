@@ -1,4 +1,5 @@
-import { BoundingSphere, Check, defined, Matrix4 } from 'cesium';
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { BoundingSphere, defined, Matrix4 } from 'cesium';
 import Scratch from "../utils/Scratch.js";
 
 /**

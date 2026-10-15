@@ -1,4 +1,5 @@
-import { Check, CylinderGeometry, CylinderOutlineGeometry, defined } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { CylinderGeometry, CylinderOutlineGeometry, defined } from "cesium";
 import PropertyType from "../additions/PropertyType.js";
 import ShapeType from "./ShapeType.js";
 

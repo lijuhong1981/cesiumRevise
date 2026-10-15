@@ -1,5 +1,6 @@
+import Check from "@lijuhong1981/jscheck/src/Check.js";
 import isTypedArray from "@lijuhong1981/jscheck/src/isTypedArray.js";
-import { BoundingSphere, Cartesian3, Check, Color, ComponentDatatype, DeveloperError, GeometryAttribute, GeometryAttributes, PrimitiveType } from "cesium";
+import { BoundingSphere, Cartesian3, Color, ComponentDatatype, DeveloperError, GeometryAttribute, GeometryAttributes, PrimitiveType } from "cesium";
 
 /**
  * 根据位置与可选颜色数据创建 Cesium 点云几何体（PrimitiveType.POINTS）。

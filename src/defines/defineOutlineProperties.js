@@ -1,4 +1,5 @@
-import { Check, Color, defined, DeveloperError, GeometryInstance } from 'cesium';
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { Color, defined, DeveloperError, GeometryInstance } from 'cesium';
 import parseToColor from "../parses/parseToColor.js";
 import getGeometryInstanceAttributes from "../utils/getGeometryInstanceAttributes.js";
 import PropertyType from "../additions/PropertyType.js";

@@ -1,5 +1,6 @@
+import Check from "@lijuhong1981/jscheck/src/Check.js";
 import getValidValue from "@lijuhong1981/jscheck/src/getValidValue.js";
-import { Cartesian3, Cartesian4, Check, defined, Plane } from "cesium";
+import { Cartesian3, Cartesian4, defined, Plane } from "cesium";
 import Scratch from "../utils/Scratch.js";
 
 /**

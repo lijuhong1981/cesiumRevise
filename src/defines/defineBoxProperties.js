@@ -1,4 +1,5 @@
-import { BoxGeometry, BoxOutlineGeometry, Cartesian3, Check } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { BoxGeometry, BoxOutlineGeometry, Cartesian3 } from "cesium";
 import parseToCartesian3 from "../parses/parseToCartesian3.js";
 import PropertyType from "../additions/PropertyType.js";
 import ShapeType from "./ShapeType.js";

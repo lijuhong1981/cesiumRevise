@@ -1,4 +1,5 @@
-import { Cartesian2, Math as CesiumMath, Check, Color, Material } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { Cartesian2, Math as CesiumMath, Color, Material } from "cesium";
 import defineStTransformsProperties from "../defines/defineStTransformsProperties.js";
 import parseToColor from "../parses/parseToColor.js";
 import BaseMaterial from "./BaseMaterial.js";

@@ -1,4 +1,5 @@
-import { Math as CesiumMath, Check } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { Math as CesiumMath } from "cesium";
 
 /**
  * 扩展 Cesium 的 Math（CesiumMath）类，补充 WGS84 相关常量，

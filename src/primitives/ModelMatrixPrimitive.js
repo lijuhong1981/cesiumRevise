@@ -1,5 +1,6 @@
+import Check from "@lijuhong1981/jscheck/src/Check.js";
 import BasePrimitive from "../additions/BasePrimitive.js";
-import { Check, Event, Matrix4 } from "cesium";
+import { Event, Matrix4 } from "cesium";
 
 /**
  * 模型矩阵图元基类，继承自 BasePrimitive。

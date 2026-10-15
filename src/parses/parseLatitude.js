@@ -1,5 +1,5 @@
+import Check from "@lijuhong1981/jscheck/src/Check.js";
 import parseNumber from '@lijuhong1981/jsmath/src/parseNumber.js';
-import { Check } from "cesium";
 
 /**
  * 把数字、字符串或数组/对象解析为纬度数值。

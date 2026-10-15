@@ -1,6 +1,7 @@
+import Check from "@lijuhong1981/jscheck/src/Check.js";
 import convertToLatitudeRange from "@lijuhong1981/jsmath/src/convertToLatitudeRange.js";
 import convertToLongitudeRange from "@lijuhong1981/jsmath/src/convertToLongitudeRange.js";
-import { Cartesian3, Cartographic, Check, EllipsoidGeodesic } from "cesium";
+import { Cartesian3, Cartographic, EllipsoidGeodesic } from "cesium";
 import Geographic from "../additions/Geographic.js";
 import Scratch from "../utils/Scratch.js";
 

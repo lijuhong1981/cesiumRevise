@@ -1,4 +1,5 @@
-import { Check, Color, Material } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { Color, Material } from "cesium";
 import parseToColor from "../parses/parseToColor.js";
 import BaseMaterial from "./BaseMaterial.js";
 import { defineColorMaterialProperties, definePolylineDashMaterialProperties, definePolylineGlowMaterialProperties, definePolylineOutlineMaterialProperties } from "./defineProperties.js";

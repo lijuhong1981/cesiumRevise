@@ -1,4 +1,5 @@
-import { BoundingSphere, Camera, Cartesian3, Math as CesiumMath, Check, HeadingPitchRoll, Matrix4, Ray, defined } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { BoundingSphere, Camera, Cartesian3, Math as CesiumMath, HeadingPitchRoll, Matrix4, Ray, defined } from "cesium";
 import parseAttitudeToHeadingPitchRoll from "../parses/parseAttitudeToHeadingPitchRoll.js";
 import parseGeographicToCartesian from "../parses/parseGeographicToCartesian.js";
 import parseToCartesian3 from "../parses/parseToCartesian3.js";

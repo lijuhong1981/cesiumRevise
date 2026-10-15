@@ -1,5 +1,6 @@
+import Check from "@lijuhong1981/jscheck/src/Check.js";
 import getValidValue from "@lijuhong1981/jscheck/src/getValidValue.js";
-import { Check, defined, DeveloperError, Rectangle } from "cesium";
+import { defined, DeveloperError, Rectangle } from "cesium";
 
 /**
  * 把数组或对象解析为矩形（{@link Rectangle}）。

@@ -1,4 +1,5 @@
-import { BoundingSphere, BoundingSphereState, Check, ClassificationPrimitive, GroundPolylinePrimitive, GroundPrimitive, Primitive } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { BoundingSphere, BoundingSphereState, ClassificationPrimitive, GroundPolylinePrimitive, GroundPrimitive, Primitive } from "cesium";
 
 /**
  * 扩展 Cesium 的 Primitive 类，补充获取包围球的方法。

@@ -1,4 +1,5 @@
-import { Cartesian2, Cartesian3, Math as CesiumMath, Check, defined, Event, Matrix3 } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { Cartesian2, Cartesian3, Math as CesiumMath, defined, Event, Matrix3 } from "cesium";
 import PropertyType from "./PropertyType.js";
 import parseToCartesian2 from "../parses/parseToCartesian2.js";
 import computeStTransform from "../utils/computeStTransform.js";

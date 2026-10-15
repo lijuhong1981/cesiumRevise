@@ -1,4 +1,5 @@
-import { Math as CesiumMath, Check, DistanceDisplayCondition } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { Math as CesiumMath, DistanceDisplayCondition } from "cesium";
 
 /**
  * 扩展 Cesium 的 DistanceDisplayCondition 类，补充基于距离判断是否显示的方法。

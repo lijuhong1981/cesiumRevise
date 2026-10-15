@@ -1,6 +1,7 @@
+import Check from "@lijuhong1981/jscheck/src/Check.js";
 import getValidValue from '@lijuhong1981/jscheck/src/getValidValue.js';
 import parseNumber from '@lijuhong1981/jsmath/src/parseNumber.js';
-import { Cartesian3, Check, defined, DeveloperError } from "cesium";
+import { Cartesian3, defined, DeveloperError } from "cesium";
 
 /**
  * 把数字、字符串或数组/对象解析为三维笛卡尔坐标（{@link Cartesian3}）。

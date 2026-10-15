@@ -1,5 +1,6 @@
+import Check from "@lijuhong1981/jscheck/src/Check.js";
 import toFixed from "@lijuhong1981/jsmath/src/toFixed.js";
-import { Cartesian2, Cartesian3, Cartesian4, Cartographic, Check, EllipsoidGeodesic } from "cesium";
+import { Cartesian2, Cartesian3, Cartesian4, Cartographic, EllipsoidGeodesic } from "cesium";
 import Geographic from "../additions/Geographic.js";
 import Scratch from "../utils/Scratch.js";
 

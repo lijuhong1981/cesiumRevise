@@ -1,4 +1,5 @@
-import { Cartesian3, Check, Matrix4, Quaternion, Transforms } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { Cartesian3, Matrix4, Quaternion, Transforms } from "cesium";
 import parseAttitudeToQuaternion from "../parses/parseAttitudeToQuaternion.js";
 import parseEulerToQuaternion from "../parses/parseEulerToQuaternion.js";
 import parseGeographicToCartesian from "../parses/parseGeographicToCartesian.js";

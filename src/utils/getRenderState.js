@@ -1,4 +1,5 @@
-import { Check, CullFace, defined } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { CullFace, defined } from "cesium";
 
 /**
  * 根据选项构建 Cesium 渲染状态对象（RenderState）。

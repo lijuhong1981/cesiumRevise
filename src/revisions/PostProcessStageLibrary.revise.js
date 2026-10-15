@@ -1,6 +1,7 @@
+import Check from "@lijuhong1981/jscheck/src/Check.js";
 import setOptions from '@lijuhong1981/jslib/src/setParameters.js';
 import parseNumber from "@lijuhong1981/jsmath/src/parseNumber.js";
-import { Cartesian3, Cartesian4, Math as CesiumMath, Check, Color, createGuid, defined, DeveloperError, Matrix3, Matrix4, PostProcessStage, PostProcessStageComposite, PostProcessStageLibrary, Quaternion } from "cesium";
+import { Cartesian3, Cartesian4, Math as CesiumMath, Color, createGuid, defined, DeveloperError, Matrix3, Matrix4, PostProcessStage, PostProcessStageComposite, PostProcessStageLibrary, Quaternion } from "cesium";
 import Geographic from '../additions/Geographic.js';
 import parseGeographicToCartesian from '../parses/parseGeographicToCartesian.js';
 import parseToCartesian3 from '../parses/parseToCartesian3.js';

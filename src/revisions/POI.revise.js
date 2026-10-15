@@ -1,4 +1,5 @@
-import { Billboard, BillboardCollection, BoundingSphere, BoundingSphereState, Check, Label, LabelCollection, PointPrimitive, PointPrimitiveCollection } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { Billboard, BillboardCollection, BoundingSphere, BoundingSphereState, Label, LabelCollection, PointPrimitive, PointPrimitiveCollection } from "cesium";
 
 /**
  * 扩展 Cesium 的 Billboard 类，补充类型标识与从集合移除的便捷方法。

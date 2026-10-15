@@ -1,4 +1,5 @@
-import { Check } from "cesium";
+
+import Check from "@lijuhong1981/jscheck/src/Check.js";
 import parseToCartesian3 from "./parseToCartesian3.js";
 
 /**

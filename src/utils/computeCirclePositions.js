@@ -1,4 +1,5 @@
-import { Cartesian3, Math as CesiumMath, Check, defined, EllipseGeometryLibrary } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { Cartesian3, Math as CesiumMath, defined, EllipseGeometryLibrary } from "cesium";
 
 /**
  * 在椭球面上按给定中心、半径与分段数计算圆（环）上的点集。

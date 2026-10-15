@@ -1,4 +1,5 @@
-import { Cartesian3, Math as CesiumMath, Check, defined, EllipsoidGeometry, EllipsoidOutlineGeometry } from 'cesium';
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { Cartesian3, Math as CesiumMath, defined, EllipsoidGeometry, EllipsoidOutlineGeometry } from 'cesium';
 import PropertyType from '../additions/PropertyType.js';
 import ShapeType from '../defines/ShapeType.js';
 import parseToCartesian3 from '../parses/parseToCartesian3.js';

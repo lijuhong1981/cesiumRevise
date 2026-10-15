@@ -1,5 +1,6 @@
+import Check from "@lijuhong1981/jscheck/src/Check.js";
 import isDestroyed from '@lijuhong1981/jsdestroy/src/isDestroyed.js';
-import { Cartesian3, Check, Color, defined, destroyObject, DistanceDisplayCondition, NearFarScalar } from 'cesium';
+import { Cartesian3, Color, defined, destroyObject, DistanceDisplayCondition, NearFarScalar } from 'cesium';
 import parseGeographicToCartesian from '../parses/parseGeographicToCartesian.js';
 import parseHeightReference from '../parses/parseHeightReference.js';
 import parseToCartesian3 from '../parses/parseToCartesian3.js';

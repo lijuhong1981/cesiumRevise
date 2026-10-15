@@ -1,5 +1,6 @@
+import Check from "@lijuhong1981/jscheck/src/Check.js";
 import parseNumber from "@lijuhong1981/jsmath/src/parseNumber.js";
-import { Cartesian3, Math as CesiumMath, Check, Event, Matrix4, Transforms } from "cesium";
+import { Cartesian3, Math as CesiumMath, Event, Matrix4, Transforms } from "cesium";
 import parseToCartesian3 from "../parses/parseToCartesian3.js";
 import parseToGeographic from "../parses/parseToGeographic.js";
 import Scratch from "../utils/Scratch.js";

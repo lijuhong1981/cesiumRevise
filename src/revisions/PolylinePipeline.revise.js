@@ -1,4 +1,5 @@
-import { Cartesian3, Check, PolylinePipeline } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { Cartesian3, PolylinePipeline } from "cesium";
 
 /**
  * 扩展 Cesium 的 PolylinePipeline 类，补充计算线段空间长度与地面长度的方法。

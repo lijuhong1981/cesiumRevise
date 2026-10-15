@@ -1,4 +1,5 @@
-import { Check, Globe, GlobeSurfaceTileProvider } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { Globe, GlobeSurfaceTileProvider } from "cesium";
 
 /**
  * 扩展 Cesium 的 GlobeSurfaceTileProvider 类，补充地形分析访问属性与待渲染瓦片帧回调支持。

@@ -2,7 +2,6 @@ export * from "./BoundingSphere.revise.js";
 export * from "./Camera.revise.js";
 export * from "./Cartesian.revise.js";
 export * from "./Cartographic.revise.js";
-export * from "./Check.revise.js";
 export * from "./Color.revise.js";
 export * from "./DistanceDisplayCondition.revise.js";
 export * from "./Ellipsoid.revise.js";

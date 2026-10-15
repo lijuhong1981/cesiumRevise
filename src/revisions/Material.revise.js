@@ -1,6 +1,7 @@
 // import setOptions from '@lijuhong1981/jslib/src/setParameters.js';
 // import WaterMaterial from '../materials/WaterMaterial.js';
-import { Check, Color, Event, Material, MaterialProperty, Matrix3, Matrix4 } from 'cesium';
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { Color, Event, Material, MaterialProperty, Matrix3, Matrix4 } from 'cesium';
 
 /**
  * 扩展 Cesium 的 Material 类，补充 BasicImage、ConverageArea、PolylineTrail、ImageTransform

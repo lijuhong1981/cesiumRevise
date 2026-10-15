@@ -1,4 +1,5 @@
-import { Cartesian2, Math as CesiumMath, Check, defined, GeographicTilingScheme, Rectangle, WebMercatorTilingScheme } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { Cartesian2, Math as CesiumMath, defined, GeographicTilingScheme, Rectangle, WebMercatorTilingScheme } from "cesium";
 import parseToCartesian2 from "../parses/parseToCartesian2.js";
 
 const defaultOrigin = Object.freeze({ x: -180, y: 90 });

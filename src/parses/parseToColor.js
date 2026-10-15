@@ -1,4 +1,5 @@
-import { Cartesian3, Cartesian4, Check, Color, DeveloperError } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { Cartesian3, Cartesian4, Color, DeveloperError } from "cesium";
 
 /**
  * 把字符串、数字、笛卡尔坐标或数组解析为颜色（{@link Color}）。

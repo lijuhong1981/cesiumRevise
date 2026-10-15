@@ -1,4 +1,5 @@
-import { Cartesian3, Cartesian4, Check, Color, defined, DeveloperError } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { Cartesian3, Cartesian4, Color, defined, DeveloperError } from "cesium";
 
 /**
  * 扩展 Cesium 的 Color 类，补充 rgb 复制比较、与 Byte 数组的打包解包、

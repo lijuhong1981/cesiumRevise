@@ -1,5 +1,6 @@
+import Check from "@lijuhong1981/jscheck/src/Check.js";
 import Destroyable from "@lijuhong1981/jsdestroy/src/Destroyable.js";
-import { Cartesian2, Cartesian3, Math as CesiumMath, Check, Credit, defer, defined, DeveloperError, DiscardMissingTileImagePolicy, Event, GeographicTilingScheme, ImageryProvider, Rectangle, Resource, RuntimeError, WebMercatorProjection, WebMercatorTilingScheme } from "cesium";
+import { Cartesian2, Cartesian3, Math as CesiumMath, Credit, defer, defined, DeveloperError, DiscardMissingTileImagePolicy, Event, GeographicTilingScheme, ImageryProvider, Rectangle, Resource, RuntimeError, WebMercatorProjection, WebMercatorTilingScheme } from "cesium";
 import CustomTilingScheme from "./CustomTilingScheme.js";
 
 const dynamicDomainTag = /{s}/g;

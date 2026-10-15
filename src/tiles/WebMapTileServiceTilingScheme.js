@@ -1,4 +1,5 @@
-import { Check, defined } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { defined } from "cesium";
 import CustomTilingScheme from "./CustomTilingScheme.js";
 
 const crsMatchPattern = /\b(4326|4490)\b/;

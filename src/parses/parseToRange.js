@@ -1,6 +1,6 @@
+import Check from "@lijuhong1981/jscheck/src/Check.js";
 import getValidValue from '@lijuhong1981/jscheck/src/getValidValue.js';
 import Interval from '@lijuhong1981/jsmath/src/Interval.js';
-import { Check } from "cesium";
 
 /**
  * 把数组或对象解析为区间（Interval）。

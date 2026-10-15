@@ -1,4 +1,5 @@
-import { Check, defined } from 'cesium';
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { defined } from 'cesium';
 import PropertyType from "../additions/PropertyType.js";
 
 /**

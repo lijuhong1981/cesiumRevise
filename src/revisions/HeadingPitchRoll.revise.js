@@ -1,4 +1,5 @@
-import { Cartesian3, Math as CesiumMath, Check, HeadingPitchRoll, Quaternion } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { Cartesian3, Math as CesiumMath, HeadingPitchRoll, Quaternion } from "cesium";
 import Scratch from "../utils/Scratch.js";
 
 /**

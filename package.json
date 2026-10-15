@@ -1,6 +1,6 @@
 {
   "name": "@lijuhong1981/cesium.utils",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Cesium 公共工具库：Cesium 类扩展（revisions）、值解析（parses）、坐标/矩阵变换、通用工具函数",
   "type": "module",
   "main": "src/index.js",

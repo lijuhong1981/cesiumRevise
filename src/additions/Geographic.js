@@ -1,4 +1,5 @@
-import { Cartesian3, Cartographic, Math as CesiumMath, Check, defined, EllipsoidGeodesic } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { Cartesian3, Cartographic, Math as CesiumMath, defined, EllipsoidGeodesic } from "cesium";
 import Scratch from "../utils/Scratch.js";
 
 /**

@@ -1,4 +1,5 @@
-import { BoundingSphere, Cartesian3, Check, defined, Matrix4 } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { BoundingSphere, Cartesian3, defined, Matrix4 } from "cesium";
 import parseGeographicsToPositions from "../parses/parseGeographicsToPositions.js";
 import Scratch from "../utils/Scratch.js";
 

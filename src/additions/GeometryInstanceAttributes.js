@@ -1,4 +1,5 @@
-import { Check, ComponentDatatype, DeveloperError, defined } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { ComponentDatatype, DeveloperError, defined } from "cesium";
 
 /**
  * 以下三个类是从 Cesium 源码（packages/engine/Source/Core/）中恢复的

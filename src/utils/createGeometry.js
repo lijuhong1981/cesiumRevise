@@ -1,4 +1,5 @@
-import { BoundingSphere, Check, ComponentDatatype, DeveloperError, Geometry, GeometryAttribute, PrimitiveType } from 'cesium';
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { BoundingSphere, ComponentDatatype, DeveloperError, Geometry, GeometryAttribute, PrimitiveType } from 'cesium';
 
 /**
  * 根据 TypedArray 的类型推断对应的 Cesium 组件数据类型（ComponentDatatype）。

@@ -1,4 +1,5 @@
-import { Math as CesiumMath, Check, HeadingPitchRange } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { Math as CesiumMath, HeadingPitchRange } from "cesium";
 
 /**
  * 把数组或对象解析为 {@link HeadingPitchRange} 对象。

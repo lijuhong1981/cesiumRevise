@@ -1,4 +1,5 @@
-import { Check, Ellipsoid, IntersectionTests, Ray } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { Ellipsoid, IntersectionTests, Ray } from "cesium";
 import Scratch from "../utils/Scratch.js";
 
 /**

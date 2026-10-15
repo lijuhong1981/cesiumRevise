@@ -1,4 +1,5 @@
-import { Check, CullFace, defined } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { CullFace, defined } from "cesium";
 import parseCullFace from "../parses/parseCullFace.js";
 import parseShadowMode from "../parses/parseShadowMode.js";
 import PropertyType from "../additions/PropertyType.js";

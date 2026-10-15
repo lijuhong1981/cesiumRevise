@@ -1,4 +1,5 @@
-import { Cartesian3, Check, Event, Matrix4 } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { Cartesian3, Event, Matrix4 } from "cesium";
 import PropertyType from "./PropertyType.js";
 import computeModelMatrix from "../utils/computeModelMatrix.js";
 import resolveModelMatrixByFixedFrame from "../utils/resolveModelMatrixByFixedFrame.js";

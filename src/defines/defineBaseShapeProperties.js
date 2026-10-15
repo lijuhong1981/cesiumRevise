@@ -1,4 +1,5 @@
-import { Check, defined, DeveloperError, DistanceDisplayCondition, PrimitiveType, RuntimeError } from "cesium";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
+import { defined, DeveloperError, DistanceDisplayCondition, PrimitiveType, RuntimeError } from "cesium";
 import parseToDistanceDisplayCondition from "../parses/parseToDistanceDisplayCondition.js";
 import PropertyType from "../additions/PropertyType.js";
 

@@ -1,3 +1,4 @@
+import Check from "@lijuhong1981/jscheck/src/Check.js";
 import parseNumber from "@lijuhong1981/jsmath/src/parseNumber.js";
 import parseAttitudeToHeadingPitchRoll from "../parses/parseAttitudeToHeadingPitchRoll.js";
 import parseEulerToHeadingPitchRoll from "../parses/parseEulerToHeadingPitchRoll.js";
@@ -5,7 +6,7 @@ import parseRotationToHeadingPitchRoll from "../parses/parseRotationToHeadingPit
 import parseToCartesian3 from "../parses/parseToCartesian3.js";
 import Scratch from "../utils/Scratch.js";
 import PropertyChangedListener from "./PropertyChangedListener.js";
-import { Cartesian3, Math as CesiumMath, Check, Event, HeadingPitchRoll, Matrix4, Quaternion } from "cesium";
+import { Cartesian3, Math as CesiumMath, Event, HeadingPitchRoll, Matrix4, Quaternion } from "cesium";
 
 /**
  * 旋转参考系类型枚举，用于指定旋转所基于的坐标系。

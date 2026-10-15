@@ -1,5 +1,6 @@
+import Check from "@lijuhong1981/jscheck/src/Check.js";
 import setOptions from '@lijuhong1981/jslib/src/setParameters.js';
-import { createGuid, Check, defer, defined } from "cesium";
+import { createGuid, defer, defined } from "cesium";
 import parseToRange from "../parses/parseToRange.js";
 import PropertyChangedListener from "./PropertyChangedListener.js";
 

@@ -2,7 +2,7 @@ import { Cartesian3, HeadingPitchRoll, Matrix3, Matrix4, Quaternion, Translation
 import parseEulerToHeadingPitchRoll from "../parses/parseEulerToHeadingPitchRoll.js";
 import parseEulerToQuaternion from "../parses/parseEulerToQuaternion.js";
 import Scratch from "../utils/Scratch.js";
-import Check from "./Check.revise.js";
+import Check from "@lijuhong1981/jscheck/src/Check.js";
 
 /**
  * 扩展 Cesium 的 Matrix3 类，补充列/行向量存取、旋转分量、四元数、

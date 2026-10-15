@@ -1,5 +1,6 @@
+import Check from "@lijuhong1981/jscheck/src/Check.js";
 import isTypedArray from "@lijuhong1981/jscheck/src/isTypedArray.js";
-import { Cartesian3, Check, Color, defined, GeometryInstance, PrimitiveType } from 'cesium';
+import { Cartesian3, Color, defined, GeometryInstance, PrimitiveType } from 'cesium';
 import parseToCartesian3 from "../parses/parseToCartesian3.js";
 import parseToColor from "../parses/parseToColor.js";
 import createPointCloudGeometry from "../utils/createPointCloudGeometry.js";
