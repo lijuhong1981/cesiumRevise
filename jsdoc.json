@@ -2,7 +2,9 @@
     "source": {
         "include": [
             "src/additions",
+            "src/defines",
             "src/parses",
+            "src/primitives",
             "src/revisions",
             "src/utils"
         ],

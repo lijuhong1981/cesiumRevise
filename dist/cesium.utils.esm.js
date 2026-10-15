@@ -1,4 +1,4 @@
-import { Check, Cartesian3, Cartographic, defined as defined$1, EllipsoidGeodesic, Math as Math$1, Cartesian2, Cartesian4, Matrix3, Matrix4, BoundingRectangle, BoundingSphere, Color, DistanceDisplayCondition, HeadingPitchRange, HeadingPitchRoll, Interval as Interval$1, NearFarScalar, PerspectiveFrustum, Plane, Quaternion, Ray, Rectangle, DeveloperError, Transforms, Camera, Ellipsoid, IntersectionTests, Geometry as Geometry$1, PrimitiveType, GeometryPipeline, GlobeSurfaceTileProvider, Globe, JulianDate, MaterialProperty, Material, Event, TranslationRotationScale, Billboard, BillboardCollection, BoundingSphereState, Label, LabelCollection, PointPrimitive, PointPrimitiveCollection, PolylinePipeline, PostProcessStage, PostProcessStageLibrary, createGuid, PostProcessStageComposite, Primitive, GroundPrimitive, ClassificationPrimitive, GroundPolylinePrimitive, Property, SceneTransforms, Spherical, ArcType, ClassificationType, ClockRange, ColorBlendMode, CornerType, CullFace, HeightReference, HorizontalOrigin, LabelStyle, ShadowMode, PolygonHierarchy, TimeInterval, VerticalOrigin, EllipseGeometryLibrary, GeometryAttribute, ComponentDatatype, GeometryAttributes, ShowGeometryInstanceAttribute, ColorGeometryInstanceAttribute, DistanceDisplayConditionGeometryInstanceAttribute } from 'cesium';
+import { Check, Cartesian3, Cartographic, defined as defined$1, EllipsoidGeodesic, Math as Math$1, Cartesian2, Cartesian4, Matrix3, Matrix4, BoundingRectangle, BoundingSphere, Color, DistanceDisplayCondition, HeadingPitchRange, HeadingPitchRoll, Interval as Interval$1, NearFarScalar, PerspectiveFrustum, Plane, Quaternion, Ray, Rectangle, DeveloperError, Transforms, Camera, Ellipsoid, IntersectionTests, Geometry as Geometry$1, PrimitiveType, GeometryPipeline, GlobeSurfaceTileProvider, Globe, JulianDate, MaterialProperty, Material, Event, TranslationRotationScale, Billboard, BillboardCollection, BoundingSphereState, Label, LabelCollection, PointPrimitive, PointPrimitiveCollection, PolylinePipeline, PostProcessStage, PostProcessStageLibrary, createGuid, PostProcessStageComposite, Primitive, GroundPrimitive, ClassificationPrimitive, GroundPolylinePrimitive, Property, SceneTransforms, Spherical, ArcType, ClassificationType, ClockRange, ColorBlendMode, CornerType, CullFace, HeightReference, HorizontalOrigin, LabelStyle, ShadowMode, PolygonHierarchy, TimeInterval, VerticalOrigin, EllipseGeometryLibrary, GeometryAttribute, ComponentDatatype, GeometryAttributes, ShowGeometryInstanceAttribute, ColorGeometryInstanceAttribute, DistanceDisplayConditionGeometryInstanceAttribute, defer, RuntimeError, BoxOutlineGeometry, BoxGeometry, CylinderOutlineGeometry, CylinderGeometry, EllipsoidOutlineGeometry, EllipsoidGeometry, destroyObject as destroyObject$1, GeometryInstance, PlaneGeometryUpdater, PlaneOutlineGeometry, PlaneGeometry } from 'cesium';
 export { Billboard, BillboardCollection, BoundingSphere, Camera, Cartesian2, Cartesian3, Cartesian4, Cartographic, Math as CesiumMath, Check, ClassificationPrimitive, Color, DistanceDisplayCondition, Ellipsoid, Geometry, Globe, GlobeSurfaceTileProvider, GroundPolylinePrimitive, GroundPrimitive, HeadingPitchRoll, JulianDate, Label, LabelCollection, Material, MaterialProperty, Matrix3, Matrix4, Plane, PointPrimitive, PointPrimitiveCollection, PolylinePipeline, PostProcessStage, PostProcessStageLibrary, Primitive, Property, Quaternion, Rectangle, SceneTransforms, Spherical } from 'cesium';
 
 /**
@@ -10996,5 +10996,3721 @@ class StTransforms extends PropertyChangedListener {
     }
 }
 
-export { BooleanGeometryInstanceAttribute, Cartesian3GeometryInstanceAttribute, FloatGeometryInstanceAttribute, FogType, Geographic, GeographicTransform, TranslationRotationScaleTransform as MatrixTransform, ModelMatrixTransforms, PropertyChangedListener, PropertyType, RotationFrameType, Scratch, StTransforms, TranslationRotationScaleTransform, computeCirclePositions, computeCircleRadius, computeModelMatrix, computeStTransform, createGeometry, createPointCloudGeometry, getGeometryInstanceAttributes, getPositionFromTarget, getRenderState, isColorMaterial, isTranslucent, parseAltitude, parseArcType, parseAttitudeToHeadingPitchRoll, parseAttitudeToMatrix3, parseAttitudeToQuaternion, parseCartographicToCartesian, parseCartographicsToPositions, parseClassificationType, parseClockRange, parseColorBlendMode, parseCornerType, parseCullFace, parseEulerToHeadingPitchRoll, parseEulerToQuaternion, parseGeographicToCartesian, parseGeographicsToPositions, parseHeading, parseAltitude as parseHeight, parseHeightReference, parseHoles, parseHorizontalOrigin, parseLabelStyle, parseLatitude, parseLongitude, parsePitch, parseRoll, parseRotationToHeadingPitchRoll, parseRotationToMatrix3, parseRotationToQuaternion, parseShadowMode, parseToBoundingRectangle, parseToCartesian2, parseToCartesian3, parseToCartesian3Array, parseToCartesian4, parseToCartographic, parseToColor, parseToDistanceDisplayCondition, parseToGeographic, parseToHeadingPitchRange, parseToJulianDate, parseToNearFarScalar, parseToPlane, parseToPolygonHierarchy, parseToRange, parseToRectangle, parseToTimeInterval, parseVerticalOrigin, resolveModelMatrixByFixedFrame };
+/**
+ * 图元基类，继承自 PropertyChangedListener。
+ * 统一管理图元的 id、name、显示状态、拾取、就绪状态与高度显示条件等公共属性，
+ * 并约定 onInit / onUpdate 生命周期钩子供子类实现。
+ */
+class BasePrimitive extends PropertyChangedListener {
+    /**
+     * 创建图元实例。
+     * @param {object} [options={}] 配置项
+     */
+    constructor(options = {}) {
+        super();
+        this._init(options);
+    }
+
+    /**
+     * 初始化图元的各项公共属性并调用 onInit 钩子。
+     * @param {object} options 配置项
+     * @param {string} [options.id] 图元唯一标识，未提供时自动生成
+     * @param {string} [options.name] 图元名称，未提供时取 id
+     * @param {boolean} [options.allowPicking=true] 是否允许拾取
+     * @param {object} [options.pickPrimitive] 拾取时返回的图元，未提供时默认为自身
+     * @param {boolean} [options.show=true] 是否显示
+     * @returns {void}
+     */
+    _init(options) {
+        this._id = options.id ?? createGuid();
+        this._name = options.name ?? this._id;
+        this._ready = false;
+        this._readyPromise = defer();
+        this._allowPicking = options.allowPicking ?? true;
+        this._pickPrimitive = options.pickPrimitive ?? this;
+        this._show = options.show ?? true;
+
+        this.onInit(options);
+    }
+
+    /**
+     * 初始化钩子，子类可重写以完成自身属性和资源的初始化。
+     * @param {object} options 配置项
+     * @returns {void}
+     */
+    onInit(options) { }
+
+    /**
+     * 使用配置对象批量设置实例属性。
+     * @param {object} options 配置项
+     * @returns {void}
+     */
+    setOptions(options) {
+        setParameters(this, options);
+    }
+
+    /**
+     * 设置图元唯一标识。
+     * @param {string} value 图元唯一标识
+     * @returns {void}
+     */
+    set id(value) {
+        if (defined$1(value) && this._id !== value) {
+            this._id = value;
+            this.raisePropertyChangeEvent('id', value);
+        }
+    }
+
+    /**
+     * 获取图元唯一标识。
+     * @returns {string} 图元唯一标识
+     */
+    get id() {
+        return this._id;
+    }
+
+    /**
+     * 设置图元唯一标识（id 的别名）。
+     * @param {string} value 图元唯一标识
+     * @returns {void}
+     */
+    set guid(value) {
+        this.id = value;
+    }
+
+    /**
+     * 获取图元唯一标识（id 的别名）。
+     * @returns {string} 图元唯一标识
+     */
+    get guid() {
+        return this.id;
+    }
+
+    /**
+     * 设置图元名称。
+     * @param {string} value 图元名称
+     * @returns {void}
+     */
+    set name(value) {
+        Check.typeOf.string('name', value);
+        if (this._name !== value) {
+            this._name = value;
+            this.raisePropertyChangeEvent('name', value);
+        }
+    }
+
+    /**
+     * 获取图元名称。
+     * @returns {string} 图元名称
+     */
+    get name() {
+        return this._name;
+    }
+
+    /**
+     * 获取图元是否已就绪。
+     * @returns {boolean} 是否已就绪
+     */
+    get ready() {
+        return this._ready;
+    }
+
+    /**
+     * 获取图元就绪状态的 Promise。
+     * @returns {Promise<BasePrimitive>} 就绪后解析为当前图元实例的 Promise
+     */
+    get readyPromise() {
+        return this._readyPromise.promise;
+    }
+
+    /**
+     * 标记图元就绪完成并兑现就绪 Promise。
+     * @returns {void}
+     */
+    _readyCompleted() {
+        this._ready = true;
+        this._readyPromise.resolve(this);
+    }
+
+    /**
+     * 标记图元就绪失败并拒绝就绪 Promise。
+     * @param {*} error 错误信息
+     * @returns {void}
+     */
+    _readyErrored(error) {
+        console.warn(error);
+        this._ready = false;
+        this._readyPromise.reject(error);
+    }
+
+    /**
+     * 设置是否允许拾取。
+     * @param {boolean} value 是否允许拾取
+     * @returns {void}
+     */
+    set allowPicking(value) {
+        Check.typeOf.bool('allowPicking', value);
+        if (this._allowPicking !== value) {
+            this._allowPicking = value;
+            this.raisePropertyChangeEvent('allowPicking', value);
+        }
+    }
+
+    /**
+     * 获取是否允许拾取。
+     * @returns {boolean} 是否允许拾取
+     */
+    get allowPicking() {
+        return this._allowPicking;
+    }
+
+    /**
+     * 设置拾取时返回的图元，未提供时默认为自身。
+     * @param {object} value 拾取时返回的图元
+     * @returns {void}
+     */
+    set pickPrimitive(value) {
+        if (defined$1(value))
+            this._pickPrimitive = value;
+        else
+            this._pickPrimitive = this;
+    }
+
+    /**
+     * 获取拾取时返回的图元。
+     * @returns {object} 拾取时返回的图元
+     */
+    get pickPrimitive() {
+        return this._pickPrimitive;
+    }
+
+    /**
+     * 设置是否显示。
+     * @param {boolean} value 是否显示
+     * @returns {void}
+     */
+    set show(value) {
+        Check.typeOf.bool('show', value);
+        if (this._show !== value) {
+            this._show = value;
+            this.raisePropertyChangeEvent('show', value);
+        }
+    }
+
+    /**
+     * 获取是否显示。
+     * @returns {boolean} 是否显示
+     */
+    get show() {
+        return this._show;
+    }
+
+    /**
+     * 设置高度显示条件（区间范围），未提供时清除该条件。
+     * @param {*} value 高度显示条件，可被解析为区间范围
+     * @returns {void}
+     */
+    set heightDisplayCondition(value) {
+        if (defined$1(value)) {
+            this._heightDisplayCondition = parseToRange(value, this._heightDisplayCondition);
+        } else
+            this._heightDisplayCondition = undefined;
+    }
+
+    /**
+     * 获取高度显示条件。
+     * @returns {*} 高度显示条件
+     */
+    get heightDisplayCondition() {
+        return this._heightDisplayCondition;
+    }
+
+    /**
+     * 每帧更新，设置椭球体并在满足就绪、显示、拾取与高度条件时调用 onUpdate 钩子。
+     * @param {FrameState} frameState 帧状态对象
+     * @returns {void}
+     */
+    update(frameState) {
+        this.ellipsoid = frameState.scene.ellipsoid;
+        if (!this.ready || !this.show || this.isDestroyed())
+            return;
+        if (frameState.passes.pick && !this._allowPicking)
+            return;
+        if (this._heightDisplayCondition) {
+            const height = frameState.camera.positionCartographic.height;
+            if (this._heightDisplayCondition.between(height))
+                this.onUpdate(frameState);
+        } else
+            this.onUpdate(frameState);
+    }
+
+    /**
+     * 更新钩子，子类可重写以完成每帧渲染更新。
+     * @param {FrameState} frameState 帧状态对象
+     * @returns {void}
+     */
+    onUpdate(frameState) { }
+
+    // onDestroy() {
+    //     super.onDestroy();
+    // }
+}
+
+/**
+ * 模型矩阵图元基类，继承自 BasePrimitive。
+ * 在图元基础上维护一个模型矩阵，支持矩阵变更事件与回调，供需要直接控制模型矩阵的图元复用。
+ */
+class ModelMatrixPrimitive extends BasePrimitive {
+    // constructor(options) {
+    //     super(options);
+    // }
+
+    /**
+     * 初始化图元：创建模型矩阵变更事件并按配置初始化模型矩阵。
+     * @param {object} options 配置项
+     * @param {Matrix4} [options.modelMatrix] 初始模型矩阵，未提供时使用单位矩阵
+     * @returns {void}
+     */
+    _init(options) {
+        super._init(options);
+
+        this._modelMatrixChanged = new Event();
+        this._modelMatrix = Matrix4.clone(options.modelMatrix ?? Matrix4.IDENTITY);
+    }
+
+    /**
+     * 获取模型矩阵变更事件对象。
+     * @returns {Event} 模型矩阵变更事件对象
+     */
+    get modelMatrixChanged() {
+        return this._modelMatrixChanged;
+    }
+
+    /**
+     * 获取模型矩阵变更事件对象。
+     * @deprecated 已废弃，请使用 modelMatrixChanged 替代
+     * @returns {Event} 模型矩阵变更事件对象
+     */
+    get modelMatrixChangeEvent() {
+        console.warn("modelMatrixChangeEvent is deprecated, use modelMatrixChanged instead");
+        return this._modelMatrixChanged;
+    }
+
+    /**
+     * 设置模型矩阵，值发生变化时触发模型矩阵变更事件。
+     * @param {Matrix4} value 模型矩阵
+     * @returns {void}
+     */
+    set modelMatrix(value) {
+        Check.instanceOf('modelMatrix', value, Matrix4);
+        if (!Matrix4.equals(value, this._modelMatrix)) {
+            this._modelMatrix = Matrix4.clone(value, this._modelMatrix);
+            this.raiseModelMatrixChangeEvent(this._modelMatrix);
+        }
+    }
+
+    /**
+     * 获取当前模型矩阵。
+     * @returns {Matrix4} 模型矩阵
+     */
+    get modelMatrix() {
+        return this._modelMatrix;
+    }
+
+    /**
+     * 触发模型矩阵变更事件并调用对应回调。
+     * @param {Matrix4} modelMatrix 变更后的模型矩阵
+     * @returns {void}
+     */
+    raiseModelMatrixChangeEvent(modelMatrix) {
+        this._modelMatrixChanged.raiseEvent(modelMatrix);
+        this.onModelMatrixChanged(modelMatrix);
+    }
+
+    /**
+     * 模型矩阵发生变更时的回调钩子，子类可重写。
+     * @param {Matrix4} modelMatrix 变更后的模型矩阵
+     * @returns {void}
+     */
+    onModelMatrixChanged(modelMatrix) { }
+
+    /**
+     * 销毁实例时清理资源，清空模型矩阵变更事件并调用父类销毁逻辑。
+     * @returns {void}
+     */
+    onDestroy() {
+        this._modelMatrixChanged.clear();
+        super.onDestroy();
+    }
+}
+
+/**
+ * 惰性创建宿主对象的内部变换对象 ModelMatrixTransforms（仅创建一次），并绑定属性/矩阵变更回调与旋转参考系类型。
+ * @param {object} that 宿主对象
+ * @param {function} [onPropertyValueChanged] 属性变更回调函数
+ * @param {function} [onModelMatrixChanged] 模型矩阵变更回调函数
+ * @param {number} [rotationFrameType] 旋转参考系类型，取值参考 RotationFrameType
+ * @returns {void}
+ */
+function ensureTransforms(that, onPropertyValueChanged, onModelMatrixChanged, rotationFrameType) {
+    if (!that._transforms) {
+        if (!onPropertyValueChanged)
+            onPropertyValueChanged = that.onPropertyValueChanged;
+        if (!onModelMatrixChanged)
+            onModelMatrixChanged = that.onModelMatrixChanged;
+        if (onPropertyValueChanged)
+            onPropertyValueChanged = onPropertyValueChanged.bind(that);
+        if (onModelMatrixChanged)
+            onModelMatrixChanged = onModelMatrixChanged.bind(that);
+        that._transforms = new ModelMatrixTransforms({
+            owner: that,
+            onPropertyValueChanged: onPropertyValueChanged,
+            onModelMatrixChanged: onModelMatrixChanged,
+        });
+        that._transforms.undeletable = true;
+        if (defined$1(rotationFrameType))
+            that._transforms.rotationFrameType = rotationFrameType;
+    }
+}
+
+/**
+ * 为目标对象动态定义一整套模型矩阵变换相关的属性与方法（位置、地理坐标、平移、旋转、欧拉角、四元数、缩放、前后置变换矩阵、模型矩阵等），
+ * 内部委托给惰性创建的 ModelMatrixTransforms 实例实现，并根据目标类型追加 3DTileset / Model 专属属性。
+ * @param {object} target 目标对象（通常是类的 prototype 或实例）
+ * @param {function} [onPropertyValueChanged] 属性变更回调函数
+ * @param {function} [onModelMatrixChanged] 模型矩阵变更回调函数
+ * @param {number} [rotationFrameType] 旋转参考系类型，取值参考 RotationFrameType
+ * @returns {void}
+ */
+function defineModelMatrixTransformsProperties(target, onPropertyValueChanged, onModelMatrixChanged, rotationFrameType) {
+
+    let is3DTileset, isModel;
+    if (target.is3DTileset || target.isCesium3DTileset) {
+        is3DTileset = true;
+    } else if (target.isModel) {
+        isModel = true;
+    }
+
+    Object.defineProperties(target, {
+        // 变换对象与旋转参考系、批量设置变换入口
+        transforms: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                ensureTransforms(this, onPropertyValueChanged, onModelMatrixChanged, rotationFrameType);
+                return this._transforms;
+            }
+        },
+        rotationFrameType: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return this.transforms.rotationFrameType;
+            }
+        },
+        setTransforms: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (transforms) {
+                this.transforms.setTransforms(transforms);
+            },
+        },
+        // 世界坐标位置相关属性与方法（position 及 setGeographic / translateLongitude 等地理坐标操作）
+        position: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                this.transforms.position = value;
+            },
+            get: function () {
+                return this.transforms.position;
+            }
+        },
+        geographic: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                this.transforms.geographic = value;
+            },
+            get: function () {
+                return this.transforms.geographic;
+            }
+        },
+        setGeographic: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (longitude, latitude, altitude, degrees) {
+                this.transforms.setGeographic(longitude, latitude, altitude, degrees);
+            }
+        },
+        translateLongitude: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (value, degrees) {
+                this.transforms.translateLongitude(value, degrees);
+            },
+        },
+        translateLatitude: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (value, degrees) {
+                this.transforms.translateLatitude(value, degrees);
+            },
+        },
+        translateAltitude: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (value, degrees) {
+                this.transforms.translateAltitude(value, degrees);
+            },
+        },
+        // 本地坐标系平移相关属性与方法（translation 及 translate / translateX 等）
+        translation: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                this.transforms.translation = value;
+            },
+            get: function () {
+                return this.transforms.translation;
+            }
+        },
+        setTranslation: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (x, y, z) {
+                this.transforms.setTranslation(x, y, z);
+            }
+        },
+        translate: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (x, y, z, local) {
+                this.transforms.translate(x, y, z, local);
+            },
+        },
+        translateOnAxis: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (axis, distance, local) {
+                this.transforms.translateOnAxis(axis, distance, local);
+            },
+        },
+        translateX: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (value, local) {
+                this.transforms.translateX(value, local);
+            },
+        },
+        translateY: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (value, local) {
+                this.transforms.translateY(value, local);
+            },
+        },
+        translateZ: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (value, local) {
+                this.transforms.translateZ(value, local);
+            },
+        },
+        // 旋转相关属性与方法（rotation / attitude / euler / quaternion 及 rotateX 等旋转操作）
+        rotation: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                this.transforms.rotation = value;
+            },
+            get: function () {
+                return this.transforms.rotation;
+            }
+        },
+        rotationDegrees: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                this.transforms.rotationDegrees = value;
+            },
+            get: function () {
+                return this.transforms.rotationDegrees;
+            }
+        },
+        setRotation: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (heading, pitch, roll, degrees) {
+                this.transforms.setRotation(heading, pitch, roll, degrees);
+            }
+        },
+        attitude: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                this.transforms.attitude = value;
+            },
+            get: function () {
+                return this.transforms.attitude;
+            }
+        },
+        setAttitude: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (yaw, pitch, roll) {
+                this.transforms.setAttitude(yaw, pitch, roll);
+            }
+        },
+        euler: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                this.transforms.euler = value;
+            },
+            get: function () {
+                return this.transforms.euler;
+            }
+        },
+        eulerDegrees: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                this.transforms.eulerDegrees = value;
+            },
+            get: function () {
+                return this.transforms.eulerDegrees;
+            }
+        },
+        setEuler: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (x, y, z, degrees) {
+                this.transforms.setEuler(x, y, z, degrees);
+            }
+        },
+        rotate: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (heading, pitch, roll, degrees) {
+                this.transforms.rotate(heading, pitch, roll, degrees);
+            },
+        },
+        rotateByEuler: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (x, y, z, degrees) {
+                this.transforms.rotateByEuler(x, y, z, degrees);
+            },
+        },
+        rotateOnAxis: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (axis, value, degrees) {
+                this.transforms.rotateOnAxis(axis, value, degrees);
+            },
+        },
+        rotateHeading: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (value, degrees) {
+                this.transforms.rotateHeading(value, degrees);
+            },
+        },
+        rotatePitch: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (value, degrees) {
+                this.transforms.rotatePitch(value, degrees);
+            },
+        },
+        rotateRoll: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (value, degrees) {
+                this.transforms.rotateRoll(value, degrees);
+            },
+        },
+        rotateX: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (value, degrees) {
+                this.transforms.rotateX(value, degrees);
+            },
+        },
+        rotateY: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (value, degrees) {
+                this.transforms.rotateY(value, degrees);
+            },
+        },
+        rotateZ: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (value, degrees) {
+                this.transforms.rotateZ(value, degrees);
+            },
+        },
+        quaternion: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                this.transforms.quaternion = value;
+            },
+            get: function () {
+                return this.transforms.quaternion;
+            }
+        },
+        // 缩放属性与方法
+        setScale: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (x, y, z) {
+                this.transforms.setScale(x, y, z);
+            }
+        },
+        // 固定坐标系矩阵、本地变换矩阵与前置/后置变换矩阵
+        fixedFrameMatrix: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return this.transforms.fixedFrameMatrix;
+            },
+        },
+        localTransformMatrix: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return this.transforms.localTransformMatrix;
+            },
+        },
+        beforeTransformMatrix: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                this.transforms.beforeTransformMatrix = value;
+            },
+            get: function () {
+                return this.transforms.beforeTransformMatrix;
+            }
+        },
+        afterTransformMatrix: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                this.transforms.afterTransformMatrix = value;
+            },
+            get: function () {
+                return this.transforms.afterTransformMatrix;
+            }
+        },
+        getActualPosition: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (result) {
+                return this.transforms.getActualPosition(result);
+            },
+        },
+        //private
+        _updateModelMatrixTransforms: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (frameState) {
+                return this.transforms.update(frameState);
+            },
+        },
+        //private
+        _destroyModelMatrixTransforms: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                this.transforms.destroy();
+            },
+        },
+    });
+
+    // 3DTileset 类型：追加 scale 与 updateRootTransform
+    if (is3DTileset) {
+        Object.defineProperties(target, {
+            scale: {
+                enumerable: true,
+                configurable: true,
+                set: function (value) {
+                    this.transforms.scale = value;
+                },
+                get: function () {
+                    return this.transforms.scale;
+                }
+            },
+            updateRootTransform: {
+                enumerable: true,
+                configurable: true,
+                writable: true,
+                value: function (force) {
+                    return this.transforms.updateModelMatrix(force);
+                },
+            },
+        });
+    // Model 类型：追加 scale3 与 updateModelMatrix
+    } else if (isModel) {
+        Object.defineProperties(target, {
+            scale3: {
+                enumerable: true,
+                configurable: true,
+                set: function (value) {
+                    this.transforms.scale = value;
+                },
+                get: function () {
+                    return this.transforms.scale;
+                }
+            },
+            updateModelMatrix: {
+                enumerable: true,
+                configurable: true,
+                writable: true,
+                value: function (force) {
+                    return this.transforms.updateModelMatrix(force);
+                },
+            },
+        });
+    // 通用类型：追加 scale、modelMatrix 及模型矩阵变更事件等
+    } else {
+        Object.defineProperties(target, {
+            scale: {
+                enumerable: true,
+                configurable: true,
+                set: function (value) {
+                    this.transforms.scale = value;
+                },
+                get: function () {
+                    return this.transforms.scale;
+                }
+            },
+            modelMatrix: {
+                enumerable: true,
+                configurable: true,
+                set: function (value) {
+                    this.transforms.modelMatrix = value;
+                },
+                get: function () {
+                    return this.transforms.modelMatrix;
+                },
+            },
+            computedModelMatrix: {
+                enumerable: true,
+                configurable: true,
+                get: function () {
+                    return this.modelMatrix;
+                }
+            },
+            modelMatrixChanged: {
+                enumerable: true,
+                configurable: true,
+                get: function () {
+                    return this.transforms.modelMatrixChanged;
+                }
+            },
+            /**
+             * @deprecated use modelMatrixChanged instead
+             */
+            modelMatrixChangeEvent: {
+                enumerable: true,
+                configurable: true,
+                get: function () {
+                    return this.transforms.modelMatrixChangeEvent;
+                },
+            },
+            needsUpdateModelMatrix: {
+                enumerable: true,
+                configurable: true,
+                set: function (value) {
+                    this.transforms.needsUpdateModelMatrix = value;
+                },
+                get: function () {
+                    return this.transforms.needsUpdateModelMatrix;
+                }
+            },
+            updateModelMatrix: {
+                enumerable: true,
+                configurable: true,
+                writable: true,
+                value: function (force) {
+                    return this.transforms.updateModelMatrix(force);
+                },
+            },
+        });
+        if ('onModelMatrixChanged' in target === false) {
+            Object.defineProperty(target, 'onModelMatrixChanged', {
+                enumerable: true,
+                configurable: true,
+                writable: true,
+                value: function (modelMatrix) {
+                    this.raisePropertyChangeEvent('modelMatrix', modelMatrix, PropertyType.MODELMATRIX);
+                }
+            });
+        }
+    }
+}
+
+/**
+ * 变换图元基类，继承自 BasePrimitive。
+ * 通过 defineModelMatrixTransformsProperties 混入位置、旋转、缩放等模型矩阵变换能力，
+ * 在每帧更新时同步变换矩阵，供需要按变换方式定位的图元复用。
+ */
+class TransformsPrimitive extends BasePrimitive {
+    // constructor(options) {
+    //     super(options);
+    // }
+
+    /**
+     * 初始化图元并应用传入的变换配置。
+     * @param {object} options 配置项，包含位置、旋转、缩放等变换参数
+     * @returns {void}
+     */
+    _init(options) {
+        super._init(options);
+
+        this.setTransforms(options);
+    }
+
+    /**
+     * 每帧更新钩子，委托给内部变换对象更新模型矩阵。
+     * @param {FrameState} frameState 帧状态对象
+     * @returns {void}
+     */
+    onUpdate(frameState) {
+        this._updateModelMatrixTransforms(frameState);
+    }
+
+    /**
+     * 销毁实例时清理变换相关资源并调用父类销毁逻辑。
+     * @returns {void}
+     */
+    onDestroy() {
+        this._destroyModelMatrixTransforms();
+        super.onDestroy();
+    }
+}
+// 将模型矩阵变换相关属性（position/geographic/translation/rotation/euler/quaternion/scale/modelMatrix 等）混入原型
+defineModelMatrixTransformsProperties(TransformsPrimitive.prototype);
+
+/**
+ * 形状类型枚举。
+ * @constant
+ */
+const ShapeType = Object.freeze({
+    PointCloud: 'PointCloud',
+    Mesh: 'Mesh',
+    //Shape
+    Box: 'Box',
+    Cylinder: 'Cylinder',
+    Ellipsoid: 'Ellipsoid',
+    Plane: 'Plane',
+    Straightline: 'Straightline',
+    Text3D: 'Text3D',
+    Frustum: 'Frustum',
+    OrthographicFrustum: 'OrthographicFrustum',
+    PerspectiveFrustum: 'PerspectiveFrustum',
+    //GroundShape
+    Circle: 'Circle',
+    Corridor: 'Corridor',
+    Ellipse: 'Ellipse',
+    Polygon: 'Polygon',
+    Polyline: 'Polyline',
+    PolylineOutline: 'PolylineOutline',
+    PolylineArrow: 'PolylineArrow',
+    PolylineDash: 'PolylineDash',
+    PolylineGlow: 'PolylineGlow',
+    PolylineTrail: 'PolylineTrail',
+    PolylineVolume: 'PolylineVolume',
+    Rectangle: 'Rectangle',
+    SimplePolyline: 'SimplePolyline',
+    Route: 'Route',
+    /**
+     * @deprecated 请使用Route替换Sparseline
+    */
+    Sparseline: 'Sparseline',
+    Wall: 'Wall',
+    Water: 'Water',
+    //Plot
+    StraightArrow: 'StraightArrow',
+    AttackArrow: 'AttackArrow',
+    PincerArrow: 'PincerArrow',
+    //CombinedShape
+    CombinedShape: 'CombinedShape',
+    MultipleCircle: 'MultipleCircle',
+    PolygonPolyline: 'PolygonPolyline',
+    PolygonPolylineOutline: 'PolygonPolylineOutline',
+    PolygonPolylineDash: 'PolygonPolylineDash',
+    PolygonPolylineGlow: 'PolygonPolylineGlow',
+    PolygonPolylineTrail: 'PolygonPolylineTrail',
+    CirclePolyline: 'CirclePolyline',
+    CirclePolylineOutline: 'CirclePolylineOutline',
+    CirclePolylineDash: 'CirclePolylineDash',
+    CirclePolylineGlow: 'CirclePolylineGlow',
+    CirclePolylineTrail: 'CirclePolylineTrail',
+    RectanglePolyline: 'RectanglePolyline',
+    RectanglePolylineOutline: 'RectanglePolylineOutline',
+    RectanglePolylineDash: 'RectanglePolylineDash',
+    RectanglePolylineGlow: 'RectanglePolylineGlow',
+    RectanglePolylineTrail: 'RectanglePolylineTrail',
+});
+
+/**
+ * 给目标对象定义外观相关属性（flat、faceForward、cullFace、shadows）。
+ * @param {object} target 要挂载属性的目标对象（通常是某个 primitive 的 prototype）
+ * @param {boolean} [isFill] 是否为填充外观，用于区分属性变更事件类型，默认为 false
+ * @returns {void}
+ */
+function defineAppearanceProperties(target, isFill = false) {
+
+    Object.defineProperties(target, {
+        // 平面化与面朝向属性
+        flat: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.bool('flat', value);
+                if (this._flat !== value) {
+                    this._flat = value;
+                    this.raisePropertyChangeEvent('flat', value, isFill ? PropertyType.FILLAPPEARANCE : PropertyType.APPEARANCE);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._flat))
+                    this._flat = false;
+                return this._flat;
+            }
+        },
+        faceForward: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.bool('faceForward', value);
+                if (this._faceForward !== value) {
+                    this._faceForward = value;
+                    this.raisePropertyChangeEvent('faceForward', value, isFill ? PropertyType.FILLAPPEARANCE : PropertyType.APPEARANCE);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._faceForward))
+                    this._faceForward = true;
+                return this._faceForward;
+            }
+        },
+        // 面剔除与阴影属性
+        cullFace: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseCullFace(value);
+                if (this._cullFace !== value) {
+                    this._cullFace = value;
+                    this.raisePropertyChangeEvent('cullFace', value, isFill ? PropertyType.FILLAPPEARANCE : PropertyType.APPEARANCE);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._cullFace))
+                    this._cullFace = CullFace.NONE;
+                return this._cullFace;
+            }
+        },
+        shadows: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseShadowMode(value);
+                if (this._shadows !== value) {
+                    this._shadows = value;
+                    this.raisePropertyChangeEvent('shadows', value, isFill ? PropertyType.FILLPRIMITIVE : PropertyType.PRIMITIVE);
+                }
+            },
+            get: function () {
+                return this._shadows;
+            }
+        },
+    });
+
+}
+
+/**
+ * 给目标对象定义基础形状通用属性（id、pickId、show、形状类型、几何图元类型、距离显示条件、深度测试、异步创建及 getGeometryOptions 等）。
+ * @param {object} target 要挂载属性的目标对象（通常是某个 primitive 的 prototype）
+ * @returns {void}
+ */
+function defineBaseShapeProperties(target) {
+
+    // 唯一标识与拾取标识
+    if ('id' in target === false) {
+        Object.defineProperty(target, 'id', {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                if (this._id !== value)
+                    this._id = value;
+            },
+            get: function () {
+                return this._id;
+            }
+        });
+    }
+
+    if ('pickId' in target === false) {
+        Object.defineProperty(target, 'pickId', {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                if (this._pickId !== value)
+                    this._pickId = value;
+            },
+            get: function () {
+                return this._pickId;
+            }
+        });
+    }
+
+    // if ('pickPrimitive' in target === false) {
+    //     Object.defineProperty(target, 'pickPrimitive', {
+    //         configurable: true,
+    //         set: function (value) {
+    //             if (this._pickPrimitive !== value)
+    //                 this._pickPrimitive = value;
+    //         },
+    //         get: function () {
+    //             return this._pickPrimitive || this;
+    //         }
+    //     });
+    // }
+
+    // 可见性
+    if ('show' in target === false) {
+        Object.defineProperty(target, 'show', {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.bool('show', value);
+                if (this._show !== value) {
+                    this._show = value;
+                    this.raisePropertyChangeEvent('show', value, PropertyType.ATTRIBUTE);
+                }
+            },
+            get: function () {
+                return this._show;
+            }
+        });
+    }
+
+    Object.defineProperties(target, {
+        // 形状类型与几何图元类型
+        shapeType: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                throw new RuntimeError('shapeType property must be overwrite.');
+            }
+        },
+        primitiveGeometricType: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return PrimitiveType.TRIANGLES
+            },
+        },
+        // 距离显示条件
+        distanceDisplayCondition: {
+            configurable: true,
+            set: function (value) {
+                value = parseToDistanceDisplayCondition(value);
+                if (!DistanceDisplayCondition.equals(value, this._distanceDisplayCondition)) {
+                    this._distanceDisplayCondition = value.clone(this._distanceDisplayCondition);
+                    this.raisePropertyChangeEvent('distanceDisplayCondition', value, PropertyType.ATTRIBUTE);
+                }
+            },
+            get: function () {
+                return this._distanceDisplayCondition;
+            }
+        },
+        // 深度测试与异步创建
+        depthTest: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.bool('depthTest', value);
+                if (this._depthTest !== value) {
+                    this._depthTest = value;
+                    this.raisePropertyChangeEvent('depthTest', value, PropertyType.APPEARANCE);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._depthTest))
+                    this._depthTest = true;
+                return this._depthTest;
+            }
+        },
+        asynchronous: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.bool('asynchronous', value);
+                if (this._asynchronous !== value) {
+                    this._asynchronous = value;
+                    this.raisePropertyChangeEvent('asynchronous', PropertyType.PRIMITIVE);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._asynchronous))
+                    this._asynchronous = true;
+                return this._asynchronous;
+            }
+        },
+        // 几何体参数生成方法（须由子类覆盖实现）
+        getGeometryOptions: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                throw new DeveloperError('getGeometryOptions function must be overwrite.');
+            }
+        }
+    });
+
+}
+
+/**
+ * 给目标对象定义长方体（Box）形状相关属性（形状类型、尺寸、几何体参数生成方法、fill/outline 几何体与几何类型）。
+ * @param {object} target 要挂载属性的目标对象（通常是某个 primitive 的 prototype）
+ * @returns {void}
+ */
+function defineBoxProperties(target) {
+
+    Object.defineProperties(target, {
+        // 形状类型
+        shapeType: {
+            enumerable: true,
+            writable: false,
+            configurable: true,
+            value: ShapeType.Box,
+        },
+        // 尺寸相关属性（dimensions 及宽/高/深快捷属性）
+        dimensions: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToCartesian3(value);
+                if (!Cartesian3.equals(value, this._dimensions)) {
+                    this._dimensions = value.clone(this._dimensions);
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('dimensions', value, PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                if (!this._dimensions) {
+                    this._dimensions = new Cartesian3(1, 1, 1);
+                }
+                return this._dimensions;
+            }
+        },
+        width: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThan('width', value, 0);
+                if (this.width !== value) {
+                    this._dimensions.x = value;
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('width', value, PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                return this.dimensions.x;
+            }
+        },
+        height: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThan('height', value, 0);
+                if (this.height !== value) {
+                    this._dimensions.y = value;
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('height', value, PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                return this.dimensions.y;
+            }
+        },
+        depth: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThan('depth', value, 0);
+                if (this.depth !== value) {
+                    this._dimensions.z = value;
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('depth', value, PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                return this.dimensions.z;
+            }
+        },
+        // 几何体参数生成方法
+        getGeometryOptions: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                if (this.needsUpdateGeometryOptions || !this._geometryOptions) {
+                    this._geometryOptions = {
+                        dimensions: this.dimensions,
+                    };
+                    this.needsUpdateGeometryOptions = false;
+                }
+                return this._geometryOptions;
+            }
+        },
+        // 几何体生成方法（填充体与轮廓线）
+        getFillGeometry: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                return BoxGeometry.fromDimensions(this.getGeometryOptions());
+            }
+        },
+        getOutlineGeometry: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                return BoxOutlineGeometry.fromDimensions(this.getGeometryOptions());
+            }
+        },
+        // fill/outline 几何类型
+        fillGeometryType: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return BoxGeometry
+            },
+        },
+        outlineGeometryType: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return BoxOutlineGeometry
+            },
+        },
+    });
+
+}
+
+/**
+ * 给目标对象定义中心点相关属性（笛卡尔坐标 center 与经纬度地理坐标 centerGeographic）。
+ * @param {object} target 要挂载属性的目标对象（通常是某个 primitive 的 prototype）
+ * @returns {void}
+ */
+function defineCenterProperties(target) {
+
+    Object.defineProperties(target, {
+        // 中心点（笛卡尔坐标）
+        center: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToCartesian3(value, Scratch.scratchCartesian3, false);
+                if (!Cartesian3.equals(value, this._center)) {
+                    this._center = value.clone(this._center);
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('center', value, PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                return this._center;
+            }
+        },
+        // 中心点（经纬度地理坐标）
+        centerGeographic: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                this.center = parseGeographicToCartesian(value, Scratch.scratchGeographic, this.ellipsoid);
+            },
+            get: function () {
+                return this._center ? this._center.toGeographic(this.ellipsoid) : undefined;
+            }
+        },
+    });
+
+}
+
+/**
+ * 给目标对象定义贴地相关属性（clampToGround、clampToGroundBatchId，以及可选的轮廓线宽度 outlineWidth）。
+ * @param {object} target 要挂载属性的目标对象（通常是某个 primitive 的 prototype）
+ * @param {boolean} [defineOutlineWidth] 是否同时定义 outlineWidth 属性，默认为 true
+ * @returns {void}
+ */
+function defineClampToGroundProperties(target, defineOutlineWidth = true) {
+
+    Object.defineProperties(target, {
+        // 贴地相关属性
+        clampToGround: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.bool('clampToGround', value);
+                if (this._clampToGround !== value) {
+                    this._clampToGround = value;
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('clampToGround', value, PropertyType.PRIMITIVE);
+                }
+            },
+            get: function () {
+                return this._clampToGround;
+            }
+        },
+        clampToGroundBatchId: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                if (this._clampToGroundBatchId !== value) {
+                    this._clampToGroundBatchId = value;
+                    this.raisePropertyChangeEvent('clampToGroundBatchId', value);
+                }
+            },
+            get: function () {
+                return this._clampToGroundBatchId ?? this.id;
+            }
+        },
+    });
+
+    // 轮廓线宽度
+    if (defineOutlineWidth)
+        Object.defineProperty(target, 'outlineWidth', {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThanOrEquals('outlineWidth', value, 0);
+                if (this._outlineWidth !== value) {
+                    this._outlineWidth = value;
+                    this.raisePropertyChangeEvent('outlineWidth', value, PropertyType.ATTRIBUTE);
+                }
+            },
+            get: function () {
+                return this._outlineWidth;
+            }
+        });
+
+}
+
+/**
+ * 惰性创建宿主对象的内部计算模型矩阵（仅创建一次），初始为单位矩阵。
+ * @param {object} that 宿主对象
+ * @returns {void}
+ */
+function ensureComputedModelMatrix(that) {
+    if (!that._computedModelMatrix) {
+        that._computedModelMatrix = Matrix4.IDENTITY.clone();
+    }
+}
+
+/**
+ * 惰性创建宿主对象的计算模型矩阵变更事件对象（仅创建一次）。
+ * @param {object} that 宿主对象
+ * @returns {void}
+ */
+function ensureComputedModelMatrixChangeEvent(that) {
+    if (!that._computedModelMatrixChangeEvent) {
+        that._computedModelMatrixChangeEvent = new Event();
+    }
+}
+
+/**
+ * 给目标对象定义计算模型矩阵相关属性与方法（computedModelMatrix、变更事件、变更触发，
+ * 以及 onComputeModelMatrix / onComputedModelMatrixChanged 可覆盖钩子）。
+ * @param {object} target 要挂载属性的目标对象（通常是某个 primitive 的 prototype）
+ * @returns {void}
+ */
+function defineComputedModelMatrixProperties(target) {
+
+    Object.defineProperties(target, {
+        // 计算模型矩阵及其变更事件
+        computedModelMatrix: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                ensureComputedModelMatrix(this);
+                return this._computedModelMatrix;
+            },
+        },
+        computedModelMatrixChangeEvent: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                ensureComputedModelMatrixChangeEvent(this);
+                return this._computedModelMatrixChangeEvent;
+            },
+        },
+        // 触发计算模型矩阵变更事件并回调
+        raiseComputedModelMatrixChangeEvent: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (computedModelMatrix) {
+                this.computedModelMatrixChangeEvent.raiseEvent(this, computedModelMatrix);
+                this.onComputedModelMatrixChanged(computedModelMatrix);
+            },
+        },
+        // 模型矩阵变化时标记需要重新计算
+        onModelMatrixChanged: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (modelMatrix) {
+                this.needsUpdateComputedModelMatrix = true;
+            },
+        },
+        //private
+        _updateComputedModelMatrix: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (frameState) {
+                if (this.needsUpdateComputedModelMatrix) {
+                    this.onComputeModelMatrix(this.modelMatrix);
+                    this.raiseComputedModelMatrixChangeEvent(this.computedModelMatrix);
+                    this.needsUpdateComputedModelMatrix = false;
+                    return true;
+                }
+            }
+        },
+    });
+
+    // 计算模型矩阵的可覆盖钩子（计算逻辑与计算完成回调）
+    if ('onComputeModelMatrix' in target === false)
+        Object.defineProperty(target, 'onComputeModelMatrix', {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (modelMatrix) { },
+        });
+    if ('onComputedModelMatrixChanged' in target === false)
+        Object.defineProperty(target, 'onComputedModelMatrixChanged', {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (computedModelMatrix) {
+                this.raisePropertyChangeEvent('computedModelMatrix', computedModelMatrix, PropertyType.MODELMATRIX);
+            },
+        });
+
+}
+
+/**
+ * 给目标对象定义圆柱（Cylinder）形状相关属性（形状类型、半径与长度、细分参数、几何体参数生成方法、fill/outline 几何类型）。
+ * @param {object} target 要挂载属性的目标对象（通常是某个 primitive 的 prototype）
+ * @returns {void}
+ */
+function defineCylinderProperties(target) {
+
+    Object.defineProperties(target, {
+        // 形状类型
+        shapeType: {
+            enumerable: true,
+            writable: false,
+            configurable: true,
+            value: ShapeType.Cylinder,
+        },
+        // 半径与长度相关属性
+        topRadius: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThan('topRadius', value, 0);
+                if (this._topRadius !== value) {
+                    this._topRadius = value;
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('topRadius', value, PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._topRadius)) {
+                    this._topRadius = 1;
+                }
+                return this._topRadius;
+            }
+        },
+        bottomRadius: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThan('bottomRadius', value, 0);
+                if (this._bottomRadius !== value) {
+                    this._bottomRadius = value;
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('bottomRadius', value, PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._bottomRadius)) {
+                    this._bottomRadius = 1;
+                }
+                return this._bottomRadius;
+            }
+        },
+        radius: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                this.topRadius = value;
+                this.bottomRadius = value;
+            }
+        },
+        length: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThan('length', value, 0);
+                if (this._length !== value) {
+                    this._length = value;
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('length', value, PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._length)) {
+                    this._length = 1;
+                }
+                return this._length;
+            }
+        },
+        // 细分参数
+        slices: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThanOrEquals('slices', value, 3);
+                if (this._slices !== value) {
+                    this._slices = value;
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('slices', value, PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._slices))
+                    this._slices = 64;
+                return this._slices;
+            }
+        },
+        numberOfVerticalLines: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThanOrEquals('numberOfVerticalLines', value, 0);
+                if (this._numberOfVerticalLines !== value) {
+                    this._numberOfVerticalLines = value;
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('numberOfVerticalLines', value, PropertyType.OUTLINEGEOMETRY);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._numberOfVerticalLines))
+                    this._numberOfVerticalLines = 0;
+                return this._numberOfVerticalLines;
+            }
+        },
+        // 几何体参数生成方法
+        getGeometryOptions: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                if (this.needsUpdateGeometryOptions || !this._geometryOptions) {
+                    this._geometryOptions = {
+                        topRadius: this.topRadius,
+                        bottomRadius: this.bottomRadius,
+                        length: this.length,
+                        slices: this.slices,
+                        numberOfVerticalLines: this.numberOfVerticalLines,
+                    };
+
+                    this.needsUpdateGeometryOptions = false;
+                }
+                return this._geometryOptions;
+            }
+        },
+        // fill/outline 几何类型
+        fillGeometryType: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return CylinderGeometry
+            },
+        },
+        outlineGeometryType: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return CylinderOutlineGeometry
+            },
+        },
+    });
+
+}
+
+/**
+ * 惰性创建宿主对象的半径向量（仅创建一次），初始为 (1, 1, 1)。
+ * @param {object} that 宿主对象
+ * @returns {void}
+ */
+function ensureRadii(that) {
+    if (!that._radii)
+        that._radii = new Cartesian3(1, 1, 1);
+}
+
+/**
+ * 给目标对象定义椭球（Ellipsoid）形状相关属性（形状类型、外/内半径、时钟角与锥角范围、细分参数、几何体参数生成方法、fill/outline 几何类型）。
+ * @param {object} target 要挂载属性的目标对象（通常是某个 primitive 的 prototype）
+ * @returns {void}
+ */
+function defineEllipsoidProperties(target) {
+
+    Object.defineProperties(target, {
+        // 形状类型
+        shapeType: {
+            enumerable: true,
+            writable: false,
+            configurable: true,
+            value: ShapeType.Ellipsoid,
+        },
+        // 外半径相关属性（radii 及 x/y/z 半径快捷属性）
+        radii: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToCartesian3(value, Scratch.scratchCartesian3);
+                if (!Cartesian3.equals(value, this._radii)) {
+                    this._radii = value.clone(this._radii);
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('radii', value, PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                ensureRadii(this);
+                return this._radii;
+            }
+        },
+        radius: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThan('radius', value, 0);
+                this.radii = new Cartesian3(value, value, value);
+            }
+        },
+        xRadius: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThan('xRadius', value, 0);
+                if (this.radii.x !== value) {
+                    this.radii.x = value;
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('radii', value, PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                return this.radii.x;
+            }
+        },
+        yRadius: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThan('yRadius', value, 0);
+                if (this.radii.y !== value) {
+                    this.radii.y = value;
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('radii', value, PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                return this.radii.y;
+            }
+        },
+        zRadius: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThan('zRadius', value, 0);
+                if (this.radii.z !== value) {
+                    this.radii.z = value;
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('radii', value, PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                return this.radii.z;
+            }
+        },
+        // 内半径（挖空）相关属性
+        innerRadii: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                if (defined$1(value)) {
+                    value = parseToCartesian3(value, Scratch.scratchCartesian3);
+                    if (!Cartesian3.equals(value, this._innerRadii)) {
+                        this._innerRadii = value.clone(this._innerRadii);
+                        this.needsUpdateGeometryOptions = true;
+                        this.raisePropertyChangeEvent('innerRadii', value, PropertyType.GEOMETRY);
+                    }
+                } else {
+                    if (this._innerRadii !== value) {
+                        this._innerRadii = undefined;
+                        this.needsUpdateGeometryOptions = true;
+                        this.raisePropertyChangeEvent('innerRadii', value, PropertyType.GEOMETRY);
+                    }
+                }
+            },
+            get: function () {
+                return this._innerRadii;
+            }
+        },
+        innerRadius: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThan('innerRadius', value, 0);
+                this.innerRadii = new Cartesian3(value, value, value);
+            }
+        },
+        // 时钟角范围（弧度与角度两种表达）
+        minimumClock: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number('minimumClock', value);
+                if (this._minimumClock !== value) {
+                    this._minimumClock = value;
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('minimumClock', value, PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                return this._minimumClock;
+            }
+        },
+        minimumClockDegrees: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number('minimumClockDegrees', value);
+                this.minimumClock = Math$1.toRadians(value);
+            },
+            get: function () {
+                if (defined$1(this._minimumClock))
+                    return Math$1.toDegrees(this._minimumClock);
+            }
+        },
+        maximumClock: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number('maximumClock', value);
+                if (this._maximumClock !== value) {
+                    this._maximumClock = value;
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('maximumClock', value, PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                return this._maximumClock;
+            }
+        },
+        maximumClockDegrees: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number('maximumClockDegrees', value);
+                this.maximumClock = Math$1.toRadians(value);
+            },
+            get: function () {
+                if (defined$1(this._maximumClock))
+                    return Math$1.toDegrees(this._maximumClock);
+            }
+        },
+        // 锥角范围（弧度与角度两种表达）
+        minimumCone: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number('minimumCone', value);
+                if (this._minimumCone !== value) {
+                    this._minimumCone = value;
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('minimumCone', value, PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                return this._minimumCone;
+            }
+        },
+        minimumConeDegrees: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number('minimumConeDegrees', value);
+                this.minimumCone = Math$1.toRadians(value);
+            },
+            get: function () {
+                if (defined$1(this._minimumCone))
+                    return Math$1.toDegrees(this._minimumCone);
+            }
+        },
+        maximumCone: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number('maximumCone', value);
+                if (this._maximumCone !== value) {
+                    this._maximumCone = value;
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('maximumCone', value, PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                return this._maximumCone;
+            }
+        },
+        maximumConeDegrees: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number('maximumConeDegrees', value);
+                this.maximumCone = Math$1.toRadians(value);
+            },
+            get: function () {
+                if (defined$1(this._maximumCone))
+                    return Math$1.toDegrees(this._maximumCone);
+            }
+        },
+        // 细分参数
+        slicePartitions: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThanOrEquals('slicePartitions', value, 3);
+                if (this._slicePartitions !== value) {
+                    this._slicePartitions = value;
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('slicePartitions', value, PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._slicePartitions))
+                    this._slicePartitions = 64;
+                return this._slicePartitions;
+            }
+        },
+        stackPartitions: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThanOrEquals('stackPartitions', value, 3);
+                if (this._stackPartitions !== value) {
+                    this._stackPartitions = value;
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('stackPartitions', value, PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._stackPartitions))
+                    this._stackPartitions = 32;
+                return this._stackPartitions;
+            }
+        },
+        subdivisions: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThan('subdivisions', value, 0);
+                if (this._subdivisions !== value) {
+                    this._subdivisions = value;
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('subdivisions', value, PropertyType.OUTLINEGEOMETRY);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._subdivisions))
+                    this._subdivisions = 32;
+                return this._subdivisions;
+            }
+        },
+        // 几何体参数生成方法
+        getGeometryOptions: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                if (this.needsUpdateGeometryOptions || !this._geometryOptions) {
+                    this._geometryOptions = {
+                        radii: this.radii,
+                        innerRadii: this._innerRadii,
+                        minimumClock: this._minimumClock,
+                        maximumClock: this._maximumClock,
+                        minimumCone: this._minimumCone,
+                        maximumCone: this._maximumCone,
+                        slicePartitions: this.slicePartitions,
+                        stackPartitions: this.stackPartitions,
+                        subdivisions: this.subdivisions,
+                    };
+
+                    this.needsUpdateGeometryOptions = false;
+                }
+                return this._geometryOptions;
+            }
+        },
+        // fill/outline 几何类型
+        fillGeometryType: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return EllipsoidGeometry
+            },
+        },
+        outlineGeometryType: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return EllipsoidOutlineGeometry
+            },
+        },
+    });
+}
+
+/**
+ * 给目标对象定义标签（Label）相关属性（类型标识、位置与地理坐标、对齐原点、文本样式、填充/轮廓/背景颜色与透明度、
+ * 距离相关的显示控制，以及内部标签销毁方法）。
+ * @param {object} target 要挂载属性的目标对象（通常是某个 primitive 的 prototype）
+ * @returns {void}
+ */
+function defineLabelProperties(target) {
+
+    Object.defineProperties(target, {
+        // 类型标识与拾取
+        isLabel: {
+            enumerable: true,
+            writable: false,
+            configurable: true,
+            value: true,
+        },
+        pickPrimitve: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return this;
+            }
+        },
+        // 唯一标识
+        id: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return this._label.id;
+            },
+            set: function (value) {
+                this._label.id = value;
+            }
+        },
+        // 可见性与位置相关属性
+        show: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.bool('show', value);
+                if (this.show !== value) {
+                    this._show = value;
+                    this._label.show = value;
+                    this.raisePropertyChangeEvent('show', value);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._show))
+                    this._show = this._label.show;
+                return this._label.show;
+            }
+        },
+        position: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToCartesian3(value, Scratch.scratchCartesian3, false);
+                if (!Cartesian3.equals(value, this.position)) {
+                    this._label.position = value;
+                    this.raisePropertyChangeEvent('position', value);
+                }
+            },
+            get: function () {
+                return this._label.position;
+            }
+        },
+        geographic: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseGeographicToCartesian(value, Scratch.scratchCartesian3, this.ellipsoid);
+                this.position = value;
+            },
+            get: function () {
+                return this.position.toGeographic(this.ellipsoid);
+            }
+        },
+        heightReference: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseHeightReference(value);
+                if (this.heightReference !== value) {
+                    this._label.heightReference = value;
+                    this.raisePropertyChangeEvent('heightReference', value);
+                }
+            },
+            get: function () {
+                return this._label.heightReference;
+            }
+        },
+        eyeOffset: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToCartesian3(value, Scratch.scratchCartesian3, false);
+                if (!Cartesian3.equals(value, this.eyeOffset)) {
+                    this._label.eyeOffset = value;
+                    this.raisePropertyChangeEvent('eyeOffset', value);
+                }
+            },
+            get: function () {
+                return this._label.eyeOffset;
+            }
+        },
+        pixelOffset: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToCartesian2(value, Scratch.scratchCartesian2, false);
+                if (!Cartesian2.equals(value, this.pixelOffset)) {
+                    this._label.pixelOffset = value;
+                    this.raisePropertyChangeEvent('pixelOffset', value);
+                }
+            },
+            get: function () {
+                return this._label.pixelOffset;
+            }
+        },
+        pixelOffsetScaleByDistance: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToNearFarScalar(value, Scratch.scratchNearFarScalar);
+                if (!NearFarScalar.equals(value, this.pixelOffsetScaleByDistance)) {
+                    this._label.pixelOffsetScaleByDistance = value;
+                    this.raisePropertyChangeEvent('pixelOffsetScaleByDistance', value);
+                }
+            },
+            get: function () {
+                return this._label.pixelOffsetScaleByDistance;
+            }
+        },
+        // 对齐原点
+        horizontalOrigin: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseHorizontalOrigin(value);
+                if (this.horizontalOrigin !== value) {
+                    this._label.horizontalOrigin = value;
+                    this.raisePropertyChangeEvent('horizontalOrigin', value);
+                }
+            },
+            get: function () {
+                return this._label.horizontalOrigin;
+            }
+        },
+        verticalOrigin: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseVerticalOrigin(value);
+                if (this.verticalOrigin !== value) {
+                    this._label.verticalOrigin = value;
+                    this.raisePropertyChangeEvent('verticalOrigin', value);
+                }
+            },
+            get: function () {
+                return this._label.verticalOrigin;
+            }
+        },
+        // 文本样式与缩放属性
+        text: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.string('text', value);
+                if (this.text !== value) {
+                    this._label.text = value;
+                    this.raisePropertyChangeEvent('text', value);
+                }
+            },
+            get: function () {
+                return this._label.text;
+            }
+        },
+        font: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.string('font', value);
+                if (this.font !== value) {
+                    this._label.font = value;
+                    this.raisePropertyChangeEvent('font', value);
+                }
+            },
+            get: function () {
+                return this._label.font;
+            }
+        },
+        style: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseLabelStyle(value);
+                if (this.style !== value) {
+                    this._label.style = value;
+                    this.raisePropertyChangeEvent('style', value);
+                }
+            },
+            get: function () {
+                return this._label.style;
+            }
+        },
+        scale: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number('scale', value);
+                if (this.scale !== value) {
+                    this._label.scale = value;
+                    this.raisePropertyChangeEvent('scale', value);
+                }
+            },
+            get: function () {
+                return this._label.scale;
+            }
+        },
+        scaleByDistance: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToNearFarScalar(value, Scratch.scratchNearFarScalar);
+                if (!NearFarScalar.equals(value, this.scaleByDistance)) {
+                    this._label.scaleByDistance = value;
+                    this.raisePropertyChangeEvent('scaleByDistance', value);
+                }
+            },
+            get: function () {
+                return this._label.scaleByDistance;
+            }
+        },
+        // 填充颜色与透明度
+        fillColor: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToColor(value, Scratch.scratchColor);
+                if (!Color.equalsRgb(value, this.fillColor)) {
+                    value.alpha = this.fillColor.alpha;
+                    this._label.fillColor = value;
+                    this.raisePropertyChangeEvent('fillColor', value);
+                }
+            },
+            get: function () {
+                return this._label.fillColor;
+            }
+        },
+        color: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                this.fillColor = value;
+            },
+            get: function () {
+                return this.fillColor;
+            }
+        },
+        fillOpacity: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThanOrEquals('fillOpacity', value, 0);
+                Check.typeOf.number.lessThanOrEquals('fillOpacity', value, 1);
+                if (this.fillOpacity !== value) {
+                    const color = this.fillColor.clone(Scratch.scratchColor).withAlpha(value);
+                    this._label.fillColor = color;
+                    this.raisePropertyChangeEvent('fillOpacity', value);
+                }
+            },
+            get: function () {
+                return this._label.fillColor.alpha;
+            }
+        },
+        opacity: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                this.fillOpacity = value;
+            },
+            get: function () {
+                return this.fillOpacity
+            }
+        },
+        // 轮廓颜色与宽度
+        outlineColor: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToColor(value, Scratch.scratchColor);
+                if (!Color.equalsRgb(value, this.outlineColor)) {
+                    value.alpha = this.outlineColor.alpha;
+                    this._label.outlineColor = value;
+                    this.raisePropertyChangeEvent('outlineColor', value);
+                }
+            },
+            get: function () {
+                return this._label.outlineColor;
+            }
+        },
+        outlineOpacity: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThanOrEquals('outlineOpacity', value, 0);
+                Check.typeOf.number.lessThanOrEquals('outlineOpacity', value, 1);
+                if (this.outlineOpacity !== value) {
+                    const color = this.outlineColor.clone(Scratch.scratchColor).withAlpha(value);
+                    this._label.outlineColor = color;
+                    this.raisePropertyChangeEvent('outlineColor', value);
+                }
+            },
+            get: function () {
+                return this._label.outlineColor.alpha;
+            }
+        },
+        outlineWidth: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number('outlineWidth', value);
+                if (this.outlineWidth !== value) {
+                    this._label.outlineWidth = value;
+                    this.raisePropertyChangeEvent('outlineWidth', value);
+                }
+            },
+            get: function () {
+                return this._label.outlineWidth;
+            }
+        },
+        // 背景相关属性
+        showBackground: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.bool('showBackground', value);
+                if (this.showBackground !== value) {
+                    this._label.showBackground = value;
+                    this.raisePropertyChangeEvent('showBackground', value);
+                }
+            },
+            get: function () {
+                return this._label.showBackground;
+            }
+        },
+        backgroundColor: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToColor(value, Scratch.scratchColor);
+                if (!Color.equalsRgb(value, this.backgroundColor)) {
+                    value.alpha = this.backgroundColor.alpha;
+                    this._label.backgroundColor = value;
+                    this.raisePropertyChangeEvent('backgroundColor', value);
+                }
+            },
+            get: function () {
+                return this._label.backgroundColor;
+            }
+        },
+        backgroundOpacity: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThanOrEquals('backgroundOpacity', value, 0);
+                Check.typeOf.number.lessThanOrEquals('backgroundOpacity', value, 1);
+                if (this.backgroundOpacity !== value) {
+                    const color = this.backgroundColor.clone(Scratch.scratchColor).withAlpha(value);
+                    this._label.backgroundColor = color;
+                    this.raisePropertyChangeEvent('backgroundColor', value);
+                }
+            },
+            get: function () {
+                return this._label.backgroundColor.alpha;
+            }
+        },
+        backgroundPadding: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToCartesian2(value, Scratch.scratchCartesian2, false);
+                if (!Cartesian2.equals(value, this.backgroundPadding)) {
+                    this._label.backgroundPadding = value;
+                    this.raisePropertyChangeEvent('backgroundPadding', value);
+                }
+            },
+            get: function () {
+                return this._label.backgroundPadding;
+            }
+        },
+        // 距离相关的显示控制属性
+        translucencyByDistance: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToNearFarScalar(value, Scratch.scratchNearFarScalar);
+                if (!NearFarScalar.equals(value, this.translucencyByDistance)) {
+                    this._label.translucencyByDistance = value;
+                    this.raisePropertyChangeEvent('translucencyByDistance', value);
+                }
+            },
+            get: function () {
+                return this._label.translucencyByDistance;
+            }
+        },
+        distanceDisplayCondition: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToDistanceDisplayCondition(value, Scratch.scratchDistanceDisplayCondition);
+                if (!DistanceDisplayCondition.equals(value, this.distanceDisplayCondition)) {
+                    this._label.distanceDisplayCondition = value;
+                    this.raisePropertyChangeEvent('distanceDisplayCondition', value);
+                }
+            },
+            get: function () {
+                return this._label.distanceDisplayCondition;
+            }
+        },
+        disableDepthTestDistance: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number('disableDepthTestDistance', value);
+                if (this.disableDepthTestDistance !== value) {
+                    this._label.disableDepthTestDistance = value;
+                    this.raisePropertyChangeEvent('disableDepthTestDistance', value);
+                }
+            },
+            get: function () {
+                return this._label.disableDepthTestDistance;
+            }
+        },
+        //private
+        _destroyInnerLabel: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                if (this._label && !isDestroyed(this._label)) {
+                    this._label._removeFromCollection();
+                    destroyObject$1(this._label);
+                }
+            }
+        },
+    });
+
+}
+
+/**
+ * 为目标对象动态定义网格（Mesh）类型的属性（形状类型、几何数据、线框开关及其颜色/透明度别名、几何获取方法等）。
+ * @param {object} target 要挂载属性的目标对象
+ * @returns {void}
+ */
+function defineMeshProperties(target) {
+
+    Object.defineProperties(target, {
+        // 基础类型标识与异步标志
+        shapeType: {
+            enumerable: true,
+            writable: false,
+            configurable: true,
+            value: ShapeType.Mesh,
+        },
+        asynchronous: {
+            enumerable: true,
+            writable: false,
+            configurable: true,
+            value: false,
+        },
+        // 几何数据（变更时标记 needsUpdateGeometry 待更新）
+        geometry: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.defined('geometry', value);
+                if (this._geometry !== value) {
+                    this._geometry = value;
+                    this.needsUpdateGeometry = true;
+                }
+            },
+            get: function () {
+                return this._geometry;
+            }
+        },
+        // 线框开关及其颜色/透明度（别名到 outline 系列属性）
+        wireframe: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                this.outline = value;
+            },
+            get: function () {
+                return this.outline;
+            }
+        },
+        wireframeColor: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                this.outlineColor = value;
+            },
+            get: function () {
+                return this.outlineColor;
+            }
+        },
+        wireframeOpacity: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                this.outlineOpacity = value;
+            },
+            get: function () {
+                return this.outlineOpacity;
+            }
+        },
+        // 填充几何与线框几何的获取/创建方法（别名）
+        getFillGeometry: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                return this.fillGeometry;
+            }
+        },
+        createFillGeometry: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                return this.fillGeometry;
+            }
+        },
+        getOutlineGeometry: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                return this.wireframeGeometry;
+            }
+        },
+        createOutlineGeometry: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                return this.wireframeGeometry;
+            }
+        },
+        getWireframeGeometry: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                return this.wireframeGeometry;
+            }
+        },
+        createWireframeGeometry: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                return this.wireframeGeometry;
+            }
+        },
+        //private
+        _updateGeometry: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (frameState) {
+                if (!defined$1(this._geometry))
+                    return;
+                if (this.needsUpdateGeometry) {
+                    this.fillGeometry = createGeometry(this._geometry);
+                    this.wireframeGeometry = this.fillGeometry.clone().toWireframe();
+
+                    this.needsUpdateGeometry = false;
+                    this.raisePropertyChangeEvent('geometry', this._geometry, PropertyType.GEOMETRY);
+                }
+            }
+        },
+    });
+
+}
+
+/**
+ * 为目标对象动态定义轮廓（outline）相关属性（开关、颜色、透明度、轮廓几何类型及轮廓几何/几何实例的创建方法等）。
+ * @param {object} target 要挂载属性的目标对象
+ * @returns {void}
+ */
+function defineOutlineProperties(target) {
+
+    Object.defineProperties(target, {
+        // 轮廓开关、显示判定、颜色与透明度
+        outline: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.bool('outline', value);
+                if (this._outline !== value) {
+                    this._outline = value;
+                    this.raisePropertyChangeEvent('outline', value, PropertyType.ATTRIBUTE);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._outline))
+                    this._outline = false;
+                return this._outline;
+            }
+        },
+        outlineShowing: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return this.show && this.outline;
+            }
+        },
+        outlineColor: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToColor(value);
+                if (!Color.equalsRgb(this.outlineColor, value)) {
+                    this._outlineColor = value.cloneRgb(this._outlineColor);
+                    this.raisePropertyChangeEvent('outlineColor', this._outlineColor, PropertyType.ATTRIBUTE);
+                }
+            },
+            get: function () {
+                if (!this._outlineColor)
+                    this._outlineColor = Color.BLACK.clone();
+                return this._outlineColor;
+            }
+        },
+        outlineOpacity: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThanOrEquals('outlineOpacity', value, 0);
+                Check.typeOf.number.lessThanOrEquals('outlineOpacity', value, 1);
+                if (this.outlineOpacity !== value) {
+                    this.outlineColor.alpha = value;
+                    this.raisePropertyChangeEvent('outlineOpacity', value, PropertyType.ATTRIBUTE);
+                }
+            },
+            get: function () {
+                return this.outlineColor.alpha;
+            }
+        },
+        // 轮廓几何类型（需子类覆盖）
+        outlineGeometryType: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                throw new DeveloperError('outlineGeometryType property must be overwrite.');
+            }
+        },
+        // 获取轮廓几何实例的顶点属性
+        getOutlineGeometryInstanceAttributes: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                return getGeometryInstanceAttributes(this.isOutlineShowing ?? this.outlineShowing, this.outlineColor, this._distanceDisplayCondition);
+            }
+        },
+        // 生成轮廓几何、创建轮廓几何与几何实例
+        getOutlineGeometry: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                const geometryOptions = this.getGeometryOptions();
+                if (!geometryOptions)
+                    return;
+                return new this.outlineGeometryType(geometryOptions);
+            }
+        },
+        createOutlineGeometry: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                const geometry = this.getOutlineGeometry();
+                if (!geometry)
+                    return;
+                return this.outlineGeometryType.createGeometry(geometry);
+            }
+        },
+        createOutlineGeometryInstance: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (enableModelMatrix = true) {
+                const geometry = this.getOutlineGeometry();
+                if (!geometry)
+                    return;
+                const attributes = this.getOutlineGeometryInstanceAttributes();
+                return new GeometryInstance({
+                    id: this.id,
+                    pickId: this.pickId,
+                    geometry: geometry,
+                    attributes: attributes,
+                    modelMatrix: enableModelMatrix ? this.computedModelMatrix : undefined,
+                });
+            }
+        }
+    });
+
+    // 目标对象未提供 getGeometryOptions 时，挂载默认实现（需子类覆盖）
+    if ('getGeometryOptions' in target === false) {
+        Object.defineProperty(target, 'getGeometryOptions', {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                throw new DeveloperError('getGeometryOptions function must be overwrite.');
+            }
+        });
+    }
+
+}
+
+/**
+ * 为目标对象动态定义平面（Plane）类型的属性（平面方程、尺寸、几何选项及平面几何类型等），
+ * 并按需挂载模型矩阵变换与计算模型矩阵相关属性。
+ * @param {object} target 要挂载属性的目标对象
+ * @returns {void}
+ */
+function definePlaneProperties(target) {
+    // 按需挂载模型矩阵变换属性
+    if ('_updateModelMatrixTransforms' in target === false)
+        defineModelMatrixTransformsProperties(target);
+
+    Object.defineProperties(target, {
+        // 形状类型标识
+        shapeType: {
+            enumerable: true,
+            writable: false,
+            configurable: true,
+            value: ShapeType.Plane,
+        },
+        // 平面方程：法向量与到原点的距离
+        plane: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToPlane(value, Scratch.scratchPlane);
+                if (!this._plane || !Plane.equals(value, this._plane)) {
+                    this._plane = Plane.clone(value, this._plane);
+                    this.needsUpdateComputedModelMatrix = true;
+                    this.raisePropertyChangeEvent('plane', value);
+                }
+            },
+            get: function () {
+                if (!this._plane)
+                    this._plane = new Plane(Cartesian3.UNIT_Z, 0);
+                return this._plane;
+            }
+        },
+        normal: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToCartesian3(value, Scratch.scratchCartesian3, false);
+                value.normalize();
+                if (!Cartesian3.equals(value, this.normal)) {
+                    this._plane.normal = value.clone(this._plane.normal);
+                    this.needsUpdateComputedModelMatrix = true;
+                    this.raisePropertyChangeEvent('normal', value);
+                }
+            },
+            get: function () {
+                return this.plane.normal;
+            }
+        },
+        distance: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number('distance', value);
+                if (this.distance !== value) {
+                    this._plane.distance = value;
+                    this.needsUpdateComputedModelMatrix = true;
+                    this.raisePropertyChangeEvent('distance', value);
+                }
+            },
+            get: function () {
+                return this.plane.distance;
+            }
+        },
+        // 平面尺寸：宽高二维向量及宽/高快捷属性
+        dimensions: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToCartesian2(value, Scratch.scratchCartesian2, false);
+                if (!Cartesian2.equals(value, this._dimensions)) {
+                    this._dimensions = value.clone(this._dimensions);
+                    this.needsUpdateComputedModelMatrix = true;
+                    this.raisePropertyChangeEvent('dimensions', value);
+                }
+            },
+            get: function () {
+                if (!this._dimensions) {
+                    this._dimensions = new Cartesian2(1, 1);
+                }
+                return this._dimensions;
+            }
+        },
+        width: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThan('width', value, 0);
+                if (this.width !== value) {
+                    this._dimensions.x = value;
+                    this.needsUpdateComputedModelMatrix = true;
+                    this.raisePropertyChangeEvent('width', value);
+                }
+            },
+            get: function () {
+                return this.dimensions.x;
+            }
+        },
+        height: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThan('height', value, 0);
+                if (this.height !== value) {
+                    this._dimensions.y = value;
+                    this.needsUpdateComputedModelMatrix = true;
+                    this.raisePropertyChangeEvent('height', value);
+                }
+            },
+            get: function () {
+                return this.dimensions.y;
+            }
+        },
+        // 几何构建相关：几何选项、填充/轮廓几何类型与计算模型矩阵的回调
+        getGeometryOptions: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                if (!this._geometryOptions) {
+                    this._geometryOptions = {};
+                }
+                return this._geometryOptions;
+            }
+        },
+        fillGeometryType: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return PlaneGeometry
+            },
+        },
+        outlineGeometryType: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return PlaneOutlineGeometry
+            },
+        },
+        onComputeModelMatrix: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (modelMatrix) {
+                PlaneGeometryUpdater.createPrimitiveMatrix(this.plane, this.dimensions, modelMatrix, this.computedModelMatrix);
+            }
+        },
+    });
+
+    // 按需挂载计算模型矩阵属性
+    if ('_updateComputedModelMatrix' in target === false)
+        defineComputedModelMatrixProperties(target);
+
+}
+
+/**
+ * 为目标对象动态定义点云（PointCloud）类型的属性（点位置/颜色集合、增删操作、外观样式及几何/几何实例创建方法等），
+ * 并按需挂载模型矩阵变换属性。
+ * @param {object} target 要挂载属性的目标对象
+ * @returns {void}
+ */
+function definePointCloudProperties(target) {
+
+    // 按需挂载模型矩阵变换属性
+    if ('_updateModelMatrixTransforms' in target === false)
+        defineModelMatrixTransformsProperties(target);
+
+    Object.defineProperties(target, {
+        // 基础类型标识与图元配置（点图元、平面着色、面向前方、异步、顶点压缩）
+        shapeType: {
+            enumerable: true,
+            writable: false,
+            configurable: true,
+            value: ShapeType.PointCloud,
+        },
+        primitiveGeometricType: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return PrimitiveType.POINTS
+            },
+        },
+        flat: {
+            enumerable: true,
+            writable: false,
+            configurable: true,
+            value: true,
+        },
+        faceForward: {
+            enumerable: true,
+            writable: false,
+            configurable: true,
+            value: true,
+        },
+        asynchronous: {
+            enumerable: true,
+            writable: false,
+            configurable: true,
+            value: false,
+        },
+        compressVertices: {
+            enumerable: true,
+            writable: false,
+            configurable: true,
+            value: false,
+        },
+        // 点数据集合：位置数组、点数量与颜色数组
+        positions: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.defined('positions', value);
+                if (value instanceof ArrayBuffer)
+                    value = new Float64Array(value);
+                if (isTypedArray(value))
+                    value = Cartesian3.unpackArray(value);
+                else if (Array.isArray(value)) {
+                    if (typeof value[0] === "number")
+                        value = Cartesian3.unpackArray(value);
+                }
+                if (this._positions !== value) {
+                    this._positions = value;
+                    this.needsUpdateGeometry = true;
+                    this.raisePropertyChangeEvent('positions', value, PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._positions))
+                    this._positions = [];
+                return this._positions;
+            }
+        },
+        numberOfPoints: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return this.positions.length;
+            }
+        },
+        colors: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.defined('colors', value);
+                if (value instanceof ArrayBuffer)
+                    value = new Uint8Array(value);
+                if (isTypedArray(value))
+                    value = Color.unpackArrayFromBytes(value);
+                else if (Array.isArray(value)) {
+                    if (typeof value[0] === "number")
+                        value = Color.unpackArrayFromBytes(value);
+                }
+                if (this._colors !== value) {
+                    this._colors = value;
+                    this.needsUpdateGeometry = true;
+                    this.raisePropertyChangeEvent('colors', value, PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._colors))
+                    this._colors = [];
+                return this._colors;
+            }
+        },
+        // 点增删操作：添加单个/批量、按索引删除、清空
+        add: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (position, color) {
+                position = parseToCartesian3(position, undefined, false);
+                color = color ?
+                    parseToColor(color) :
+                    Color.fromRandom({
+                        alpha: 1.0,
+                    });
+                this.positions.push(position);
+                const index = this.positions.lastIndexOf(position);
+                this.colors[index] = color;
+                this.needsUpdateGeometry = true;
+                this.raisePropertyChangeEvent('positions', this.positions, PropertyType.GEOMETRY);
+                this.raisePropertyChangeEvent('colors', this.colors, PropertyType.GEOMETRY);
+            },
+        },
+        addArray: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (array) {
+                Check.typeOf.array('array', array);
+                array.forEach(element => {
+                    this.add(element.position, element.color);
+                });
+            },
+        },
+        removeAt: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (startIndex, deleteCount = 1) {
+                Check.typeOf.number('startIndex', startIndex);
+                this.positions.splice(startIndex, deleteCount);
+                this.colors.splice(startIndex, deleteCount);
+                this.raisePropertyChangeEvent('positions', this.positions, PropertyType.GEOMETRY);
+                this.raisePropertyChangeEvent('colors', this.colors, PropertyType.GEOMETRY);
+            }
+        },
+        removeAll: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                this.positions.length = 0;
+                this.colors.length = 0;
+                this.needsUpdateGeometry = true;
+                this.raisePropertyChangeEvent('positions', this.positions, PropertyType.GEOMETRY);
+                this.raisePropertyChangeEvent('colors', this.colors, PropertyType.GEOMETRY);
+            },
+        },
+        // 外观样式：整体颜色、透明度、点大小与逐顶点着色开关
+        color: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToColor(value);
+                if (!Color.equalsRgb(this._color, value)) {
+                    this._color = value.cloneRgb(this._color);
+                    this.raisePropertyChangeEvent('color', value, PropertyType.ATTRIBUTE);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._color))
+                    this._color = Color.DARKGRAY.clone();
+                return this._color;
+            }
+        },
+        opacity: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThanOrEquals('opacity', value, 0);
+                Check.typeOf.number.lessThanOrEquals('opacity', value, 1);
+                if (this.color.alpha !== value) {
+                    this.color.alpha = value;
+                    this.raisePropertyChangeEvent('opacity', value, PropertyType.ATTRIBUTE);
+                }
+            },
+            get: function () {
+                return this.color.alpha;
+            }
+        },
+        pointSize: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number('pointSize', value);
+                if (this._pointSize !== value) {
+                    this._pointSize = value;
+                    this.raisePropertyChangeEvent('pointSize', value, PropertyType.ATTRIBUTE);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._pointSize))
+                    this._pointSize = 3;
+                return this._pointSize;
+            },
+        },
+        perVertexColors: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.bool('perVertexColors', value);
+                if (this._perVertexColors !== value) {
+                    this._perVertexColors = value;
+                    this.raisePropertyChangeEvent('perVertexColors', value, PropertyType.ATTRIBUTE);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._perVertexColors))
+                    this._perVertexColors = true;
+                return this._perVertexColors;
+            }
+        },
+        // 几何构建：创建几何、获取几何实例属性与创建几何实例
+        createGeometry: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                if (this.needsUpdateGeometry || !this._geometry) {
+                    this._geometry = createPointCloudGeometry({
+                        positions: this.positions,
+                        colors: this.colors,
+                    });
+                    this.needsUpdateGeometry = false;
+                }
+                return this._geometry;
+            }
+        },
+        getGeometryInstanceAttributes: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                return getGeometryInstanceAttributes(this.show, undefined, this._distanceDisplayCondition, undefined, this.pointSize, this.perVertexColors, this.color);
+            }
+        },
+        createGeometryInstance: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (enableModelMatrix = true) {
+                if (this.numberOfPoints === 0)
+                    return;
+                const geometry = this.createGeometry();
+                const attributes = this.getGeometryInstanceAttributes();
+                return new GeometryInstance({
+                    id: this.id,
+                    pickId: this.pickId,
+                    geometry: geometry,
+                    attributes: attributes,
+                    modelMatrix: enableModelMatrix ? this.computedModelMatrix : undefined,
+                });
+            }
+        }
+    });
+
+}
+
+/**
+ * 为目标对象动态定义点图元（PointPrimitive）相关属性（标识、位置/地理坐标、大小、颜色/轮廓、距离缩放与显示控制等），
+ * 内部委托给 PointPrimitive 实现。
+ * @param {object} target 要挂载属性的目标对象
+ * @returns {void}
+ */
+function definePointPrimitiveProperties(target) {
+
+    Object.defineProperties(target, {
+        // 类型标识与拾取图元
+        isPointPrimitive: {
+            enumerable: true,
+            writable: false,
+            configurable: true,
+            value: true,
+        },
+        pickPrimitve: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return this;
+            }
+        },
+        // 标识与显示开关
+        id: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return this._point.id;
+            },
+            set: function (value) {
+                this._point.id = value;
+            }
+        },
+        show: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.bool('show', value);
+                if (this.show !== value) {
+                    this._show = value;
+                    this._point.show = value;
+                    this.raisePropertyChangeEvent('show', value);
+                }
+            },
+            get: function () {
+                if (!defined$1(this._show))
+                    this._show = this._point.show;
+                return this._point.show;
+            }
+        },
+        // 世界坐标位置、地理坐标与高度参考
+        position: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToCartesian3(value, Scratch.scratchCartesian3, false);
+                if (!Cartesian3.equals(value, this.position)) {
+                    this._point.position = value;
+                    this.raisePropertyChangeEvent('position', value);
+                }
+            },
+            get: function () {
+                return this._point.position;
+            }
+        },
+        geographic: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseGeographicToCartesian(value, Scratch.scratchCartesian3, this.ellipsoid);
+                this.position = value;
+            },
+            get: function () {
+                return this.position.toGeographic(this.ellipsoid);
+            }
+        },
+        heightReference: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseHeightReference(value);
+                if (this.heightReference !== value) {
+                    this._point.heightReference = value;
+                    this.raisePropertyChangeEvent('heightReference', value);
+                }
+            },
+            get: function () {
+                this._point.heightReference;
+            }
+        },
+        // 点大小：像素大小及 size 别名
+        pixelSize: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number('pixelSize', value);
+                if (this.pixelSize !== value) {
+                    this._point.pixelSize = value;
+                    this.raisePropertyChangeEvent('pixelSize', value);
+                }
+            },
+            get: function () {
+                return this._point.pixelSize;
+            }
+        },
+        size: {
+            enumerable: true,
+            configurable: true,
+            value: target.pixelSize,
+        },
+        // 外观与显示控制：距离缩放、颜色/透明度、轮廓颜色/透明度/宽度、距离透明、显示条件与深度测试
+        scaleByDistance: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToNearFarScalar(value, Scratch.scratchNearFarScalar);
+                if (!NearFarScalar.equals(value, this.scaleByDistance)) {
+                    this._point.scaleByDistance = value;
+                    this.raisePropertyChangeEvent('scaleByDistance', value);
+                }
+            },
+            get: function () {
+                return this._point.scaleByDistance;
+            }
+        },
+        color: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToColor(value, Scratch.scratchColor);
+                if (!Color.equalsRgb(value, this.color)) {
+                    value.alpha = this.color.alpha;
+                    this._point.color = value;
+                    this.raisePropertyChangeEvent('color', value);
+                }
+            },
+            get: function () {
+                return this._point.color;
+            }
+        },
+        opacity: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThanOrEquals('opacity', value, 0);
+                Check.typeOf.number.lessThanOrEquals('opacity', value, 1);
+                if (this.opacity !== value) {
+                    const color = this.color.clone(Scratch.scratchColor).withAlpha(value);
+                    this._point.color = color;
+                    this.raisePropertyChangeEvent('opacity', value);
+                }
+            },
+            get: function () {
+                return this._point.color.alpha;
+            }
+        },
+        outlineColor: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToColor(value, Scratch.scratchColor);
+                if (!Color.equalsRgb(value, this.outlineColor)) {
+                    value.alpha = this.outlineColor.alpha;
+                    this._point.outlineColor = value;
+                    this.raisePropertyChangeEvent('outlineColor', value);
+                }
+            },
+            get: function () {
+                return this._point.outlineColor;
+            }
+        },
+        outlineOpacity: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number.greaterThanOrEquals('outlineOpacity', value, 0);
+                Check.typeOf.number.lessThanOrEquals('outlineOpacity', value, 1);
+                if (this.outlineOpacity !== value) {
+                    const color = this.outlineColor.clone(Scratch.scratchColor).withAlpha(value);
+                    this._point.outlineColor = color;
+                    this.raisePropertyChangeEvent('outlineOpacity', value);
+                }
+            },
+            get: function () {
+                return this._point.outlineColor.alpha;
+            }
+        },
+        outlineWidth: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number('outlineWidth', value);
+                if (this.outlineWidth !== value) {
+                    this._point.outlineWidth = value;
+                    this.raisePropertyChangeEvent('outlineWidth', value);
+                }
+            },
+            get: function () {
+                return this._point.outlineWidth;
+            }
+        },
+        translucencyByDistance: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToNearFarScalar(value, Scratch.scratchNearFarScalar);
+                if (!NearFarScalar.equals(value, this.translucencyByDistance)) {
+                    this._point.translucencyByDistance = value;
+                    this.raisePropertyChangeEvent('translucencyByDistance', value);
+                }
+            },
+            get: function () {
+                return this._point.translucencyByDistance;
+            }
+        },
+        distanceDisplayCondition: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                value = parseToDistanceDisplayCondition(value, Scratch.scratchDistanceDisplayCondition);
+                if (!DistanceDisplayCondition.equals(value, this.distanceDisplayCondition)) {
+                    this._point.distanceDisplayCondition = value;
+                    this.raisePropertyChangeEvent('distanceDisplayCondition', value);
+                }
+            },
+            get: function () {
+                return this._point.distanceDisplayCondition;
+            }
+        },
+        disableDepthTestDistance: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.number('disableDepthTestDistance', value);
+                if (this.disableDepthTestDistance !== value) {
+                    this._point.disableDepthTestDistance = value;
+                    this.raisePropertyChangeEvent('disableDepthTestDistance', value);
+                }
+            },
+            get: function () {
+                return this._point.disableDepthTestDistance;
+            }
+        },
+        //private
+        _destroyInnerPoint: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                if (this._point && !isDestroyed(this._point)) {
+                    this._point._removeFromCollection();
+                    destroyObject$1(this._point);
+                }
+            }
+        }
+    });
+
+}
+
+/**
+ * 为目标对象动态定义多边形体（PolygonVolume）相关属性（高度、拉伸高度及顶/底闭合开关等）。
+ * @param {object} target 要挂载属性的目标对象
+ * @returns {void}
+ */
+function definePolygonVolumeProperties(target) {
+
+    Object.defineProperties(target, {
+        // 高度与拉伸高度
+        height: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                if (defined$1(value))
+                    Check.typeOf.number('height', value);
+                if (this._height !== value) {
+                    this._height = value;
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('height', value, this.clampToGround ? undefined : PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                return this._height;
+            }
+        },
+        extrudedHeight: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                if (defined$1(value))
+                    Check.typeOf.number('extrudedHeight', value);
+                if (this._extrudedHeight !== value) {
+                    this._extrudedHeight = value;
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('extrudedHeight', value, this.clampToGround ? undefined : PropertyType.GEOMETRY);
+                }
+            },
+            get: function () {
+                return this._extrudedHeight;
+            }
+        },
+        // 顶面/底面闭合开关
+        closeTop: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.bool('closeTop', value);
+                if (this._closeTop !== value) {
+                    this._closeTop = value;
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('closeTop', value, this.clampToGround ? undefined : PropertyType.FILLGEOMETRY);
+                }
+            },
+            get: function () {
+                return this._closeTop;
+            }
+        },
+        closeBottom: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.bool('closeBottom', value);
+                if (this._closeBottom !== value) {
+                    this._closeBottom = value;
+                    this.needsUpdateGeometryOptions = true;
+                    this.raisePropertyChangeEvent('closeBottom', value, this.clampToGround ? undefined : PropertyType.FILLGEOMETRY);
+                }
+            },
+            get: function () {
+                return this._closeBottom;
+            }
+        },
+    });
+
+}
+
+/**
+ * 为目标对象动态定义“按像素固定尺寸”相关属性（开关、像素尺寸模型矩阵及内部更新方法）。
+ * @param {object} target 要挂载属性的目标对象
+ * @returns {void}
+ */
+function defineSizeInPixelsProperties(target) {
+
+    Object.defineProperties(target, {
+        // 是否按像素固定尺寸
+        sizeInPixels: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                Check.typeOf.bool('sizeInPixels', value);
+                if (this._sizeInPixels !== value) {
+                    this._sizeInPixels = value;
+                    this.raisePropertyChangeEvent('sizeInPixels', value);
+                }
+            },
+            get: function () {
+                return this._sizeInPixels;
+            }
+        },
+        // 像素尺寸模型矩阵（惰性初始化为单位矩阵）
+        pixelSizeModelMatrix: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                if (!defined$1(this._pixelSizeModelMatrix))
+                    this._pixelSizeModelMatrix = Matrix4.IDENTITY.clone(new Matrix4());
+                return this._pixelSizeModelMatrix;
+            }
+        },
+        //private
+        _updatePixelSizeModelMatrix: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (frameState) {
+                if (this.sizeInPixels) {
+                    const boundingSphere = BoundingSphere.fromModelMatrix(this.computedModelMatrix, undefined, Scratch.scratchBoundingSphere);
+                    const pixelSize = frameState.camera.getPixelSize(boundingSphere,
+                        frameState.context.drawingBufferWidth,
+                        frameState.context.drawingBufferHeight);
+                    if (this._pixelSize !== pixelSize) {
+                        this._pixelSize = pixelSize;
+                        // console.log('pixelSize:', pixelSize, 'modelMatrix:', this._modelMatrix.clone());
+                        Matrix4.multiplyByUniformScale(this.computedModelMatrix, pixelSize, this.pixelSizeModelMatrix);
+                    }
+                }
+            },
+        },
+    });
+
+}
+
+/**
+ * 惰性创建宿主对象的内部纹理坐标变换对象 StTransforms（仅创建一次），并绑定属性变更回调与事件转发。
+ * @param {object} that 宿主对象
+ * @param {function} [onStTransformChanged] 纹理坐标变换变更回调函数
+ * @returns {void}
+ */
+function ensureStTransforms(that, onStTransformChanged) {
+    if (!that._stTransforms) {
+        if (!onStTransformChanged)
+            onStTransformChanged = that.onStTransformChanged;
+        if (onStTransformChanged)
+            onStTransformChanged = onStTransformChanged.bind(that);
+        that._stTransforms = new StTransforms({
+            owner: that,
+            onStTransformChanged: onStTransformChanged,
+        });
+        that._stTransforms.propertyChanged.addEventListener(function (raiser, name, value, type) {
+            if (typeof that.raisePropertyChangeEvent === 'function')
+                that.raisePropertyChangeEvent(name, value, type);
+        });
+    }
+}
+
+/**
+ * 为目标对象动态定义一整套纹理坐标（st）变换相关属性与方法（偏移、重复、旋转、中心点及变换矩阵等），
+ * 内部委托给惰性创建的 StTransforms 实例实现。
+ * @param {object} target 要挂载属性的目标对象
+ * @returns {void}
+ */
+function defineStTransformsProperties(target) {
+
+    Object.defineProperties(target, {
+        // 变换对象与批量设置变换入口
+        stTransforms: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                ensureStTransforms(this);
+                return this._stTransforms;
+            }
+        },
+        setStTransforms: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (transforms) {
+                this.stTransforms.setTransforms(transforms);
+            }
+        },
+        // 纹理坐标变换参数：偏移、重复、旋转（弧度/角度）、中心点、中心旋转及变换矩阵
+        stOffset: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                this.stTransforms.stOffset = value;
+            },
+            get: function () {
+                return this.stTransforms.stOffset;
+            }
+        },
+        stRepeat: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                this.stTransforms.stRepeat = value;
+            },
+            get: function () {
+                return this.stTransforms.stRepeat;
+            }
+        },
+        stRotation: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                this.stTransforms.stRotation = value;
+            },
+            get: function () {
+                return this.stTransforms.stRotation;
+            }
+        },
+        stRotationDegrees: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                this.stTransforms.stRotationDegrees = value;
+            },
+            get: function () {
+                return this.stTransforms.stRotationDegrees;
+            }
+        },
+        stCenter: {
+            enumerable: true,
+            configurable: true,
+            set: function (value) {
+                this.stTransforms.stCenter = value;
+            },
+            get: function () {
+                return this.stTransforms.stCenter;
+            }
+        },
+        stCenterRotation: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return this.stTransforms.stCenterRotation;
+            }
+        },
+        stTransform: {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                return this.stTransforms.transform;
+            }
+        },
+        // 强制更新纹理坐标变换矩阵
+        updateStTransform: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function (force) {
+                return this.stTransforms.updateTransform(force);
+            },
+        },
+        //private
+        _updateStTransforms: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                this.stTransforms.update();
+            },
+        },
+        //private
+        _destroyStTransforms: {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () {
+                this.stTransforms.destroy();
+            },
+        },
+    });
+
+}
+
+export { BasePrimitive, BooleanGeometryInstanceAttribute, Cartesian3GeometryInstanceAttribute, FloatGeometryInstanceAttribute, FogType, Geographic, GeographicTransform, TranslationRotationScaleTransform as MatrixTransform, ModelMatrixPrimitive, ModelMatrixTransforms, PropertyChangedListener, PropertyType, RotationFrameType, Scratch, ShapeType, StTransforms, TransformsPrimitive, TranslationRotationScaleTransform, computeCirclePositions, computeCircleRadius, computeModelMatrix, computeStTransform, createGeometry, createPointCloudGeometry, defineAppearanceProperties, defineBaseShapeProperties, defineBoxProperties, defineCenterProperties, defineClampToGroundProperties, defineComputedModelMatrixProperties, defineCylinderProperties, defineEllipsoidProperties, defineLabelProperties, defineMeshProperties, defineModelMatrixTransformsProperties, defineOutlineProperties, definePlaneProperties, definePointCloudProperties, definePointPrimitiveProperties, definePolygonVolumeProperties, defineSizeInPixelsProperties, defineStTransformsProperties, getGeometryInstanceAttributes, getPositionFromTarget, getRenderState, isColorMaterial, isTranslucent, parseAltitude, parseArcType, parseAttitudeToHeadingPitchRoll, parseAttitudeToMatrix3, parseAttitudeToQuaternion, parseCartographicToCartesian, parseCartographicsToPositions, parseClassificationType, parseClockRange, parseColorBlendMode, parseCornerType, parseCullFace, parseEulerToHeadingPitchRoll, parseEulerToQuaternion, parseGeographicToCartesian, parseGeographicsToPositions, parseHeading, parseAltitude as parseHeight, parseHeightReference, parseHoles, parseHorizontalOrigin, parseLabelStyle, parseLatitude, parseLongitude, parsePitch, parseRoll, parseRotationToHeadingPitchRoll, parseRotationToMatrix3, parseRotationToQuaternion, parseShadowMode, parseToBoundingRectangle, parseToCartesian2, parseToCartesian3, parseToCartesian3Array, parseToCartesian4, parseToCartographic, parseToColor, parseToDistanceDisplayCondition, parseToGeographic, parseToHeadingPitchRange, parseToJulianDate, parseToNearFarScalar, parseToPlane, parseToPolygonHierarchy, parseToRange, parseToRectangle, parseToTimeInterval, parseVerticalOrigin, resolveModelMatrixByFixedFrame };
 //# sourceMappingURL=cesium.utils.esm.js.map

@@ -6,3 +6,4 @@ export * from "./StTransforms.js";
 export * from "./TranslationRotationScaleTransform.js";
 export * from "./PropertyChangedListener.js";
 export * from "./PropertyType.js";
+export * from "./BasePrimitive.js";
